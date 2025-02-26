@@ -29,7 +29,7 @@ public class ClickEffect : MonoBehaviour
         }
         if (effect != null && !effect.activeInHierarchy)
         {
-            SceneManager.LoadScene("End");  // "End"라는 씬을 로드
+            SceneManager.LoadScene("Gudle_End");  // "End"라는 씬을 로드
         }
     }
 

@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Gudle.unity
+    guid: 88783b7e5e3eb6849bdae3a01d6f2529
+  - enabled: 1
+    path: Assets/Scenes/Gudle_End.unity
+    guid: efa462b0489772741af413af651d7991
   m_configObjects: {}
