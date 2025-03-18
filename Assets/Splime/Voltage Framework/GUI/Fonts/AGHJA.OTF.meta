@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c346c41b4135db147880b6d631b9736b
+timeCreated: 1508658738
+licenseType: Store
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aghja
+  fontNames:
+  - Aghja
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
