@@ -1,31 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private CameraController cameraController;
+
+    [Header("Movement")]
+    [SerializeField] private float moveSpeed = 4.0f;
+    [SerializeField] private float jumpForce = 5.0f;
+    [SerializeField] private float rotationSpeed = 15f; // 회전 속도 추가
+
     private Animator m_animator;
     private Vector3 m_velocity;
-
     private bool m_wasGrounded;
     private bool m_isGrounded = true;
 
-    public float m_moveSpeed = 4.0f;
-    public float m_jumpForce = 5.0f;
-
-    void Start()
-    {
-        m_animator = GetComponent<Animator>();
-    }
+    void Start() => m_animator = GetComponent<Animator>();
 
     void Update()
     {
-        // Animator 파라미터 업데이트
         m_animator.SetBool("Grounded", m_isGrounded);
-
         PlayerMove();
-
-        // 직전 상태 업데이트
         m_wasGrounded = m_isGrounded;
     }
 
@@ -33,45 +28,48 @@ public class PlayerController : MonoBehaviour
     {
         CharacterController controller = GetComponent<CharacterController>();
         float gravity = 20.0f;
+        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
         if (controller.isGrounded)
         {
-            // 이동 방향 계산. 키에서 손 떼도 지속되는 거 방지 위해 GetAxis 대신 GetAxisRaw
-            m_velocity = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-            m_velocity = m_velocity.normalized;
+            // 1. 이동 방향 계산 (카메라 기준)
+            Vector3 camForward = cameraController.transform.forward;
+            Vector3 camRight = cameraController.transform.right;
+            camForward.y = camRight.y = 0f;
+            camForward.Normalize();
+            camRight.Normalize();
 
-            // 전력질주
-            if (Input.GetKey(KeyCode.LeftShift)) 
-            {
-                // 전역인 movement에 곱해버리면 이속이 순식간에 엄청 커져버림
-                m_velocity *= 2.0f;
-            }
-            // 걷기
-            if (Input.GetKey(KeyCode.LeftControl)) 
-            {
-                m_velocity /= 2.0f;
-            }
-            // m_velocity.magnitude는 0.5/1/2 중 하나. 
-            m_animator.SetFloat("MoveSpeed", m_velocity.magnitude*m_moveSpeed);
-        
+            m_velocity = (camForward * input.z + camRight * input.x).normalized;
 
+            // 2. 속도 조절 (전력질주/걷기)
+            if (Input.GetKey(KeyCode.LeftShift)) m_velocity *= 2.0f;
+            if (Input.GetKey(KeyCode.LeftControl)) m_velocity /= 2.0f;
+            m_animator.SetFloat("MoveSpeed", m_velocity.magnitude * moveSpeed);
+
+            // 3. 점프 처리
             if (Input.GetKey(KeyCode.Space))
             {
-                // 점프 처리
                 m_animator.SetTrigger("Jump");
-                m_velocity.y = m_jumpForce;
+                m_velocity.y = jumpForce;
             }
-            else if (m_velocity.magnitude > 0.1f)
+
+            // 4. 방향키 입력에 따른 캐릭터 회전 (예시 조건 충족)
+            if (input.magnitude > 0.1f)
             {
-                transform.LookAt(transform.position + m_velocity); // 움직이는 방향으로 회전
+                // 입력 방향 기준으로 회전 (카메라 기준)
+                Vector3 targetDir = (camForward * input.z + camRight * input.x).normalized;
+                Quaternion targetRot = Quaternion.LookRotation(targetDir);
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRot,
+                    rotationSpeed * Time.deltaTime
+                );
             }
         }
 
-        // 중력 적용 및 이동 처리
+        // 5. 중력 적용 및 이동
         m_velocity.y -= gravity * Time.deltaTime;
-        controller.Move(m_velocity * m_moveSpeed * Time.deltaTime);
-
-        // 땅에 닿았는지 확인
+        controller.Move(m_velocity * moveSpeed * Time.deltaTime);
         m_isGrounded = controller.isGrounded;
     }
 }
