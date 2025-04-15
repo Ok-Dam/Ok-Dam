@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8854584063255122544}
   - component: {fileID: 6624405097858506872}
   m_Layer: 0
-  m_Name: POI_Teleport
+  m_Name: POI_Shortcut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c7c826a5dc709f4687beca7d8977d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 2
 --- !u!1 &6354740422453715123
 GameObject:
   m_ObjectHideFlags: 0

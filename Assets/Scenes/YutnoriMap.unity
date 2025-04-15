@@ -183,11 +183,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardContainer: {fileID: 457240432}
-  pointsOfInterestPrefabs:
-  - {fileID: 9201229766074553285, guid: a6256cc590876af4291df28cbb63cbcc, type: 3}
-  - {fileID: 3828526687718817441, guid: 58cb7915d77e81f45be39070c69d7c78, type: 3}
-  - {fileID: 6624405097858506872, guid: a0fb23520ddc2fc4880f6a6353f06dcd, type: 3}
-  - {fileID: 8752746988108342439, guid: 194b07f1a2ff9464289f8adf436233b4, type: 3}
+  weightedPointsOfInterestPrefabs:
+  - prefab: {fileID: 9201229766074553285, guid: a6256cc590876af4291df28cbb63cbcc, type: 3}
+    weight: 5
+  - prefab: {fileID: 3828526687718817441, guid: 58cb7915d77e81f45be39070c69d7c78, type: 3}
+    weight: 1
+  - prefab: {fileID: 6624405097858506872, guid: a0fb23520ddc2fc4880f6a6353f06dcd, type: 3}
+    weight: 3
+  - prefab: {fileID: 8752746988108342439, guid: 194b07f1a2ff9464289f8adf436233b4, type: 3}
+    weight: 1
+  componentPOI: {fileID: 3828526687718817441, guid: 58cb7915d77e81f45be39070c69d7c78, type: 3}
+  shortcutPOI: {fileID: 6624405097858506872, guid: a0fb23520ddc2fc4880f6a6353f06dcd, type: 3}
   pathPrefab: {fileID: 7329522608057612884, guid: 14786a4b77743b3469e4a608bc46bff6, type: 3}
   numberOfStartingPoints: 4
   mapLength: 10
