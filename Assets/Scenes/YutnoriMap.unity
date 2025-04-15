@@ -188,8 +188,6 @@ MonoBehaviour:
     weight: 5
   - prefab: {fileID: 3828526687718817441, guid: 58cb7915d77e81f45be39070c69d7c78, type: 3}
     weight: 1
-  - prefab: {fileID: 6624405097858506872, guid: a0fb23520ddc2fc4880f6a6353f06dcd, type: 3}
-    weight: 3
   - prefab: {fileID: 8752746988108342439, guid: 194b07f1a2ff9464289f8adf436233b4, type: 3}
     weight: 1
   componentPOI: {fileID: 3828526687718817441, guid: 58cb7915d77e81f45be39070c69d7c78, type: 3}
