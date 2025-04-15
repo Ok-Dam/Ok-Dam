@@ -223,7 +223,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -391,8 +391,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbaa94834a9f1e040b5ae9e22b8d6cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveSpeed: 4
-  m_jumpForce: 5
+  cameraController: {fileID: 2100100184}
+  moveSpeed: 4
+  jumpForce: 5
+  rotationSpeed: 15
 --- !u!1001 &1249495000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -647,14 +649,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2100100180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b9de4cb4ab5aef4db256376f1173251, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f7c359ad395d6a4582818462c2d07ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTr: {fileID: 467405629}
-  distance: 3.5
-  height: 1.5
-  targetOffset: 1.7
-  damping: 0.1
+  player: {fileID: 467405629}
+  distance: 5
+  mouseSensitivity: 1600
+  minVerticalAngle: -40
+  maxVerticalAngle: 80
+  offset: {x: 0, y: 2, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
