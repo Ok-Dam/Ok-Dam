@@ -101,6 +101,7 @@ public class MapGenerator : MonoBehaviour
             return _pointOfInterestsMap[floor][column];
         }
 
+        // 3.1 POI 생성 --------------------------------------
         // POI 종류 선택, 프리팹 형태로 리턴
         PointOfInterest randomPOI = GetWeightedRandomPOI(floor);
 
@@ -111,27 +112,10 @@ public class MapGenerator : MonoBehaviour
         // 화면상 위치 계산, 지정
         Vector3 pos = GetPositionVector(floor, column);
         instance.transform.localPosition = pos;
-        
-        // 생성된 연결 개수
-        int created = 0;
 
-        // 다음 층의 PointOfInterest를 생성하고 연결하는 로컬 함수
-        // 로컬 함수: 이 함수 내부에서만 쓸 경우 내부에 생성. 상위 함수와 강하게 결합된 헬퍼 함수를 만들 때 매우 적합. 
-        void InstantiateNextPoint(int index_i, int index_j)
-        {
-            PointOfInterest nextPOI = InstantiatePointOfInterest(index_i, index_j);
-            AddLineBetweenPoints(instance, nextPOI);
-
-            // 이미 안 들어가있다면 이후/이전 노드 목록 갱신 
-            if (!instance.NextPointsOfInterest.Contains(nextPOI))
-                instance.NextPointsOfInterest.Add(nextPOI);
-            
-            created++;
-            _numberOfConnections++;
-        }
-
-        // 연결이 하나도 생성되지 않았고, 마지막 층이 아니면 연결 시도
-        while (created == 0 && floor < mapLength - 1)
+        // 3.2 다음 POI 생성 ---------------------------------
+        // 내 위에 연결된 노드 없고, 이게 마지막 층 아니라면 노드 생성 시도 
+        while (instance.NextPointsOfInterest.Count == 0 && floor < mapLength - 1)
         {
             // 왼쪽 대각선 연결 시도
             if (column > 0 && Random.Range(0f, 1f) < chancePathSide)
@@ -158,10 +142,24 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
+        // 다음 층의 PointOfInterest를 생성하고 연결하는 로컬 함수
+        // 로컬 함수: 이 함수 내부에서만 쓸 경우 내부에 생성. 상위 함수와 강하게 결합된 헬퍼 함수를 만들 때 매우 적합. 
+        void InstantiateNextPoint(int index_i, int index_j)
+        {
+            PointOfInterest nextPOI = InstantiatePointOfInterest(index_i, index_j);
+            AddLineBetweenPoints(instance, nextPOI);
+
+            // 이미 안 들어가있다면 이후/이전 노드 목록 갱신 
+            if (!instance.NextPointsOfInterest.Contains(nextPOI))
+                instance.NextPointsOfInterest.Add(nextPOI);
+
+            _numberOfConnections++;
+        }
+
         return instance;
     }
 
-    // 가중치에 따라 노드 종류 결정, 5번째 층엔 shortcutPOI로 고정
+    // 가중치에 따라 노드 종류 결정, 5번째 층엔 shortcutPOI로 고정. POI Prefab 반환
     private PointOfInterest GetWeightedRandomPOI(int currentFloor)
     {
         // 5번째 층일 경우 shortcutPOI 강제 반환
@@ -170,7 +168,7 @@ public class MapGenerator : MonoBehaviour
             return shortcutPOI;
         }
 
-        // 기존 가중치 랜덤 로직 유지
+        // 나머지는 가중치에 따른 랜덤 선정
         if (weightedPointsOfInterestPrefabs.Count == 0)
             throw new System.Exception("프리팹 리스트가 비어있습니다!");
 
@@ -193,7 +191,7 @@ public class MapGenerator : MonoBehaviour
         return weightedPointsOfInterestPrefabs[0].prefab;
     }
 
-    // 두 PointOfInterest 사이에 라인(경로) 오브젝트를 생성하는 함수
+    // 두 POI 사이 라인(경로) 생성
     private void AddLineBetweenPoints(PointOfInterest thisPoint, PointOfInterest nextPoint)
     {
         float len = _lineLength;
@@ -227,6 +225,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     // 0~maxWidth-1 중 n개를 랜덤하게 뽑는 함수 (중복 없음)
+    // 출발점을 몇 개 행에 생성할 건지 고르는데 사용
     private List<int> GetRandomIndexes(int n)
     {
         List<int> indexes = new List<int>();
@@ -246,7 +245,7 @@ public class MapGenerator : MonoBehaviour
         return indexes;
     }
 
-    // 현 행,열 정수로 받아서 화면 상 위치 계산 후 벡터로 반환. 
+    // 행,열 정수로 받아서 화면 상 위치 계산 후 벡터로 반환. 
     private Vector3 GetPositionVector(int floor, int column)
     {
         // x축 한 칸의 크기 계산
