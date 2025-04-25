@@ -15,10 +15,34 @@ public class PlayerController : MonoBehaviour
     private bool m_wasGrounded;
     private bool m_isGrounded = true;
 
-    void Start() => m_animator = GetComponent<Animator>();
+    void Start() {
+        m_animator = GetComponent<Animator>();
+
+        // 자동으로 Main Camera의 CameraController 할당
+        if (cameraController == null)
+        {
+            Camera mainCam = Camera.main;
+            if (mainCam != null)
+            {
+                cameraController = mainCam.GetComponent<CameraController>();
+            }
+
+            if (cameraController == null)
+            {
+                Debug.LogError("[PlayerController] CameraController가 할당되지 않았습니다.");
+            }
+        }
+        if (cameraController != null)
+        {
+            cameraController.GetType().GetField("player", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                ?.SetValue(cameraController, this.transform);
+        }
+    }
 
     void Update()
     {
+        if (ChatManager.IsChatActive) return;
+
         m_animator.SetBool("Grounded", m_isGrounded);
         PlayerMove();
         m_wasGrounded = m_isGrounded;

@@ -8,18 +8,18 @@ using ExitGames.Client.Photon;
 public class ChatManager : MonoBehaviour, IChatClientListener
 {
     [Header("UI Reference")]
-    public GameObject chatPanel;                         // Layout 오브젝트
-    public TMP_InputField chatInputField;                // Input/InputField
-    public TMP_Text chatText;                            // Output/Scroll View/Viewport/Content 안 TMP_Text
-    public ScrollRect scrollRect;                        // Output/Scroll View
+    public GameObject chatPanel;
+    public TMP_InputField chatInputField;
+    public TMP_Text chatText;
+    public ScrollRect scrollRect;
 
     private ChatClient chatClient;
     private string currentChannel = "Global";
-    private bool isChatActive = false;
+
+    public static bool IsChatActive { get; private set; } = false;
 
     void Start()
     {
-        // 닉네임 자동 지정
         if (string.IsNullOrEmpty(PhotonNetwork.NickName))
             PhotonNetwork.NickName = "User" + Random.Range(1000, 9999);
 
@@ -39,9 +39,9 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (!isChatActive)
+            if (!IsChatActive)
             {
-                OpenChat(); // 채팅창 열기
+                OpenChat();
             }
             else
             {
@@ -50,36 +50,37 @@ public class ChatManager : MonoBehaviour, IChatClientListener
                 if (!string.IsNullOrEmpty(message))
                 {
                     SendChatMessage(message);
-                    chatInputField.text = ""; // 메시지 전송 후 입력창만 초기화
-                    chatInputField.ActivateInputField(); // 포커스 유지
+                    chatInputField.text = "";
+                    chatInputField.ActivateInputField();
                 }
                 else
                 {
-                    CloseChat(); // 아무 입력 없을 경우에만 닫기
+                    CloseChat();
                 }
             }
         }
 
-        if (isChatActive && Input.GetKeyDown(KeyCode.Escape))
+        if (IsChatActive && Input.GetKeyDown(KeyCode.Escape))
         {
             CloseChat();
         }
     }
-
 
     void OpenChat()
     {
         chatPanel.SetActive(true);
         chatInputField.text = "";
         chatInputField.ActivateInputField();
-        isChatActive = true;
+        IsChatActive = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     void CloseChat()
     {
         chatInputField.DeactivateInputField();
         chatPanel.SetActive(false);
-        isChatActive = false;
+        IsChatActive = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void SendChatMessage(string message)
@@ -110,7 +111,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         scrollRect.verticalNormalizedPosition = 0f;
     }
 
-    // 필수 인터페이스 메서드들
+    // 필수 인터페이스 구현 (빈 상태 유지 가능)
     public void OnChatStateChange(ChatState state) { }
     public void OnDisconnected() => Debug.Log("Disconnected from Photon Chat");
     public void OnSubscribed(string[] channels, bool[] results) { }
