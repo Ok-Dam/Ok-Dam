@@ -11,7 +11,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     //버전 입력
     private readonly string version = "1.0f";
     // 사용자 아이디 입력
-    private string userid = "Capston";
+    private string userid;
 
     //Start보다 먼저 실행됨.
     private void Awake()
@@ -21,9 +21,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //같은 버전의 유저끼리 접속 허용
         PhotonNetwork.GameVersion = version;
         //유저 아이디 할당
+        userid = "User" + Random.Range(1000, 9999);
         PhotonNetwork.NickName = userid;
         //포톤 서버와 통신 횟수 설정.(초당 30회)
         Debug.Log(PhotonNetwork.SendRate);
+        Debug.Log($"My NickName: {PhotonNetwork.NickName}");
         //서버 접속
         PhotonNetwork.ConnectUsingSettings();
     }
