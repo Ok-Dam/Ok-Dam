@@ -1,6 +1,7 @@
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPun
 {
     [Header("References")]
     [SerializeField] private CameraController cameraController;
@@ -8,39 +9,48 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 4.0f;
     [SerializeField] private float jumpForce = 5.0f;
-    [SerializeField] private float rotationSpeed = 15f; // 회전 속도 추가
+    [SerializeField] private float rotationSpeed = 15f;
 
     private Animator m_animator;
     private Vector3 m_velocity;
     private bool m_wasGrounded;
     private bool m_isGrounded = true;
 
-    void Start() {
+    void Start()
+    {
         m_animator = GetComponent<Animator>();
 
-        // 자동으로 Main Camera의 CameraController 할당
-        if (cameraController == null)
+        // PhotonView가 내 것일 때만 카메라 설정
+        if (photonView.IsMine)
         {
-            Camera mainCam = Camera.main;
-            if (mainCam != null)
-            {
-                cameraController = mainCam.GetComponent<CameraController>();
-            }
-
+            // Main Camera의 CameraController 연결
             if (cameraController == null)
             {
-                Debug.LogError("[PlayerController] CameraController가 할당되지 않았습니다.");
+                Camera mainCam = Camera.main;
+                if (mainCam != null)
+                {
+                    cameraController = mainCam.GetComponent<CameraController>();
+                }
+
+                if (cameraController == null)
+                {
+                    Debug.LogError("[PlayerController] CameraController가 할당되지 않았습니다.");
+                }
             }
-        }
-        if (cameraController != null)
-        {
-            cameraController.GetType().GetField("player", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                ?.SetValue(cameraController, this.transform);
+
+            // 카메라의 타겟을 이 캐릭터로 설정
+            if (cameraController != null)
+            {
+                cameraController.GetType().GetField("player", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                    ?.SetValue(cameraController, this.transform);
+            }
         }
     }
 
     void Update()
     {
+        // 내 캐릭터가 아니거나 채팅 중일 경우 조작 불가
+        if (!photonView.IsMine) return;
         if (ChatManager.IsChatActive) return;
 
         m_animator.SetBool("Grounded", m_isGrounded);
@@ -56,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
         if (controller.isGrounded)
         {
-            // 1. 이동 방향 계산 (카메라 기준)
+            // 카메라 기준으로 이동 방향 계산
             Vector3 camForward = cameraController.transform.forward;
             Vector3 camRight = cameraController.transform.right;
             camForward.y = camRight.y = 0f;
@@ -65,22 +75,21 @@ public class PlayerController : MonoBehaviour
 
             m_velocity = (camForward * input.z + camRight * input.x).normalized;
 
-            // 2. 속도 조절 (전력질주/걷기)
+            // 속도 조절
             if (Input.GetKey(KeyCode.LeftShift)) m_velocity *= 2.0f;
             if (Input.GetKey(KeyCode.LeftControl)) m_velocity /= 2.0f;
             m_animator.SetFloat("MoveSpeed", m_velocity.magnitude * moveSpeed);
 
-            // 3. 점프 처리
+            // 점프 처리
             if (Input.GetKey(KeyCode.Space))
             {
                 m_animator.SetTrigger("Jump");
                 m_velocity.y = jumpForce;
             }
 
-            // 4. 방향키 입력에 따른 캐릭터 회전 (예시 조건 충족)
+            // 방향 회전
             if (input.magnitude > 0.1f)
             {
-                // 입력 방향 기준으로 회전 (카메라 기준)
                 Vector3 targetDir = (camForward * input.z + camRight * input.x).normalized;
                 Quaternion targetRot = Quaternion.LookRotation(targetDir);
                 transform.rotation = Quaternion.Slerp(
@@ -91,7 +100,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // 5. 중력 적용 및 이동
+        // 중력 적용 및 이동
         m_velocity.y -= gravity * Time.deltaTime;
         controller.Move(m_velocity * moveSpeed * Time.deltaTime);
         m_isGrounded = controller.isGrounded;
