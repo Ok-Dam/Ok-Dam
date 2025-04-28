@@ -6,8 +6,11 @@ public class UI_Info : MonoBehaviour
 {
     public GameObject GOINFO;
 
-    public void OnbtnOk()
+    void Update()
     {
-        GOINFO.SetActive(false);
+        if (GOINFO.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
+            GOINFO.SetActive(false);
+        }
     }
 }

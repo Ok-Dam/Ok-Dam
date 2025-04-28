@@ -98,7 +98,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6855176476876334078}
-  m_Layer: 0
+  - component: {fileID: 7225237938611349388}
+  - component: {fileID: 1413680954365064159}
+  m_Layer: 3
   m_Name: Jangdokdae
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,6 +131,41 @@ Transform:
   - {fileID: 7670875869997986863}
   m_Father: {fileID: 5513559798785635057}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7225237938611349388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4428491198538085118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
+--- !u!65 &1413680954365064159
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4428491198538085118}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 1, z: 9}
+  m_Center: {x: 1, y: 1, z: 4}
 --- !u!1 &5630510044452717185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,11 +1179,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brown_Ceramic_Jar_0218101840_texture (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7473134128344405379}
   m_SourcePrefab: {fileID: 100100000, guid: 244092794f76b574192423f793c37952, type: 3}
+--- !u!1 &40704792187495806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+  m_PrefabInstance: {fileID: 887760098199394351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7473134128344405379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40704792187495806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!4 &854360557104250820 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 244092794f76b574192423f793c37952, type: 3}
@@ -1694,16 +1757,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brown_Ceramic_Jar_0218101840_texture (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8263282486420420161}
   m_SourcePrefab: {fileID: 100100000, guid: 244092794f76b574192423f793c37952, type: 3}
 --- !u!4 &1289634259090075232 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 244092794f76b574192423f793c37952, type: 3}
   m_PrefabInstance: {fileID: 1616522868185729419}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1922583123066664154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+  m_PrefabInstance: {fileID: 1616522868185729419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8263282486420420161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922583123066664154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1001 &1687784809139917158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1760,16 +1849,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brown_Ceramic_Jar_0218101840_texture
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4476161421928290265}
   m_SourcePrefab: {fileID: 100100000, guid: 244092794f76b574192423f793c37952, type: 3}
 --- !u!4 &1217817060435342989 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 244092794f76b574192423f793c37952, type: 3}
   m_PrefabInstance: {fileID: 1687784809139917158}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1994354142064733239 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+  m_PrefabInstance: {fileID: 1687784809139917158}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4476161421928290265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994354142064733239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1001 &1755235595535908975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3924,16 +4039,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brown_Ceramic_Jar_0218101840_texture (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3971526640495579722}
   m_SourcePrefab: {fileID: 100100000, guid: 244092794f76b574192423f793c37952, type: 3}
 --- !u!4 &4842028015263412053 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 244092794f76b574192423f793c37952, type: 3}
   m_PrefabInstance: {fileID: 4951971321383651518}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5222353127108490735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+  m_PrefabInstance: {fileID: 4951971321383651518}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3971526640495579722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5222353127108490735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1001 &4962571304162981035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5262,16 +5403,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brown_Ceramic_Jar_0218101840_texture (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3280451461547057947}
   m_SourcePrefab: {fileID: 100100000, guid: 244092794f76b574192423f793c37952, type: 3}
 --- !u!4 &5913199894558316523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 244092794f76b574192423f793c37952, type: 3}
   m_PrefabInstance: {fileID: 6162435590445592576}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6432327006468623697 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+  m_PrefabInstance: {fileID: 6162435590445592576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3280451461547057947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6432327006468623697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1001 &6321996400073406594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5992,16 +6159,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brown_Ceramic_Jar_0218101840_texture (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6566233814058980598}
   m_SourcePrefab: {fileID: 100100000, guid: 244092794f76b574192423f793c37952, type: 3}
 --- !u!4 &7335650173242669039 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 244092794f76b574192423f793c37952, type: 3}
   m_PrefabInstance: {fileID: 7081857130844917764}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7964235904818163029 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+  m_PrefabInstance: {fileID: 7081857130844917764}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6566233814058980598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964235904818163029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1001 &7083347201708568613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6058,16 +6251,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brown_Ceramic_Jar_0218101840_texture (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8128885709749739166}
   m_SourcePrefab: {fileID: 100100000, guid: 244092794f76b574192423f793c37952, type: 3}
 --- !u!4 &7334010551617837006 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 244092794f76b574192423f793c37952, type: 3}
   m_PrefabInstance: {fileID: 7083347201708568613}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7965868361363328372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+  m_PrefabInstance: {fileID: 7083347201708568613}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8128885709749739166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7965868361363328372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1001 &7224613208720599997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6128,16 +6347,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brown_Ceramic_Jar_0218101840_texture (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6165109605038490571}
   m_SourcePrefab: {fileID: 100100000, guid: 244092794f76b574192423f793c37952, type: 3}
 --- !u!4 &7190069454332464214 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 244092794f76b574192423f793c37952, type: 3}
   m_PrefabInstance: {fileID: 7224613208720599997}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7531024348471088876 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+  m_PrefabInstance: {fileID: 7224613208720599997}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6165109605038490571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531024348471088876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1001 &7373931980150494540
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6652,11 +6897,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brown_Ceramic_Jar_0218101840_texture (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3406926015334981473}
   m_SourcePrefab: {fileID: 100100000, guid: 244092794f76b574192423f793c37952, type: 3}
+--- !u!1 &7007526642795425429 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 244092794f76b574192423f793c37952, type: 3}
+  m_PrefabInstance: {fileID: 7926007188502680516}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3406926015334981473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7007526642795425429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!4 &7670875869997986863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 244092794f76b574192423f793c37952, type: 3}
