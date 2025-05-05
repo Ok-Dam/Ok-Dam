@@ -19,6 +19,7 @@ public class InteractableObject : MonoBehaviour
         if (popupUI != null)
         {
             popupUI.SetActive(true);
+            isPopupOpen = true;
             Debug.Log(gameObject.name + " popup UI opened!");
         }
         else
