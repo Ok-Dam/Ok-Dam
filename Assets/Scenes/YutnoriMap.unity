@@ -159,7 +159,7 @@ MonoBehaviour:
   throwForce: 500
   yutLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 64
   gameManager: {fileID: 1233684752}
   velocityThreshold: 0.1
   maxWaitTime: 5
@@ -671,7 +671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3464101974896028667, guid: 6079ab164e9491e479061ea3629c32df, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1030,7 +1030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7527786443233112692, guid: 9fa1ab57b284d6045bc8208606e7c516, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1060,7 +1060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1883219541459638259, guid: 7883f96a3c0813e4ba03ae8e2f0baf4b, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7669933640459676347, guid: 7883f96a3c0813e4ba03ae8e2f0baf4b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1395,7 +1395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8153143790537477498, guid: b7bcdc016742be14f8655b28aadf7734, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
