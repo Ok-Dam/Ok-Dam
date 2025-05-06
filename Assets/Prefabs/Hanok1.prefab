@@ -1406,9 +1406,9 @@ GameObject:
   - component: {fileID: 7836842489481387799}
   - component: {fileID: 2319622035353806494}
   - component: {fileID: 6135642084247164999}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A1 (4)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3376,6 +3376,7 @@ Transform:
   - {fileID: 4088131154321669943}
   - {fileID: 5021519230373231297}
   - {fileID: 6009059193087620994}
+  - {fileID: 3031849336861454221}
   - {fileID: 1694957229099376298}
   - {fileID: 3217491250487351975}
   - {fileID: 4274398304631798301}
@@ -3435,18 +3436,12 @@ Transform:
   - {fileID: 581009134877704556}
   - {fileID: 375954098230147953}
   - {fileID: 2086202751260308227}
-  - {fileID: 8432418552218068302}
-  - {fileID: 3607760825334457114}
-  - {fileID: 8577595175601884507}
-  - {fileID: 1205509834841512090}
   - {fileID: 4172681527699713806}
   - {fileID: 9082515349273957430}
   - {fileID: 5968369791666496514}
   - {fileID: 1807745193973561794}
   - {fileID: 1812906953706418857}
   - {fileID: 6924405837529834508}
-  - {fileID: 6535290983589762453}
-  - {fileID: 1449745986366479724}
   - {fileID: 7674009047189447252}
   - {fileID: 5679462354466329043}
   - {fileID: 6846121338957909652}
@@ -4718,6 +4713,7 @@ GameObject:
   - component: {fileID: 3507675515277144288}
   - component: {fileID: 3620716742888315741}
   - component: {fileID: 7132539692512041280}
+  - component: {fileID: 7480623090310386669}
   m_Layer: 0
   m_Name: SM_Baeryeom_Floor_A1
   m_TagString: Untagged
@@ -4790,6 +4786,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7480623090310386669
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2255136966676742323}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.289169, y: 0.27389526, z: 9.048137}
+  m_Center: {x: 1.6445875, y: 0.13694799, z: 4.5240674}
 --- !u!1 &2309815557550320491
 GameObject:
   m_ObjectHideFlags: 0
@@ -5261,9 +5278,9 @@ GameObject:
   - component: {fileID: 5993369126010484516}
   - component: {fileID: 6169008700261577861}
   - component: {fileID: 7828106380394862434}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A5
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5554,9 +5571,9 @@ GameObject:
   - component: {fileID: 3737944498888249903}
   - component: {fileID: 7310164519319285785}
   - component: {fileID: 4925626454171485647}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A1 (3)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6179,9 +6196,10 @@ GameObject:
   - component: {fileID: 8703559021506087666}
   - component: {fileID: 5516985483113410713}
   - component: {fileID: 2361543215637977453}
-  m_Layer: 0
+  - component: {fileID: 8262894197393374481}
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A2 (7)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6272,6 +6290,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6148059, y: 1.6861215, z: 0.11058776}
   m_Center: {x: -0.30116394, y: 0.84306085, z: 0.035015717}
+--- !u!114 &8262894197393374481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3497662100670193156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &3518167257792813943
 GameObject:
   m_ObjectHideFlags: 0
@@ -7135,6 +7167,7 @@ GameObject:
   - component: {fileID: 4088131154321669943}
   - component: {fileID: 8732474816299202619}
   - component: {fileID: 5548186385173521904}
+  - component: {fileID: 6174594453283328143}
   m_Layer: 0
   m_Name: SM_Baeryeom_Wall_A2 (2)
   m_TagString: Untagged
@@ -7207,6 +7240,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6174594453283328143
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3758744735356311413}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.11784631, y: 2.3854094, z: 1.9822465}
+  m_Center: {x: 0.049457215, y: 1.1927052, z: -0.99109834}
 --- !u!1 &3770632413442955279
 GameObject:
   m_ObjectHideFlags: 0
@@ -8252,111 +8306,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.118712, y: 2.3854103, z: 0.11784564}
   m_Center: {x: -1.0593324, y: 1.1927066, z: -0.0494587}
---- !u!1 &4233917189627557016
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6535290983589762453}
-  - component: {fileID: 1869097911146690167}
-  - component: {fileID: 9119228836495680246}
-  - component: {fileID: 8441294465047450957}
-  m_Layer: 0
-  m_Name: SM_Baeryeom_Door_A2 (6)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6535290983589762453
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233917189627557016}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.00000001545431, y: -0.7071069, z: -0.000000015454312, w: -0.7071067}
-  m_LocalPosition: {x: 5.989001, y: -0.11080003, z: 0.7062012}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2266912589220305051}
-  m_LocalEulerAnglesHint: {x: 0, y: -270, z: 0}
---- !u!33 &1869097911146690167
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233917189627557016}
-  m_Mesh: {fileID: -7914826132862429979, guid: c14c2699e1ceafc40a0908554f22c390, type: 3}
---- !u!23 &9119228836495680246
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233917189627557016}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 53bb95e3f915e3c4c9a0a27eb0e8916c, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8441294465047450957
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233917189627557016}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.6148059, y: 1.6861215, z: 0.11058776}
-  m_Center: {x: -0.30116394, y: 0.84306085, z: 0.03501667}
 --- !u!1 &4273223520163630842
 GameObject:
   m_ObjectHideFlags: 0
@@ -8606,111 +8555,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &4308965451700665663
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1449745986366479724}
-  - component: {fileID: 8995519499298602611}
-  - component: {fileID: 7311156740088796398}
-  - component: {fileID: 6688197540562679560}
-  m_Layer: 0
-  m_Name: SM_Baeryeom_Door_A1 (6)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1449745986366479724
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4308965451700665663}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.00000001545431, y: -0.7071069, z: -0.000000015454312, w: -0.7071067}
-  m_LocalPosition: {x: 5.9890003, y: -0.111, z: 1.925}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2266912589220305051}
-  m_LocalEulerAnglesHint: {x: 0, y: -270, z: 0}
---- !u!33 &8995519499298602611
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4308965451700665663}
-  m_Mesh: {fileID: 4678471625602887776, guid: 292a9fe9465630a43ac8583380f3a8e2, type: 3}
---- !u!23 &7311156740088796398
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4308965451700665663}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 53bb95e3f915e3c4c9a0a27eb0e8916c, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6688197540562679560
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4308965451700665663}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.6148065, y: 1.6861206, z: 0.110450745}
-  m_Center: {x: 0.30116484, y: 0.84306115, z: 0.035357513}
 --- !u!1 &4329368949848973789
 GameObject:
   m_ObjectHideFlags: 0
@@ -8982,6 +8826,111 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4550614832544834150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3031849336861454221}
+  - component: {fileID: 1675816478268953833}
+  - component: {fileID: 8575930066977265311}
+  - component: {fileID: 8543136250606175180}
+  m_Layer: 0
+  m_Name: SM_Baeryeom_Wall_B (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3031849336861454221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4550614832544834150}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000021855698, y: -0.00000008940696, z: -1.5615263e-15, w: 1}
+  m_LocalPosition: {x: 6.0953, y: -0.29995, z: 0.49359}
+  m_LocalScale: {x: 0.8851, y: 0.8851, z: 0.8851}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2266912589220305051}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1675816478268953833
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4550614832544834150}
+  m_Mesh: {fileID: 7288771367941908732, guid: 898921d5cb046904c9a1f2a19e19eef5, type: 3}
+--- !u!23 &8575930066977265311
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4550614832544834150}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 74121457d09003d4c912eac1c10e9d0a, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8543136250606175180
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4550614832544834150}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.11784546, y: 2.38541, z: 1.9945645}
+  m_Center: {x: -0.049464844, y: 1.1927058, z: 0.9972819}
 --- !u!1 &4578383027510634326
 GameObject:
   m_ObjectHideFlags: 0
@@ -10779,9 +10728,9 @@ GameObject:
   - component: {fileID: 4171397915239085383}
   - component: {fileID: 802066435063312736}
   - component: {fileID: 1244874006119819785}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A8 (1)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12074,9 +12023,10 @@ GameObject:
   - component: {fileID: 8167879092697781990}
   - component: {fileID: 6043616942003947749}
   - component: {fileID: 7000147159755489384}
-  m_Layer: 0
+  - component: {fileID: 3377869972143426641}
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A2 (5)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12167,6 +12117,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6148059, y: 1.6861215, z: 0.11058776}
   m_Center: {x: -0.30116394, y: 0.8430608, z: 0.035017624}
+--- !u!114 &3377869972143426641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680656492026228265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &5720034263005960263
 GameObject:
   m_ObjectHideFlags: 0
@@ -12970,9 +12934,10 @@ GameObject:
   - component: {fileID: 3463862700483438673}
   - component: {fileID: 5311187524429230417}
   - component: {fileID: 7966829251153600674}
-  m_Layer: 0
+  - component: {fileID: 7023102959186403110}
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A6
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13063,111 +13028,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.11058776, y: 1.3357952, z: 0.51533884}
   m_Center: {x: -0.03500615, y: 0.667899, z: -0.25143042}
---- !u!1 &6204494207415552257
-GameObject:
+--- !u!114 &7023102959186403110
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8577595175601884507}
-  - component: {fileID: 4329232790701093323}
-  - component: {fileID: 1544596363498825174}
-  - component: {fileID: 1743496763530943574}
-  m_Layer: 0
-  m_Name: SM_Baeryeom_Door_A10 (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8577595175601884507
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6204494207415552257}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.00000010927849, y: 0.000000029802322, z: 0.000000059604645, w: 1}
-  m_LocalPosition: {x: 0.1405003, y: 0.07799965, z: -2.4069998}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2266912589220305051}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4329232790701093323
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6204494207415552257}
-  m_Mesh: {fileID: -4401221663380054879, guid: d867628405f294d458c19b4a7b309310, type: 3}
---- !u!23 &1544596363498825174
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6204494207415552257}
+  m_GameObject: {fileID: 6175383552017014746}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c84117343d2678b49b7cac18cc52c18d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1743496763530943574
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6204494207415552257}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.07066101, y: 1.69112, z: 0.47735155}
-  m_Center: {x: -0.028840745, y: 0.82036805, z: -0.23274267}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &6230745644718584232
 GameObject:
   m_ObjectHideFlags: 0
@@ -14054,9 +13928,10 @@ GameObject:
   - component: {fileID: 3390865606010833242}
   - component: {fileID: 6522977308706029099}
   - component: {fileID: 6748847026606397466}
-  m_Layer: 0
+  - component: {fileID: 2945965660925309018}
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A2 (4)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14147,6 +14022,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6148059, y: 1.6861215, z: 0.11058776}
   m_Center: {x: -0.30116394, y: 0.8430608, z: 0.035015717}
+--- !u!114 &2945965660925309018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6731547579355568471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &6740055112730780502
 GameObject:
   m_ObjectHideFlags: 0
@@ -15412,7 +15301,7 @@ GameObject:
   - component: {fileID: 3361209001281682584}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A1 (2)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15649,13 +15538,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7265698556645543118}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.144, y: -0.2729997, z: -4.3850007}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.133, y: -0.215, z: -4.373}
+  m_LocalScale: {x: 1.9925054, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2266912589220305051}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &3743893957182884475
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -16186,111 +16075,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.11784546, y: 2.38541, z: 1.9945645}
   m_Center: {x: -0.049464844, y: 1.1927058, z: 0.99728286}
---- !u!1 &7425242435207139300
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1205509834841512090}
-  - component: {fileID: 9173872132534785720}
-  - component: {fileID: 3192457853328084379}
-  - component: {fileID: 4379463897998392207}
-  m_Layer: 0
-  m_Name: SM_Baeryeom_Door_A7 (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1205509834841512090
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7425242435207139300}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.00000010927852, y: -0.00000008940697, z: 0.000000087422784, w: 1}
-  m_LocalPosition: {x: 0.14050007, y: 0.07800001, z: -4.2940006}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2266912589220305051}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &9173872132534785720
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7425242435207139300}
-  m_Mesh: {fileID: 2861914101686622698, guid: 1cf61b399a6554d48aaa54c6a74f4f3d, type: 3}
---- !u!23 &3192457853328084379
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7425242435207139300}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c84117343d2678b49b7cac18cc52c18d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4379463897998392207
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7425242435207139300}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.07066028, y: 1.69112, z: 0.47735155}
-  m_Center: {x: -0.028840393, y: 0.820368, z: 0.23274267}
 --- !u!1 &7599173630021466297
 GameObject:
   m_ObjectHideFlags: 0
@@ -16408,9 +16192,9 @@ GameObject:
   - component: {fileID: 772625738277837066}
   - component: {fileID: 5373369103813228331}
   - component: {fileID: 3050404143654302558}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A9 (1)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16487,111 +16271,6 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7636406698189040866}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.11045068, y: 1.6911201, z: 0.4773527}
-  m_Center: {x: -0.0353601, y: 0.84556067, z: -0.2327422}
---- !u!1 &7908506767527426987
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3607760825334457114}
-  - component: {fileID: 8413086040953280510}
-  - component: {fileID: 4594361909887397505}
-  - component: {fileID: 3991419787490494497}
-  m_Layer: 0
-  m_Name: SM_Baeryeom_Door_A9 (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3607760825334457114
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7908506767527426987}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.0000000218557, y: 0.00000017881392, z: 0.0000000874228, w: 1}
-  m_LocalPosition: {x: 0.15150023, y: 0.052999735, z: -2.875}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2266912589220305051}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8413086040953280510
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7908506767527426987}
-  m_Mesh: {fileID: 763202575122156721, guid: c305141e46b4310439d22846dc767c26, type: 3}
---- !u!23 &4594361909887397505
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7908506767527426987}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c84117343d2678b49b7cac18cc52c18d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3991419787490494497
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7908506767527426987}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -16806,9 +16485,9 @@ GameObject:
   - component: {fileID: 326829250808729301}
   - component: {fileID: 4806565486513179927}
   - component: {fileID: 1808519314098339176}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A1 (7)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17558,9 +17237,10 @@ GameObject:
   - component: {fileID: 595407069186181078}
   - component: {fileID: 372945070498165607}
   - component: {fileID: 1372684837568400849}
-  m_Layer: 0
+  - component: {fileID: 7230860050127400861}
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A2 (3)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17651,111 +17331,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6148059, y: 1.6861215, z: 0.11058776}
   m_Center: {x: -0.30116394, y: 0.8430608, z: 0.035015717}
---- !u!1 &8300268302831854183
-GameObject:
+--- !u!114 &7230860050127400861
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8432418552218068302}
-  - component: {fileID: 7120161516288301576}
-  - component: {fileID: 1992270818217546927}
-  - component: {fileID: 2271566333700495142}
-  m_Layer: 0
-  m_Name: SM_Baeryeom_Door_A8 (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8432418552218068302
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300268302831854183}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.000000109278496, y: 0.000000029802322, z: 0.00000008742279, w: 1}
-  m_LocalPosition: {x: 0.15149999, y: 0.052999973, z: -3.8289993}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2266912589220305051}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7120161516288301576
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300268302831854183}
-  m_Mesh: {fileID: -2416677893179922666, guid: 1dab8da31a95c4749a6a1f8294b5c1e3, type: 3}
---- !u!23 &1992270818217546927
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300268302831854183}
+  m_GameObject: {fileID: 8279812080552666145}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c84117343d2678b49b7cac18cc52c18d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2271566333700495142
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300268302831854183}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.110450685, y: 1.6911201, z: 0.47735283}
-  m_Center: {x: -0.035359003, y: 0.84556067, z: 0.2327411}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &8321023386304101508
 GameObject:
   m_ObjectHideFlags: 0
@@ -18830,9 +18419,9 @@ GameObject:
   - component: {fileID: 4524169780581956893}
   - component: {fileID: 6898004590441613060}
   - component: {fileID: 3730330047139139051}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_A1 (5)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -8,17 +8,42 @@ public class Playerinteraction : MonoBehaviour
 {
     public float interactionDistance = 10f;
     public LayerMask interactableLayer;
-    public Camera playerCamera;
+    //public Camera playerCamera;
 
+    private Transform playerTransform;
     private InteractableObject currentTarget = null;
     private InteractableObject openedTarget = null; // 팝업 열린 오브젝트 기억
 
+
+    void Start()
+    {
+        // 플레이어가 생성된 후 자동으로 찾아서 연결
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerTransform = player.transform;
+        }
+    }
     void Update()
     {
+        // 혹시 플레이어가 아직 생성 안되었을 때를 대비해서 다시 시도
+        if (playerTransform == null)
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                playerTransform = player.transform;
+            }
+            else
+            {
+                return; // 플레이어 없으면 실행 안 함
+            }
+        }
 
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+
+        Ray ray = new Ray(playerTransform.position + Vector3.up * 1.5f, playerTransform.forward);
         RaycastHit hit;
-        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * interactionDistance, Color.red);
+        Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red);
         if (Physics.Raycast(ray, out hit, interactionDistance, interactableLayer))
         {
             GameObject hitObj = hit.collider.gameObject;
