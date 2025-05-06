@@ -17920,6 +17920,7 @@ GameObject:
   - component: {fileID: 8171699279171441070}
   - component: {fileID: 3747360070309828671}
   - component: {fileID: 6975572938638475831}
+  - component: {fileID: 9006127047857736278}
   m_Layer: 0
   m_Name: SM_Baeryeom_Step (5)
   m_TagString: Untagged
@@ -17992,6 +17993,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &9006127047857736278
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8490828800394469321}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2307911, y: 0.17492673, z: 0.33042502}
+  m_Center: {x: -0.61503565, y: 0.087463245, z: 0.16520762}
 --- !u!1 &8541829891100638052
 GameObject:
   m_ObjectHideFlags: 0
@@ -18794,6 +18816,7 @@ GameObject:
   - component: {fileID: 2915694684607853156}
   - component: {fileID: 6888282536772032394}
   - component: {fileID: 3008371148752125535}
+  - component: {fileID: 8673955834970767244}
   m_Layer: 0
   m_Name: SM_Baeryeom_Pillar_A (22)
   m_TagString: Untagged
@@ -18866,6 +18889,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8673955834970767244
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8959859597352261108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1544893, y: 0.042887434, z: 2.7931314}
+  m_Center: {x: -1.16, y: 0.1432, z: -1.3999999}
 --- !u!1 &8986670958524735123
 GameObject:
   m_ObjectHideFlags: 0
