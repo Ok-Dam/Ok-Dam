@@ -8,10 +8,13 @@ public class YutnoriGameManager : MonoBehaviour
 {
     public GameStage stage;
 
+    public bool isDraggingYut { get; private set; } 
+    public void SetYutDragState(bool state) => isDraggingYut = state; 
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        setGameStage(GameStage.Interact);
     }
 
     // Update is called once per frame

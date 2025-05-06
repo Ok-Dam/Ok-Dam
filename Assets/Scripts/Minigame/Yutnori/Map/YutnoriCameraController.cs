@@ -9,10 +9,10 @@ public class YutnoriCameraController : MonoBehaviour
     private YutnoriGameManager gameManager;
     private Camera _mainCam;
     private Vector3 _dragStartPos;
-    private bool _isDraggingYut;
-    [SerializeField] private float minY = 5f;
-    [SerializeField] private float maxY = 15f;
     [SerializeField] private LayerMask yutLayer; // 인스펙터에서 "Yut" 레이어 
+
+    [SerializeField] private MapGenerator mapGenerator;
+    private float minZ, maxZ;
 
 
     private float dragSpeed = 1.0f;
@@ -24,41 +24,41 @@ public class YutnoriCameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.stage != GameStage.Interact) return;
+        // 게임 매니저 상태로 모든 조건 처리
+        if (gameManager.stage != GameStage.Interact || gameManager.isDraggingYut)
+            return;
 
-        // 마우스 클릭 시작 시 윷인지 판별
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = _mainCam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, Mathf.Infinity, yutLayer))
-            {
-                _isDraggingYut = true;
-                return;
-            }
             _dragStartPos = _mainCam.ScreenToViewportPoint(Input.mousePosition);
         }
 
-        // 윷을 드래그 중이 아니고, 마우스가 눌려있을 때 카메라 이동
-        if (!_isDraggingYut && Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
         {
             Vector3 currentPos = _mainCam.ScreenToViewportPoint(Input.mousePosition);
             Vector3 delta = _dragStartPos - currentPos;
-            float newY = transform.position.y + delta.y * dragSpeed * 100; // 감도 조정
-            newY = Mathf.Clamp(newY, minY, maxY);
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+            float newZ = Mathf.Clamp(
+                transform.position.z + delta.y * dragSpeed * 100,
+                minZ,
+                maxZ
+            );
+            transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
             _dragStartPos = currentPos;
         }
+    }
 
-        // 마우스 버튼에서 손을 뗄 때 초기화
-        if (Input.GetMouseButtonUp(0))
-        {
-            _isDraggingYut = false;
-        }
+    // 맵 생성 후 MapGenerator.cs에서 이 함수 불러서 스크롤 가능 범위 업데이트
+    public void UpdateClampBounds()
+    {
+        Vector2 zBounds = mapGenerator.GetZBounds();
+        float margin = 3.0f;
+        minZ = zBounds.x - margin;
+        maxZ = zBounds.y + margin;
     }
 }
