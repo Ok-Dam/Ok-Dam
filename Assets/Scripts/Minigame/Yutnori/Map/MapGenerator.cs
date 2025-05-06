@@ -11,6 +11,8 @@ public class WeightedPOI
 
 public class MapGenerator : MonoBehaviour
 {
+    [SerializeField] private YutnoriCameraController cameraController;
+
     // 맵 오브젝트들이 들어갈 부모 Transform
     [SerializeField] private Transform boardContainer;
 
@@ -42,6 +44,8 @@ public class MapGenerator : MonoBehaviour
     private float _lineLength;
     private float _lineHeight;
 
+
+
     private void Start()
     {
         RecreateBoard();
@@ -68,6 +72,8 @@ public class MapGenerator : MonoBehaviour
 
         // 맵 생성
         CreateMap();
+        // 생성한 맵 기준으로 드래그 범위 설정
+        cameraController.UpdateClampBounds();
     }
     
     // 2. 맵 생성 -------------------------------------------------------------------
@@ -281,4 +287,32 @@ public class MapGenerator : MonoBehaviour
             DestroyImmediate(toKill[i].gameObject);
         }
     }
+
+    // 카메라 스크롤에 쓸 맵 높이 구하기
+    public Vector2 GetZBounds()
+    {
+        float minZ = float.MaxValue;
+        float maxZ = float.MinValue;
+
+        if (_pointOfInterestsMap == null) return new Vector2(0, 0);
+
+        foreach (var poiRow in _pointOfInterestsMap)
+        {
+            if (poiRow == null) continue;
+            foreach (var poi in poiRow)
+            {
+                if (poi == null) continue;
+                float z = poi.transform.position.z;
+                if (z < minZ) minZ = z;
+                if (z > maxZ) maxZ = z;
+            }
+        }
+
+        // POI가 하나도 없을 경우 예외 처리
+        if (minZ == float.MaxValue || maxZ == float.MinValue)
+            return new Vector2(0, 0);
+
+        return new Vector2(minZ, maxZ);
+    }
+
 }
