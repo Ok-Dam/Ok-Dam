@@ -848,7 +848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5086873084775371691, guid: 84708512f90b2ff4eae8d04dd48a2f44, type: 3}
-  distance: 5
+  distance: 5.5
   mouseSensitivity: 1600
   minVerticalAngle: -40
   maxVerticalAngle: 80
@@ -5278,7 +5278,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7242617391010778089, guid: 81bab3379adac01439fec457235fc280, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81bab3379adac01439fec457235fc280, type: 3}
