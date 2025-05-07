@@ -1406,9 +1406,10 @@ GameObject:
   - component: {fileID: 7836842489481387799}
   - component: {fileID: 2319622035353806494}
   - component: {fileID: 6135642084247164999}
+  - component: {fileID: 1155413183686899781}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A1 (4)
-  m_TagString: Door
+  m_TagString: LeftDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1499,6 +1500,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6148065, y: 1.6861206, z: 0.110450745}
   m_Center: {x: 0.30116484, y: 0.8430611, z: 0.035357513}
+--- !u!114 &1155413183686899781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738210609846479335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &780014218615473663
 GameObject:
   m_ObjectHideFlags: 0
@@ -5278,9 +5293,10 @@ GameObject:
   - component: {fileID: 5993369126010484516}
   - component: {fileID: 6169008700261577861}
   - component: {fileID: 7828106380394862434}
+  - component: {fileID: 180585853512465004}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A5
-  m_TagString: Door
+  m_TagString: LeftDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5371,6 +5387,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.110450685, y: 1.3357948, z: 0.5153391}
   m_Center: {x: -0.035347044, y: 0.66789854, z: 0.25143054}
+--- !u!114 &180585853512465004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2761479445116519915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &2855568375808301080
 GameObject:
   m_ObjectHideFlags: 0
@@ -5571,9 +5601,10 @@ GameObject:
   - component: {fileID: 3737944498888249903}
   - component: {fileID: 7310164519319285785}
   - component: {fileID: 4925626454171485647}
+  - component: {fileID: 1924862637023698013}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A1 (3)
-  m_TagString: Door
+  m_TagString: LeftDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5664,6 +5695,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6148065, y: 1.6861206, z: 0.110450745}
   m_Center: {x: 0.30116484, y: 0.8430611, z: 0.035357513}
+--- !u!114 &1924862637023698013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3064783036202285713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &3171716052898112675
 GameObject:
   m_ObjectHideFlags: 0
@@ -6199,7 +6244,7 @@ GameObject:
   - component: {fileID: 8262894197393374481}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A2 (7)
-  m_TagString: Door
+  m_TagString: RightDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10362,7 +10407,7 @@ GameObject:
   - component: {fileID: 1829460449851867075}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A2 (2)
-  m_TagString: Door
+  m_TagString: RightDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10728,9 +10773,10 @@ GameObject:
   - component: {fileID: 4171397915239085383}
   - component: {fileID: 802066435063312736}
   - component: {fileID: 1244874006119819785}
+  - component: {fileID: 4691907047456736140}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A8 (1)
-  m_TagString: Door
+  m_TagString: LeftDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10821,6 +10867,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.110450685, y: 1.6911201, z: 0.47735283}
   m_Center: {x: -0.035359003, y: 0.84556067, z: 0.2327411}
+--- !u!114 &4691907047456736140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5365374989617771501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &5435080116183998660
 GameObject:
   m_ObjectHideFlags: 0
@@ -12026,7 +12086,7 @@ GameObject:
   - component: {fileID: 3377869972143426641}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A2 (5)
-  m_TagString: Door
+  m_TagString: RightDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12937,7 +12997,7 @@ GameObject:
   - component: {fileID: 7023102959186403110}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A6
-  m_TagString: Door
+  m_TagString: RightDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13931,7 +13991,7 @@ GameObject:
   - component: {fileID: 2945965660925309018}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A2 (4)
-  m_TagString: Door
+  m_TagString: RightDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15301,7 +15361,7 @@ GameObject:
   - component: {fileID: 3361209001281682584}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A1 (2)
-  m_TagString: Door
+  m_TagString: LeftDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16192,9 +16252,10 @@ GameObject:
   - component: {fileID: 772625738277837066}
   - component: {fileID: 5373369103813228331}
   - component: {fileID: 3050404143654302558}
+  - component: {fileID: 8491445697543771675}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A9 (1)
-  m_TagString: Door
+  m_TagString: RightDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16285,6 +16346,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.11045068, y: 1.6911201, z: 0.4773527}
   m_Center: {x: -0.0353601, y: 0.84556067, z: -0.2327422}
+--- !u!114 &8491445697543771675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636406698189040866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &7947500737491191784
 GameObject:
   m_ObjectHideFlags: 0
@@ -16485,9 +16560,10 @@ GameObject:
   - component: {fileID: 326829250808729301}
   - component: {fileID: 4806565486513179927}
   - component: {fileID: 1808519314098339176}
+  - component: {fileID: 4045461090853862908}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A1 (7)
-  m_TagString: Door
+  m_TagString: LeftDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16578,6 +16654,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6148065, y: 1.6861206, z: 0.110450745}
   m_Center: {x: 0.30116484, y: 0.8430611, z: 0.035358466}
+--- !u!114 &4045461090853862908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7973277218171094947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &7983010135780442763
 GameObject:
   m_ObjectHideFlags: 0
@@ -17240,7 +17330,7 @@ GameObject:
   - component: {fileID: 7230860050127400861}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A2 (3)
-  m_TagString: Door
+  m_TagString: RightDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18441,9 +18531,10 @@ GameObject:
   - component: {fileID: 4524169780581956893}
   - component: {fileID: 6898004590441613060}
   - component: {fileID: 3730330047139139051}
+  - component: {fileID: 1695648526906366721}
   m_Layer: 3
   m_Name: SM_Baeryeom_Door_A1 (5)
-  m_TagString: Door
+  m_TagString: LeftDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18534,6 +18625,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6148065, y: 1.6861206, z: 0.110450745}
   m_Center: {x: 0.3011658, y: 0.8430611, z: 0.035357513}
+--- !u!114 &1695648526906366721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8801660041747787288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &8813322376752127726
 GameObject:
   m_ObjectHideFlags: 0

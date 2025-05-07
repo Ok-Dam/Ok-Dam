@@ -8,7 +8,7 @@ public class InteractableObject : MonoBehaviour
     public GameObject arrowUI;
     private bool isPopupOpen = false; // 현재 팝업 열려있는지 여부 체크
 
-    // 이건 F키를 눌렀을 때 호출된다
+    //F키를 눌렀을 때 호출된다
     public void Interact()
     {
         ShowPopupUI();

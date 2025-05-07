@@ -407,6 +407,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Yeonkyung_O_Haenggak_Door_G_001
       objectReference: {fileID: 0}
+    - target: {fileID: 3423330577672373575, guid: 452c4425d16784a428d46af8fa615b94, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3423330577672373575, guid: 452c4425d16784a428d46af8fa615b94, type: 3}
+      propertyPath: m_TagString
+      value: LeftDoor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -414,6 +422,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3423330577672373575, guid: 452c4425d16784a428d46af8fa615b94, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2100343259144029507}
+    - targetCorrespondingSourceObject: {fileID: 3423330577672373575, guid: 452c4425d16784a428d46af8fa615b94, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3154626183204365875}
   m_SourcePrefab: {fileID: 100100000, guid: 452c4425d16784a428d46af8fa615b94, type: 3}
 --- !u!1 &7326286142130032520 stripped
 GameObject:
@@ -441,6 +452,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.07404772, y: 1.771394, z: 0.42662427}
   m_Center: {x: -0.019249696, y: 0.885697, z: 0.20725058}
+--- !u!114 &3154626183204365875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7326286142130032520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!4 &7991605388962649394 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2650875982698078205, guid: 452c4425d16784a428d46af8fa615b94, type: 3}
@@ -506,6 +531,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Yeonkyung_O_Haenggak_Door_H_001
       objectReference: {fileID: 0}
+    - target: {fileID: 1864230335538978166, guid: 5fa4fb9cd68550d48b55a77633227864, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864230335538978166, guid: 5fa4fb9cd68550d48b55a77633227864, type: 3}
+      propertyPath: m_TagString
+      value: RightDoor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -513,6 +546,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1864230335538978166, guid: 5fa4fb9cd68550d48b55a77633227864, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4094528696761151203}
+    - targetCorrespondingSourceObject: {fileID: 1864230335538978166, guid: 5fa4fb9cd68550d48b55a77633227864, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4690586456361998492}
   m_SourcePrefab: {fileID: 100100000, guid: 5fa4fb9cd68550d48b55a77633227864, type: 3}
 --- !u!1 &5988387244908498386 stripped
 GameObject:
@@ -540,6 +576,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.08177174, y: 1.7713944, z: 0.40860474}
   m_Center: {x: -0.0153878, y: 0.8856972, z: -0.19824082}
+--- !u!114 &4690586456361998492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5988387244908498386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!4 &6363822480384071528 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1338909601973569484, guid: 5fa4fb9cd68550d48b55a77633227864, type: 3}

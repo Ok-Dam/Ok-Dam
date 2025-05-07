@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7391316987419306227}
   m_Layer: 0
   m_Name: MiddleDoor
-  m_TagString: Door
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,7 +208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7574361151452198068, guid: dc2f1721996598a42b2e4b27680bbf8a, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: RightDoor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -725,7 +725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9360341993126820, guid: f34a2f3f1bbba8c43aba09895fd11929, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: LeftDoor
       objectReference: {fileID: 0}
     - target: {fileID: 822629873402618142, guid: f34a2f3f1bbba8c43aba09895fd11929, type: 3}
       propertyPath: m_RootOrder
