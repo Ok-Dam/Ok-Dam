@@ -108,6 +108,7 @@ public class YutController : MonoBehaviour
         int faceUpCount = CalculateFaceUpCount();
         string result = GetYutResult(faceUpCount);
 
+        gameManager.ProcessYutResult(result);
         gameManager.setGameStage(GameStage.Move);
         Debug.Log($"결과: {result} ({faceUpCount}개 앞면)");
     }
