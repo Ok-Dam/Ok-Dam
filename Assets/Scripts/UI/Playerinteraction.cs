@@ -72,7 +72,7 @@ public class Playerinteraction : MonoBehaviour
                     //문 열림
                     else if (hitObj.CompareTag("LeftDoor") || hitObj.CompareTag("RightDoor"))
                     {
-                        OpenDoor(hitObj);
+                        interactable.OpenDoor(hitObj);
                        
 
                     }
@@ -100,28 +100,28 @@ public class Playerinteraction : MonoBehaviour
         }
     }
 
-    private void OpenDoor(GameObject door)
-    {
-        float currentY = door.transform.eulerAngles.y;
-        float targetY;
+    //private void OpenDoor(GameObject door)
+    //{
+    //    float currentY = door.transform.eulerAngles.y;
+    //    float targetY;
 
-        if (door.CompareTag("LeftDoor"))
-        {
-            targetY = currentY + 90f;  
-        }
-        else if (door.CompareTag("RightDoor"))
-        {
-            targetY = currentY - 90f;  
-        }
-        else
-        {
-            targetY = currentY; // 기본값
-        }
+    //    if (door.CompareTag("LeftDoor"))
+    //    {
+    //        targetY = currentY + 90f;  
+    //    }
+    //    else if (door.CompareTag("RightDoor"))
+    //    {
+    //        targetY = currentY - 90f;  
+    //    }
+    //    else
+    //    {
+    //        targetY = currentY; // 기본값
+    //    }
 
-        Quaternion openRotation = Quaternion.Euler(0, targetY, 0);
-        door.transform.rotation = openRotation;
+    //    Quaternion openRotation = Quaternion.Euler(0, targetY, 0);
+    //    door.transform.rotation = openRotation;
 
-        Debug.Log("문 열림: " + door.name);
-    }
+    //    Debug.Log("문 열림: " + door.name);
+    //}
 
 }

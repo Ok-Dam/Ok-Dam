@@ -9923,9 +9923,10 @@ GameObject:
   - component: {fileID: 1792000324248942979}
   - component: {fileID: 1285364726662592720}
   - component: {fileID: 1859451725208699298}
-  m_Layer: 0
+  - component: {fileID: 5094313943640890335}
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_B2
-  m_TagString: Untagged
+  m_TagString: RightDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10016,6 +10017,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8933909, y: 2.029717, z: 0.14308067}
   m_Center: {x: -0.4322456, y: 1.0148582, z: -0.03037159}
+--- !u!114 &5094313943640890335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5176694035717568524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &5190700366452672728
 GameObject:
   m_ObjectHideFlags: 0
@@ -10028,9 +10043,10 @@ GameObject:
   - component: {fileID: 67665364576882052}
   - component: {fileID: 2837081507389706753}
   - component: {fileID: 1618205902747435373}
-  m_Layer: 0
+  - component: {fileID: 1968756112459345961}
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_B3
-  m_TagString: Untagged
+  m_TagString: LeftDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10121,6 +10137,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.86478263, y: 2.0297174, z: 0.14201942}
   m_Center: {x: 0.41794065, y: 1.0148585, z: -0.029841192}
+--- !u!114 &1968756112459345961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190700366452672728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &5195949326841793029
 GameObject:
   m_ObjectHideFlags: 0
@@ -11098,7 +11128,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.23, y: 0.02, z: -5.66}
-  m_LocalScale: {x: 0.8963842, y: 0.002, z: -0.236493}
+  m_LocalScale: {x: 0.8963842, y: 0.002, z: -0.23944917}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2266912589220305051}
@@ -13633,9 +13663,11 @@ GameObject:
   - component: {fileID: 1802028359099038661}
   - component: {fileID: 1300996272883754623}
   - component: {fileID: 1361681156272959814}
-  m_Layer: 0
+  - component: {fileID: 2265443617072464142}
+  - component: {fileID: 8519408819479165930}
+  m_Layer: 3
   m_Name: SM_Baeryeom_Door_C3
-  m_TagString: Untagged
+  m_TagString: Introduce
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13705,6 +13737,41 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2265443617072464142
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507250420794873276}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.4062152, y: 1.3319122, z: 0.9547906}
+  m_Center: {x: 0.5248842, y: 0.66595644, z: -0.47115716}
+--- !u!114 &8519408819479165930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507250420794873276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603a87540a4cf3d4b9081456fcecc66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupUI: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!1 &6612571199134050088
 GameObject:
   m_ObjectHideFlags: 0
@@ -19014,7 +19081,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 2.1544893, y: 0.042887434, z: 2.7931314}
-  m_Center: {x: -1.16, y: 0.1432, z: -1.3999999}
+  m_Center: {x: -1.16, y: 0.2061798, z: -1.3999999}
 --- !u!1 &8986670958524735123
 GameObject:
   m_ObjectHideFlags: 0
