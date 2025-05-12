@@ -27,6 +27,15 @@ public class NodeManager : MonoBehaviour
         while (queue.Count > 0)
         {
             var current = queue.Dequeue();
+
+            // dead end 처리: 더 이상 갈 곳이 없고, 아직 moveDistance에 도달하지 못했을 때
+            if (current.node.NextPointsOfInterest == null || current.node.NextPointsOfInterest.Count == 0)
+            {
+                // dead end에 도달하면 결과에 추가
+                result.Add(current.node);
+                continue;
+            }
+
             if (current.distance == distance)
             {
                 result.Add(current.node);
