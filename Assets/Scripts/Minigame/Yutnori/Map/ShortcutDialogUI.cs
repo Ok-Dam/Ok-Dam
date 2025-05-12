@@ -10,7 +10,7 @@ public class ShortcutDialogUI : MonoBehaviour
     private System.Action onNo;
 
     // 다이얼로그를 표시하고 콜백을 등록
-    public void Show(System.Action yesAction, System.Action noAction)
+    public void Show(System.Action yesAction, System.Action noAction, bool isLastShortcut)
     {
         gameObject.SetActive(true);
         onYes = yesAction;
@@ -21,6 +21,9 @@ public class ShortcutDialogUI : MonoBehaviour
 
         yesButton.onClick.AddListener(OnYesClicked);
         noButton.onClick.AddListener(OnNoClicked);
+
+        // 마지막 shortcut이면 예 버튼 숨김
+        yesButton.gameObject.SetActive(!isLastShortcut);
     }
 
     private void OnYesClicked()

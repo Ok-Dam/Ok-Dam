@@ -10,6 +10,7 @@ public class YutnoriGameManager : MonoBehaviour
     public GameStage stage;
     [SerializeField] private NodeManager nodeManager;
     [SerializeField] private ShortcutDialogUI shortcutDialogUI;
+    [SerializeField] private EndPanelUI endPanelUI;
     [SerializeField] private PlayerPiece[] playerPieces; // 플레이어 말 4개
 
     // 현재 윷 결과 저장
@@ -58,6 +59,7 @@ public class YutnoriGameManager : MonoBehaviour
                 }
             case GameStage.End:
             {
+                    endPanelUI.Show();
                     Debug.Log("END");
                 break;
             }
@@ -134,7 +136,7 @@ public class YutnoriGameManager : MonoBehaviour
         }
     }
 
-    // N칸 뒤의 Shortcut 노드 찾기 (예시: 5칸 뒤)
+    // N칸 뒤의 Shortcut 노드 찾기 (현재: 10칸 뒤)
     private PointOfInterest FindNextShortcut(PointOfInterest start, int maxStep = 10)
     {
         var current = start;
@@ -170,10 +172,16 @@ public class YutnoriGameManager : MonoBehaviour
             case POIType.Shortcut:
                 {
                     if (!piece.HasUsedShortcut()) // 이번 턴에 지름길 안 썼으면
+                    {
+                        var nextShortcut = FindNextShortcut(poi); // poi는 현재 위치
+                        bool isLastShortcut = (nextShortcut == null);
+
                         shortcutDialogUI.Show(
                             () => UseShortcut(piece, poi), // 예
-                            () => { setGameStage(GameStage.Throw); } // 아니요
+                            () => { setGameStage(GameStage.Throw); }, // 아니요
+                            isLastShortcut // 새 인자
                         );
+                    }
                     else setGameStage(GameStage.Throw); 
                 break;
                 }
