@@ -8,7 +8,6 @@ public class Playerinteraction : MonoBehaviour
 {
     public float interactionDistance = 10f;
     public LayerMask interactableLayer;
-    //public Camera playerCamera;
 
     private Transform playerTransform;
     private InteractableObject currentTarget = null;
@@ -64,14 +63,16 @@ public class Playerinteraction : MonoBehaviour
                 // F키를 눌렀을 때 Tag에 따라 상호작용
                 if (Input.GetKeyDown(KeyCode.F))
                 {
+                    //소개 ui
                     if (hitObj.CompareTag("Introduce"))
                     {
                         interactable.Interact();
                         openedTarget = interactable;
                     }
-                    else if (hitObj.CompareTag("Door"))
+                    //문 열림
+                    else if (hitObj.CompareTag("LeftDoor") || hitObj.CompareTag("RightDoor"))
                     {
-                        OpenDoor(hitObj);
+                        interactable.OpenDoor(hitObj);
                        
 
                     }
@@ -99,12 +100,28 @@ public class Playerinteraction : MonoBehaviour
         }
     }
 
-    private void OpenDoor(GameObject door)
-    {
-        //문 열기
-        Quaternion openRotation = Quaternion.Euler(0, 90, 0);
-        door.transform.rotation = openRotation;
-        Debug.Log("문이 열렸습니다: " + door.name);
+    //private void OpenDoor(GameObject door)
+    //{
+    //    float currentY = door.transform.eulerAngles.y;
+    //    float targetY;
 
-    }
+    //    if (door.CompareTag("LeftDoor"))
+    //    {
+    //        targetY = currentY + 90f;  
+    //    }
+    //    else if (door.CompareTag("RightDoor"))
+    //    {
+    //        targetY = currentY - 90f;  
+    //    }
+    //    else
+    //    {
+    //        targetY = currentY; // 기본값
+    //    }
+
+    //    Quaternion openRotation = Quaternion.Euler(0, targetY, 0);
+    //    door.transform.rotation = openRotation;
+
+    //    Debug.Log("문 열림: " + door.name);
+    //}
+
 }
