@@ -31,7 +31,8 @@ public class YutnoriCameraController : MonoBehaviour
     void Update()
     {
         // 게임 매니저 상태로 모든 조건 처리
-        if (gameManager.stage != GameStage.Interact || gameManager.isDraggingYut)
+        // if (gameManager.stage != GameStage.Interact || gameManager.isDraggingYut)
+        if (gameManager.isDraggingYut)
             return;
 
         if (Input.GetMouseButtonDown(0))

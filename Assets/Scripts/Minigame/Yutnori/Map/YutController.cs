@@ -24,7 +24,7 @@ public class YutController : MonoBehaviour
 
     public void StartDrag()
     {
-        if (gameManager.stage != GameStage.Interact) return;
+        if (gameManager.stage != GameStage.Throw) return;
         if (gameManager.isDraggingYut) return;
 
         gameManager.SetYutDragState(true);
@@ -108,6 +108,7 @@ public class YutController : MonoBehaviour
         int faceUpCount = CalculateFaceUpCount();
         string result = GetYutResult(faceUpCount);
 
+        gameManager.ProcessYutResult(result);
         gameManager.setGameStage(GameStage.Move);
         Debug.Log($"결과: {result} ({faceUpCount}개 앞면)");
     }
