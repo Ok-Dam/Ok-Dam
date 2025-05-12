@@ -19,13 +19,16 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]
     private List<WeightedPOI> weightedPointsOfInterestPrefabs = new();
 
-    [SerializeField]
-    private PointOfInterest shortcutPOI;
+    [SerializeField] private PointOfInterest startPOI;
+    [SerializeField] private PointOfInterest endPOI;
+    [SerializeField] private PointOfInterest shortcutPOI;
+
+    private PointOfInterest startingPoint; // 플레이어 말들에 전달해줄 시작점 (startPOI 객체)
 
     [SerializeField] private GameObject pathPrefab; // 경로(라인) 프리팹
 
-    [SerializeField] private int numberOfStartingPoints = 4; // 시작 지점의 개수
-    [SerializeField] private int mapLength = 10; // 맵의 세로 길이(층 수)
+    [SerializeField] private int numberOfStartingPoints = 1; // 시작 지점의 개수
+    [SerializeField] private int mapLength = 16; // 맵의 세로 길이(층 수)
     [SerializeField] private int maxWidth = 5; // 맵의 가로 최대 폭
     [SerializeField] private float xMaxSize; // 맵의 가로 최대 크기
     [SerializeField] private float yPadding; // 층 간 y축 간격
@@ -46,7 +49,7 @@ public class MapGenerator : MonoBehaviour
 
 
 
-    private void Start()
+    private void Awake()
     {
         RecreateBoard();
     }
@@ -72,6 +75,8 @@ public class MapGenerator : MonoBehaviour
 
         // 맵 생성
         CreateMap();
+        // 시작점 저장. 시작점은 언제나 0층 첫 번째 행에 생성됨
+        startingPoint = _pointOfInterestsMap[0][1]; 
         // 생성한 맵 기준으로 드래그 범위 설정
         cameraController.UpdateClampBounds();
     }
@@ -80,11 +85,13 @@ public class MapGenerator : MonoBehaviour
     private void CreateMap()
     {
         // 시작점 생성 (첫 층)
-        List<int> positions = GetRandomIndexes(numberOfStartingPoints);
-        foreach (int j in positions)
-        {
-            _ = InstantiatePointOfInterest(0, j);
-        }
+        //List<int> positions = GetRandomIndexes(numberOfStartingPoints);
+        //foreach (int j in positions)
+        //{
+        //    _ = InstantiatePointOfInterest(0, j);
+        //}
+
+        InstantiatePointOfInterest(0, 1);
 
         // 연결 개수 검증 - 최소한의 경로 복잡도와 경로 간 연결점 보장하려고 넣음
         if (_numberOfConnections <= mapLength * multiplicativeNumberOfMinimunConnections)
@@ -93,9 +100,6 @@ public class MapGenerator : MonoBehaviour
             RecreateBoard();
             return;
         }
-
-        //Debug.Log($"Created board with {_numberOfConnections} connections");
-        //Debug.Log($"Created board with {pointsOfInterest.Count} points");
     }
 
     // 3. POI 생성 및 다음 노드와의 연결 ----------------------------------------
@@ -168,6 +172,10 @@ public class MapGenerator : MonoBehaviour
     // 가중치에 따라 노드 종류 결정, 5번째 층엔 shortcutPOI로 고정. POI Prefab 반환
     private PointOfInterest GetWeightedRandomPOI(int currentFloor)
     {
+        if (currentFloor == 0) return startPOI;
+
+        if (currentFloor == mapLength - 1) return endPOI;
+
         // 5번째 층일 경우 shortcutPOI 강제 반환
         if ((currentFloor + 1) % 5 == 0)
         {
@@ -230,27 +238,6 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    // 0~maxWidth-1 중 n개를 랜덤하게 뽑는 함수 (중복 없음)
-    // 출발점을 몇 개 행에 생성할 건지 고르는데 사용
-    private List<int> GetRandomIndexes(int n)
-    {
-        List<int> indexes = new List<int>();
-        if (n > maxWidth)
-        {
-            throw new System.Exception("Number of starting points greater than maxWidth!");
-        }
-
-        while (indexes.Count < n)
-        {
-            int randomNum = Random.Range(0, maxWidth);
-            if (!indexes.Contains(randomNum))
-            {
-                indexes.Add(randomNum);
-            }
-        }
-        return indexes;
-    }
-
     // 행,열 정수로 받아서 화면 상 위치 계산 후 벡터로 반환. 
     private Vector3 GetPositionVector(int floor, int column)
     {
@@ -259,6 +246,15 @@ public class MapGenerator : MonoBehaviour
         // x, y 위치 계산
         float xPos = (xSize * column) + (xSize / 2f);
         float yPos = yPadding * floor;
+
+        // 첫 층이면 위치 고정
+        if(floor == 0)
+        {
+            xPos = xMaxSize / 2;
+            Vector3 startPos = new Vector3(xPos, 0, yPos);
+            Debug.Log("Start pos" +  startPos);
+            return startPos;
+        }
 
         // 위치에 랜덤 패딩 추가 - 격자에 딱딱 들어맞는 기계적인 느낌의 노드 배치 피하기
         xPos += Random.Range(-xSize / 4f, xSize / 4f);
@@ -315,4 +311,8 @@ public class MapGenerator : MonoBehaviour
         return new Vector2(minZ, maxZ);
     }
 
+    public PointOfInterest getStartingPoint()
+    {
+        return startingPoint;
+    }
 }

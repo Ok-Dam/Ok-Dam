@@ -7,6 +7,8 @@ public class PlayerPiece : MonoBehaviour
 
     [SerializeField] private Highlighter highlighter;
 
+    [SerializeField] private MapGenerator mapGenerator;
+
     // 말의 현재 위치 (맵에 아직 없으면 null)
     public PointOfInterest currentNode { get; private set; }
 
@@ -14,6 +16,12 @@ public class PlayerPiece : MonoBehaviour
 
     void Start()
     {
+        SetCurrentNode(mapGenerator.getStartingPoint());
+        //Debug.Log(currentNode.Type);
+    }
+    public void SetCurrentNode(PointOfInterest node)
+    {
+        currentNode = node;
     }
 
     void OnMouseDown()

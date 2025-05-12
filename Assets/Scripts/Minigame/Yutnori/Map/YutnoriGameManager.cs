@@ -25,17 +25,26 @@ public class YutnoriGameManager : MonoBehaviour
     void Start()
     {
         setGameStage(GameStage.Interact);
+        // YutController에서 윷 던지고 나서 결과값 얻고 GameStage을 Move로 바꿈
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void setGameStage(GameStage stage) 
     {
-        this.stage = stage; 
+        this.stage = stage;
+        switch (stage)
+        {
+            case GameStage.Move:
+                {
+                    movePlayer();
+                    break;
+                }
+        }
     }
 
     public void ProcessYutResult(string result)
@@ -53,9 +62,14 @@ public class YutnoriGameManager : MonoBehaviour
             case "빽도": moveDistance = -1; canThrowAgain = false; break;
             default: moveDistance = 0; canThrowAgain = false; break;
         }
+    }
 
+    public void movePlayer() 
+    {
         // 말 선택 단계로 변경
         HighlightAllPieces(true);
+        // PlayerPiece에서 onMouseDown으로 SelectPiece 호출
+        // SelectPiece는 nodeManager의 HighlightReachableNodes 호출
     }
 
     // 모든 말 하이라이트

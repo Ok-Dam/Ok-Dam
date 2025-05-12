@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public enum POIType { Component, Upgrade, Shortcut, Buff }
+public enum POIType { Start, Component, Upgrade, Shortcut, Buff, End }
 
 public class PointOfInterest : MonoBehaviour
 {

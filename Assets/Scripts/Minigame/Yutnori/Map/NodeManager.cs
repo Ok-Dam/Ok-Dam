@@ -47,6 +47,7 @@ public class NodeManager : MonoBehaviour
         {
             highlighter.StartBlink();
             highlightedNodes.Add(node);
+            Debug.Log("Working");
         }
     }
 
