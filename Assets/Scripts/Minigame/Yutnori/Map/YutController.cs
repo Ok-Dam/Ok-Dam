@@ -24,7 +24,7 @@ public class YutController : MonoBehaviour
 
     public void StartDrag()
     {
-        if (gameManager.stage != GameStage.Interact) return;
+        if (gameManager.stage != GameStage.Throw) return;
         if (gameManager.isDraggingYut) return;
 
         gameManager.SetYutDragState(true);

@@ -2,13 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum HanokPart
+{
+    Roof,   // 지붕
+    Column,   // 벽
+    Wall, // 기둥
+    Floor   // 바닥
+}
+
 public class PlayerPiece : MonoBehaviour
 {
+    // 순서 바뀌면 highlight 안 되기도 함 
     [SerializeField] private YutnoriGameManager gameManager;
 
     [SerializeField] private Highlighter highlighter;
 
+    [SerializeField] private HanokPart hanokPart;
+
     [SerializeField] private MapGenerator mapGenerator;
+
+    private bool shortcutUsed = false; // 이미 지름길 사용중인지 체크용, 중복 방지용
 
     // 말의 현재 위치 (맵에 아직 없으면 null)
     public PointOfInterest currentNode { get; private set; }
@@ -81,4 +94,6 @@ public class PlayerPiece : MonoBehaviour
         transform.position = end;
     }
 
+    public void SetShortcutUsed(bool used) { shortcutUsed = used; }
+    public bool HasUsedShortcut() { return shortcutUsed; }
 }
