@@ -14,6 +14,7 @@ public class YutnoriGameManager : MonoBehaviour
     private string currentYutResult = "";
     private int moveDistance = 0;
     public bool canThrowAgain = false;
+    public bool canMove = false;
 
     // 선택된 말
     private PlayerPiece selectedPiece = null;
@@ -33,20 +34,23 @@ public class YutnoriGameManager : MonoBehaviour
     {
 
     }
-
     public void setGameStage(GameStage stage) 
     {
         this.stage = stage;
         switch (stage)
         {
+            case GameStage.Start:
+                {
+                    // 처음 시작시 
+                    break;
+                }
             case GameStage.Move:
                 {
-                    movePlayer();
+                    startMoveStage();
                     break;
                 }
         }
     }
-
     public void ProcessYutResult(string result)
     {
         currentYutResult = result;
@@ -55,16 +59,15 @@ public class YutnoriGameManager : MonoBehaviour
         switch (result)
         {
             case "도": moveDistance = 1; canThrowAgain = false; break;
-            case "개": moveDistance = 2; canThrowAgain = false; break;
-            case "걸": moveDistance = 3; canThrowAgain = false; break;
+            case "개": moveDistance = -1; canThrowAgain = false; break;
+            case "걸": moveDistance = -1; canThrowAgain = false; break;
             case "윷": moveDistance = 4; canThrowAgain = true; break;
             case "모": moveDistance = 5; canThrowAgain = true; break;
             case "빽도": moveDistance = -1; canThrowAgain = false; break;
             default: moveDistance = 0; canThrowAgain = false; break;
         }
     }
-
-    public void movePlayer() 
+    public void startMoveStage() 
     {
         // 말 선택 단계로 변경
         HighlightAllPieces(true);
@@ -103,4 +106,27 @@ public class YutnoriGameManager : MonoBehaviour
         }
     }
 
+    public void interactByPOI(PlayerPiece piece, PointOfInterest poi)
+    {
+        switch (poi.Type)
+        {
+            case POIType.Start:
+                break;
+            case POIType.Component:
+                // UI창 띄우기
+                break;
+            case POIType.Upgrade:
+                // 업그레이드 처리
+                break;
+            case POIType.Buff:
+                // 버프 선택
+                break;
+            case POIType.Shortcut:
+                // 순간이동 처리
+                break;
+            case POIType.End:
+                break;
+                // ...
+        }
+    }
 }

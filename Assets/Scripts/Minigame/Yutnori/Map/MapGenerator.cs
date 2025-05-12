@@ -28,7 +28,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private GameObject pathPrefab; // 경로(라인) 프리팹
 
     [SerializeField] private int numberOfStartingPoints = 1; // 시작 지점의 개수
-    [SerializeField] private int mapLength = 16; // 맵의 세로 길이(층 수)
+    [SerializeField] private int mapLength = 17; // 맵의 세로 길이(층 수)
     [SerializeField] private int maxWidth = 5; // 맵의 가로 최대 폭
     [SerializeField] private float xMaxSize; // 맵의 가로 최대 크기
     [SerializeField] private float yPadding; // 층 간 y축 간격
@@ -176,8 +176,8 @@ public class MapGenerator : MonoBehaviour
 
         if (currentFloor == mapLength - 1) return endPOI;
 
-        // 5번째 층일 경우 shortcutPOI 강제 반환
-        if ((currentFloor + 1) % 5 == 0)
+        // 5번째 층일 경우 shortcutPOI 강제 반환. 시작점 있어서 currentFloor+1 아님
+        if ((currentFloor) % 5 == 0)
         {
             return shortcutPOI;
         }

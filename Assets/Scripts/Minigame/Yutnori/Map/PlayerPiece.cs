@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerPiece : MonoBehaviour
@@ -40,31 +41,44 @@ public class PlayerPiece : MonoBehaviour
 
     public void MoveTo(PointOfInterest destination)
     {
-        // 말 이동 애니메이션 (간단히 구현)
-        StartCoroutine(MoveAnimation(destination));
+        StartCoroutine(MoveByPath(destination));
     }
 
-    private IEnumerator MoveAnimation(PointOfInterest destination)
+    private IEnumerator MoveByPath(PointOfInterest destination)
     {
-        Vector3 startPos = transform.position;
-        Vector3 targetPos = destination.transform.position + Vector3.up * 0.5f; // 노드 위에 위치
-        float duration = 0.5f;
-        float time = 0;
+        // 출발~도착까지의 경로 리스트 구하기
+        List<PointOfInterest> path = NodeManager.FindPath(currentNode, destination);
+        if (path == null || path.Count < 2)
+            yield break;
 
+        for (int i = 1; i < path.Count; i++)
+        {
+            Vector3 start = path[i - 1].transform.position + Vector3.up * 0.5f;
+            Vector3 end = path[i].transform.position + Vector3.up * 0.5f;
+            yield return MoveAlongArc(start, end, 0.4f, 4.0f); // (duration, arcHeight)
+            currentNode = path[i];
+        }
+
+        // 이동 완료 후 다음 단계로
+        gameManager.setGameStage(GameStage.Interact);
+        gameManager.interactByPOI(this, currentNode);
+    }
+
+    // 포물선 애니메이션 (앞서 제공한 코드와 동일)
+    private IEnumerator MoveAlongArc(Vector3 start, Vector3 end, float duration, float arcHeight)
+    {
+        float time = 0;
         while (time < duration)
         {
-            transform.position = Vector3.Lerp(startPos, targetPos, time / duration);
+            float t = time / duration;
+            float height = 4 * arcHeight * t * (1 - t);
+            Vector3 pos = Vector3.Lerp(start, end, t);
+            pos.y += height;
+            transform.position = pos;
             time += Time.deltaTime;
             yield return null;
         }
-
-        transform.position = targetPos;
-        currentNode = destination;
-
-        // 이동 완료 후 다음 단계로
-        if (gameManager.canThrowAgain)
-            gameManager.setGameStage(GameStage.Throw); // 한 번 더 던지기
-        else
-            gameManager.setGameStage(GameStage.Interact); // 다음 플레이어 턴
+        transform.position = end;
     }
+
 }
