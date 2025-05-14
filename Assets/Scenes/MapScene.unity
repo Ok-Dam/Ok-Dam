@@ -2649,7 +2649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5086873084775371691, guid: 84708512f90b2ff4eae8d04dd48a2f44, type: 3}
-  distance: 5.5
+  distance: 2.5
   mouseSensitivity: 1600
   minVerticalAngle: -40
   maxVerticalAngle: 80
