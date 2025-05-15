@@ -11,10 +11,12 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float rotationSpeed = 15f;
 
+    private NPCUI npcUI;
     private Animator m_animator;
     private Vector3 m_velocity;
     private bool m_wasGrounded;
     private bool m_isGrounded = true;
+    private bool isTalking = false;
 
     void Start()
     {
@@ -49,13 +51,19 @@ public class PlayerController : MonoBehaviourPun
 
     void Update()
     {
-        // 내 캐릭터가 아니거나 채팅 중일 경우 조작 불가
+        // 내 캐릭터가 아니거나, 채팅 중이거나, npc 대화 ui가 떠있으면 조작 불가
         if (!photonView.IsMine) return;
         if (ChatManager.IsChatActive) return;
+        if (isTalking) return;
 
         m_animator.SetBool("Grounded", m_isGrounded);
         PlayerMove();
         m_wasGrounded = m_isGrounded;
+    }
+
+    public void setIsTalking(bool isTalking)
+    {
+        this.isTalking = isTalking;
     }
 
     private void PlayerMove()

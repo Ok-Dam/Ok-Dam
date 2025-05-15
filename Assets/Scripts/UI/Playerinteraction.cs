@@ -13,6 +13,8 @@ public class Playerinteraction : MonoBehaviour
     private InteractableObject currentTarget = null;
     private InteractableObject openedTarget = null; // 팝업 열린 오브젝트 기억
 
+    private NPCUI npcUI;
+
 
     void Start()
     {
@@ -22,6 +24,7 @@ public class Playerinteraction : MonoBehaviour
         {
             playerTransform = player.transform;
         }
+        npcUI = FindObjectOfType<NPCUI>();
     }
     void Update()
     {
@@ -39,6 +42,10 @@ public class Playerinteraction : MonoBehaviour
             }
         }
 
+        // 대화 중이거나 대화창이 떠 있으면 상호작용 금지
+    if (npcUI != null && (npcUI.getIsChoiceActive() || npcUI.dialoguePanel.activeSelf))
+        return;
+
 
         Ray ray = new Ray(playerTransform.position + Vector3.up * 1.5f, playerTransform.forward);
         RaycastHit hit;
@@ -47,6 +54,7 @@ public class Playerinteraction : MonoBehaviour
         {
             GameObject hitObj = hit.collider.gameObject;
             InteractableObject interactable = hitObj.GetComponent<InteractableObject>();
+            NPCController npc = hitObj.GetComponent<NPCController>();
 
             if (interactable != null)
             {
@@ -75,6 +83,21 @@ public class Playerinteraction : MonoBehaviour
                         interactable.OpenDoor(hitObj);
                        
 
+                    }
+                    else if (hitObj.CompareTag("NPC"))
+                    {
+                        var npcController = hitObj.GetComponentInParent<NPCController>();
+                        if (npcController != null)
+                        {
+                            // NPCUI를 찾고, ConnectToNPC 호출
+                            if (npcUI != null)
+                            {
+                                npcUI.ConnectToNPC(npcController);
+                            }
+                            else Debug.Log("npcUI null");
+                            npcController.InteractWithPlayer();
+                        }
+                        else Debug.Log("npcController null");
                     }
                 }
             }
