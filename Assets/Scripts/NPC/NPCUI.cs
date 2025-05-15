@@ -21,7 +21,7 @@ public class NPCUI : MonoBehaviour
     }
     void Update()
     {
-        // 대화 패널이 떠 있을 때 F키로 대화 종료
+        // 대화 패널이 떠 있을 때 F키 누르면 패널 닫고 다시 선택지 보여줌
         if (dialoguePanel.activeSelf && Input.GetKeyDown(KeyCode.F))
         {
             currentNPC?.EndDialogue();
