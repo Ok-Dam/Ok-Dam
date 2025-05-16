@@ -13,6 +13,8 @@ public class NPCController : MonoBehaviour
     public event Action OnDialogueStarted;
     public event Action OnDialogueEnded;
 
+    private bool isNPCTalking = false;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -21,7 +23,7 @@ public class NPCController : MonoBehaviour
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {        
-            playerController =player.GetComponent<PlayerController>();
+            playerController= player.GetComponent<PlayerController>();
             playerTransform = player.transform;
         }
     }
@@ -50,6 +52,8 @@ public class NPCController : MonoBehaviour
         // 애니메이션 Any State > Idle
         ForceIdle();
 
+        isNPCTalking = true;
+
         // NPC가 플레이어 바라보기
         Vector3 lookPos = playerTransform.position;
         lookPos.y = transform.position.y; // Y축 고정(회전만)
@@ -64,6 +68,7 @@ public class NPCController : MonoBehaviour
     public void CancelInteraction()
     {
         playerController.setIsTalking(false); // 이동 못 하게 하는 bool
+        isNPCTalking = false;
         OnInteractionCanceled?.Invoke();
     }
 
@@ -87,4 +92,6 @@ public class NPCController : MonoBehaviour
     {
         animator.SetTrigger("forceIdle");
     }
+
+    public bool getIsNPCTalking() { return isNPCTalking; }
 }
