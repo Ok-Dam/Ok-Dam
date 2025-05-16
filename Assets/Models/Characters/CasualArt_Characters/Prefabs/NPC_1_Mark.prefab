@@ -220,6 +220,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4dd2a5610cbc2e3459bbdf22e6b09aaa, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6777545094035722476}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4dd2a5610cbc2e3459bbdf22e6b09aaa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7526797256663677076}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4dd2a5610cbc2e3459bbdf22e6b09aaa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 918386403709868009}
   m_SourcePrefab: {fileID: 100100000, guid: 4dd2a5610cbc2e3459bbdf22e6b09aaa, type: 3}
 --- !u!1 &291128065737924816 stripped
 GameObject:
@@ -276,6 +282,44 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   UIopenSound: {fileID: 0}
   dooropenSound: {fileID: 0}
+--- !u!195 &7526797256663677076
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291128065737924816}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &918386403709868009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291128065737924816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1178285aed0134ba779bdc632069e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minPauseTime: 3
+  maxPauseTime: 6
+  waitAtDestinationMin: 3
+  waitAtDestinationMax: 6
 --- !u!4 &722148992562252015 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -9021075015064496786, guid: 4dd2a5610cbc2e3459bbdf22e6b09aaa, type: 3}
