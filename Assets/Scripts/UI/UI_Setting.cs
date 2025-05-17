@@ -8,8 +8,8 @@ public class UI_Setting : MonoBehaviour
 
     void Update()
     {
-        // ESC 키로 설정창 열기만 함
-        if (Input.GetKeyDown(KeyCode.Escape) && !GOSETTING.activeSelf)
+        // tab키로 설정창 열기만 함
+        if (Input.GetKeyDown(KeyCode.Tab) && !GOSETTING.activeSelf)
         {
             GOSETTING.SetActive(true);
             Cursor.visible = true;
