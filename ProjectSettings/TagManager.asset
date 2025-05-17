@@ -8,6 +8,11 @@ TagManager:
   - RightDoor
   - LeftDoor
   - NPC
+  - save
+  - crack
+  - Bullet
+  - dug
+  - cracked
   layers:
   - Default
   - TransparentFX
@@ -16,7 +21,7 @@ TagManager:
   - Water
   - UI
   - Yut
-  - 
+  - MiniMap
   - 
   - 
   - 

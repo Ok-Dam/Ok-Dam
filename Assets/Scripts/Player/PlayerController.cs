@@ -47,6 +47,19 @@ public class PlayerController : MonoBehaviourPun
                     ?.SetValue(cameraController, this.transform);
             }
         }
+
+        if (photonView.IsMine)
+        {
+            GameObject miniMapCamObj = GameObject.Find("MiniMapCamera");
+            if (miniMapCamObj != null)
+            {
+                MiniMapCameraFollow follow = miniMapCamObj.GetComponent<MiniMapCameraFollow>();
+                if (follow != null)
+                {
+                    follow.SetTarget(this.transform);
+                }
+            }
+        }
     }
 
     void Update()
