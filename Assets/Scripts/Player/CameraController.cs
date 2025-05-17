@@ -31,6 +31,9 @@ public class CameraController : MonoBehaviour
     {
         if (player == null) return;
 
+        //마우스가 잠겨있을 때만 회전 허용(ui 나올때는 회전X)
+        if (Cursor.lockState != CursorLockMode.Locked) return;
+
         // 마우스 입력 처리 (델타타임 곱해 프레임률 독립적)
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;

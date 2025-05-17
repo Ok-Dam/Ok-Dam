@@ -6,6 +6,7 @@ public class InteractableObject : MonoBehaviour
 {
     public GameObject popupUI; // 띄울 UI 오브젝트 연결
     public GameObject arrowUI;
+
     private bool isPopupOpen = false; // 현재 팝업 열려있는지 여부 체크
     public AudioSource audioSource;
     public AudioClip UIopenSound;
@@ -18,16 +19,17 @@ public class InteractableObject : MonoBehaviour
     {
         ShowPopupUI();
     }
-
     public void ShowPopupUI()
     {
         if (popupUI != null)
         {
             popupUI.SetActive(true);
             isPopupOpen = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
 
-            // 효과음 재생
-            if (audioSource != null && UIopenSound != null)
+        // 효과음 재생
+        if (audioSource != null && UIopenSound != null)
             {
                 audioSource.PlayOneShot(UIopenSound);
             }
@@ -45,9 +47,17 @@ public class InteractableObject : MonoBehaviour
         {
             popupUI.SetActive(false);
             isPopupOpen = false;
-            Debug.Log(gameObject.name + " popup UI closed!");
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        Debug.Log(gameObject.name + " popup UI closed!");
         }
     }
+
+    public void OnCloseButtonClick()
+    {
+        ClosePopupUI();
+    }
+
 
     public bool IsPopupOpen()
     {

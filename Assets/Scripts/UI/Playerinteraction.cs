@@ -73,7 +73,6 @@ public class Playerinteraction : MonoBehaviour
                     else if (hitObj.CompareTag("LeftDoor") || hitObj.CompareTag("RightDoor"))
                     {
                         interactable.OpenDoor(hitObj);
-                       
 
                     }
                 }
