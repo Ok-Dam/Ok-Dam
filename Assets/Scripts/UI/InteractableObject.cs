@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class InteractableObject : MonoBehaviour
 {
-    public GameObject popupUI; // 띄울 UI 오브젝트 연결
+    public GameObject popupUI;
     public GameObject arrowUI;
 
     private bool isPopupOpen = false; // 현재 팝업 열려있는지 여부 체크
     public AudioSource audioSource;
     public AudioClip UIopenSound;
     public AudioClip dooropenSound;
+
+    public bool isLeftDoor = true; // 왼쪽 문인지 여부 (왼쪽은 +90, 오른쪽은 -90)
+    private bool isOpen = false; // 문 열림,닫힘 상태
 
 
 
@@ -82,31 +86,32 @@ public class InteractableObject : MonoBehaviour
 
     public void OpenDoor(GameObject door)
     {
+
         float currentY = door.transform.eulerAngles.y;
         float targetY;
 
-        if (door.CompareTag("LeftDoor"))
+        if (!isOpen)
         {
-            targetY = currentY + 90f;
-        }
-        else if (door.CompareTag("RightDoor"))
-        {
-            targetY = currentY - 90f;
+            // 왼쪽 문이면 +90도, 오른쪽 문이면 -90도 회전
+            targetY = currentY + (isLeftDoor ? 90f : -90f);
         }
         else
         {
-            targetY = currentY; // 기본값
+            // 닫을 때는 원래 각도로 돌려놓기 (현재에서 반대 방향 회전)
+            targetY = currentY + (isLeftDoor ? -90f : 90f);
         }
 
         Quaternion openRotation = Quaternion.Euler(0, targetY, 0);
         door.transform.rotation = openRotation;
 
-        //문 여는 소리 재생
+        // 문 상태 토글: 열려있으면 닫힘으로, 닫혀있으면 열림으로 변경
+        isOpen = !isOpen;
+
         if (audioSource != null && dooropenSound != null)
         {
             audioSource.PlayOneShot(dooropenSound);
         }
 
-        Debug.Log("문 열림: " + door.name);
     }
 }
+

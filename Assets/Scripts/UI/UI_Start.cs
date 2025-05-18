@@ -10,8 +10,7 @@ public class UI_Start : MonoBehaviour
 
     public void OnBtnStart()
     {
-        //mapscene으로 이동
-        Shared.SceneMgr.ChangeScene(eSCENE.eSCENE_MAPSCENE);
+        SceneManager.LoadScene("MapScene",LoadSceneMode.Single);
     }
     public void OnBtnTutorial()
     {

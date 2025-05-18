@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7807737128438138041}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UI_Setting, Assembly-CSharp
+        m_MethodName: OnClickExit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &725544166740599998
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +519,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 791ad8ea2e7a4a846956207a3baca93d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 01b86e43888984d4babf7a512fb2c9a9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1000,8 +1012,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Option, Assembly-CSharp
-        m_MethodName: OnBtnClose
+        m_TargetAssemblyTypeName: UI_Setting, Assembly-CSharp
+        m_MethodName: OnButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1176,7 +1188,7 @@ GameObject:
   - component: {fileID: 7362027749707903043}
   - component: {fileID: 7362027749707903042}
   m_Layer: 5
-  m_Name: Toggle (1)
+  m_Name: OFF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1468,19 +1480,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: bbd6bde5df8351c4588eb61783c05b85, type: 3}
-    m_FontSize: 40
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 45
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: sound
+  m_Text: B G M
 --- !u!1 &7362027749866609578
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1579,7 @@ GameObject:
   - component: {fileID: 7362027749961366627}
   - component: {fileID: 7362027749961366626}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: ON
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1640,7 +1652,19 @@ MonoBehaviour:
   m_Group: {fileID: 7362027750752012079}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4580004597367153913}
+        m_TargetAssemblyTypeName: BGMController, Assembly-CSharp
+        m_MethodName: OnToggleBGM
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &7362027750181148545
 GameObject:
@@ -1808,7 +1832,7 @@ GameObject:
   - component: {fileID: 7362027750752012072}
   - component: {fileID: 7362027750752012079}
   m_Layer: 5
-  m_Name: Sound
+  m_Name: BGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2651,5 +2675,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b4487ad3cf91c64f9f1b92321205cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmToggle: {fileID: 0}
+  bgmToggle: {fileID: 7362027749961366626}
   bgmSource: {fileID: 0}
