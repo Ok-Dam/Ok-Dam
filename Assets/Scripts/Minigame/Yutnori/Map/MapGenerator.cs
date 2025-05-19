@@ -26,8 +26,6 @@ public class MapGenerator : MonoBehaviour
     private PointOfInterest startingPoint; // 플레이어 말들에 전달해줄 시작점 (startPOI 객체)
 
     [SerializeField] private GameObject pathPrefab; // 경로(라인) 프리팹
-
-    [SerializeField] private int numberOfStartingPoints = 1; // 시작 지점의 개수
     [SerializeField] private int mapLength = 17; // 맵의 세로 길이(층 수)
     [SerializeField] private int maxWidth = 5; // 맵의 가로 최대 폭
     [SerializeField] private float xMaxSize; // 맵의 가로 최대 크기
