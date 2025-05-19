@@ -12,6 +12,7 @@ public class YutnoriGameManager : MonoBehaviour
     [SerializeField] private ShortcutDialogUI shortcutDialogUI;
     [SerializeField] private EndPanelUI endPanelUI;
     [SerializeField] private PlayerPiece[] playerPieces; // 플레이어 말 4개
+    [SerializeField] private QuizManager quizManager;
 
     // 현재 윷 결과 저장
     private string currentYutResult = "";
@@ -166,7 +167,14 @@ public class YutnoriGameManager : MonoBehaviour
                 setGameStage(GameStage.Throw);
                 break;
             case POIType.Buff:
-                // 버프 선택
+                quizManager.ShowRandomQuiz((isCorrect) => {
+                    if (isCorrect)
+                    {
+                        // 버프 지급
+                    }
+                    // 윷놀이로 복귀
+                });
+
                 setGameStage(GameStage.Throw);
                 break;
             case POIType.Shortcut:
