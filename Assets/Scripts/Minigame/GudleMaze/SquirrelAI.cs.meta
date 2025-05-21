@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5e3effa7f545c6c4eaad483b138c33d9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - agent: {instanceID: 0}
+  - squirrelHandTransform: {instanceID: 0}
+  - acornPrefab: {fileID: 272992231503539107, guid: ec1a1cb3d4e0cc74b811d8c960d808a1, type: 3}
+  - animator: {instanceID: 0}
+  - exitPoint: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
