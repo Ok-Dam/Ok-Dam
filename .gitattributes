@@ -5,3 +5,7 @@ Assets/Images/Yutnori/QuizImage/* filter=lfs diff=lfs merge=lfs -text
 Assets/Fonts/행복고흥B.otf filter=lfs diff=lfs merge=lfs -text
 Assets/Fonts/행복고흥L.otf filter=lfs diff=lfs merge=lfs -text
 Assets/Fonts/행복고흥M.otf filter=lfs diff=lfs merge=lfs -text
+Assets/Materials/Maze/skybox_Maze filter=lfs diff=lfs merge=lfs -text
+Assets/Materials/Maze filter=lfs diff=lfs merge=lfs -text
+Assets/Materials/Ondol_Simul/Skybox_ondol filter=lfs diff=lfs merge=lfs -text
+Assets/Ondol_Prefab filter=lfs diff=lfs merge=lfs -text
