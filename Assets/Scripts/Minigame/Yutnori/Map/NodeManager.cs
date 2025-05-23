@@ -88,7 +88,7 @@ public class NodeManager : MonoBehaviour
         {
             highlighter.StartBlink();
             highlightedNodes.Add(node);
-            gameManager.canMove = true; // 노드 클릭 시 말 움직일지 말지 제어하는 bool
+            gameManager.CurrentPlayer.canMove = true; // 노드 클릭 시 말 움직일지 말지 제어하는 bool
         }
     }
 
@@ -100,7 +100,7 @@ public class NodeManager : MonoBehaviour
             if (highlighter != null) highlighter.StopBlink();
         }
         highlightedNodes.Clear();
-        gameManager.canMove = false;
+        gameManager.CurrentPlayer.canMove = false;
     }
 
     private class NodeWithDistance

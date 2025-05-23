@@ -1,29 +1,25 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public enum HanokPart
 {
     Roof,   // 지붕
-    Column,   // 벽
-    Wall, // 기둥
+    Column, // 벽
+    Wall,   // 기둥
     Floor   // 바닥
 }
 
 public class PlayerPiece : MonoBehaviour
 {
-    // 순서 바뀌면 highlight 안 되기도 함 
     [SerializeField] private YutnoriGameManager gameManager;
-
     [SerializeField] private Highlighter highlighter;
-
     [SerializeField] private HanokPart hanokPart;
-
     [SerializeField] private MapGenerator mapGenerator;
 
-    private bool shortcutUsed = false; // 이미 지름길 사용중인지 체크용, 중복 방지용
+    private bool shortcutUsed = false;
+    public PlayerState playerState; // 플레이어 상태 참조
 
-    // 말의 현재 위치 (맵에 아직 없으면 null)
     public PointOfInterest currentNode { get; private set; }
 
     private Coroutine blinkCoroutine;
@@ -31,8 +27,8 @@ public class PlayerPiece : MonoBehaviour
     void Start()
     {
         SetCurrentNode(mapGenerator.getStartingPoint());
-        //Debug.Log(currentNode.Type);
     }
+
     public void SetCurrentNode(PointOfInterest node)
     {
         currentNode = node;
@@ -59,25 +55,29 @@ public class PlayerPiece : MonoBehaviour
 
     private IEnumerator MoveByPath(PointOfInterest destination)
     {
-        // 출발~도착까지의 경로 리스트 구하기
         List<PointOfInterest> path = NodeManager.FindPath(currentNode, destination);
         if (path == null || path.Count < 2)
             yield break;
+
+        // 버프: 이동거리 +1 적용 및 소멸
+        if (playerState.nextMovePlus > 0)
+        {
+            playerState.moveDistance += playerState.nextMovePlus;
+            playerState.ConsumeNextMovePlus();
+        }
 
         for (int i = 1; i < path.Count; i++)
         {
             Vector3 start = path[i - 1].transform.position + Vector3.up * 0.5f;
             Vector3 end = path[i].transform.position + Vector3.up * 0.5f;
-            yield return MoveAlongArc(start, end, 0.4f, 4.0f); // (duration, arcHeight)
+            yield return MoveAlongArc(start, end, 0.4f, 4.0f);
             currentNode = path[i];
         }
 
-        // 이동 완료 후 다음 단계로
         gameManager.setGameStage(GameStage.Interact);
         gameManager.interactByPOI(this, currentNode);
     }
 
-    // 포물선 애니메이션 (앞서 제공한 코드와 동일)
     private IEnumerator MoveAlongArc(Vector3 start, Vector3 end, float duration, float arcHeight)
     {
         float time = 0;
