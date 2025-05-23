@@ -25,7 +25,7 @@ public class POIClickHandler : MonoBehaviour
     }
     void OnMouseDown()
     {
-        if (gameManager.canMove && nodeManager.HighlightedNodes.Contains(poi))
+        if (gameManager.CurrentPlayer.canMove && nodeManager.HighlightedNodes.Contains(poi))
         {
             gameManager.MoveSelectedPieceTo(poi);
         }
