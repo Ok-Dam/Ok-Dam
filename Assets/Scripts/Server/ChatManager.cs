@@ -25,6 +25,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
         chatPanel.SetActive(false);
 
+
         chatClient = new ChatClient(this);
         chatClient.Connect(
             PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat,
