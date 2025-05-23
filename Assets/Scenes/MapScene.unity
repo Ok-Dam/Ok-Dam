@@ -5274,11 +5274,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6365723871276526231, guid: c6827bb96f7c01c41994da355998cef0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.9658492
+      value: 1.2360669
       objectReference: {fileID: 0}
     - target: {fileID: 6365723871276526231, guid: c6827bb96f7c01c41994da355998cef0, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.9658492
+      value: 1.2360669
       objectReference: {fileID: 0}
     - target: {fileID: 6365723871276526231, guid: c6827bb96f7c01c41994da355998cef0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5290,7 +5290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6365723871276526231, guid: c6827bb96f7c01c41994da355998cef0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.89
+      value: 7.97
       objectReference: {fileID: 0}
     - target: {fileID: 6365723871276526231, guid: c6827bb96f7c01c41994da355998cef0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6264,6 +6264,88 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 6366535b6caaa3b42a5ad064d1fdb9e5, type: 2}
   m_BuildHeightMesh: 0
+--- !u!1 &876556969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 876556970}
+  - component: {fileID: 876556972}
+  - component: {fileID: 876556971}
+  m_Layer: 5
+  m_Name: Text (Legacy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &876556970
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876556969}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1189830257}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 9, y: -132}
+  m_SizeDelta: {x: 1081.668, y: 200}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &876556971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876556969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: bbd6bde5df8351c4588eb61783c05b85, type: 3}
+    m_FontSize: 45
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 50
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "\uAE30\uC640\uB294 \uD55C\uC625\uC758 \uC9C0\uBD95\uC744 \uC774\uB8E8\uB294
+    \uD575\uC2EC \uC7AC\uB8CC\uB85C, \uC810\uD1A0\uB97C \uD2C0\uC5D0 \uB123\uC5B4
+    \uC77C\uC815\uD55C \uBAA8\uC591\uC73C\uB85C \uAC00\uB9C8\uC5D0\uC11C \uAD6C\uC6CC
+    \uB9CC\uB4E0 \uAC74\uCD95\uC7AC\uC774\uB2E4"
+--- !u!222 &876556972
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876556969}
+  m_CullTransparentMesh: 1
 --- !u!1 &884749331 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5107038e910bd0f44826f407127261b9, type: 3}
@@ -7992,15 +8074,15 @@ RectTransform:
   m_GameObject: {fileID: 1122873020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.987838, y: 0.90003014, z: 0.8780782}
+  m_LocalScale: {x: 0.86924976, y: 0.7919831, z: 0.77266645}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 627371962}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -30}
-  m_SizeDelta: {x: 1200, y: 700}
+  m_AnchoredPosition: {x: 5.2689, y: -77.73108}
+  m_SizeDelta: {x: 1406.0891, y: 713.3056}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1122873022
 MonoBehaviour:
@@ -8643,8 +8725,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 357497491}
   m_HandleRect: {fileID: 357497490}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8716,13 +8798,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 876556970}
   m_Father: {fileID: 627371962}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 339}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchoredPosition: {x: 0, y: 354}
+  m_SizeDelta: {x: 300, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1189830258
 MonoBehaviour:
@@ -8745,8 +8828,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 6018a167446cc7f4e90cefa18365fd3b, type: 3}
-    m_FontSize: 70
+    m_Font: {fileID: 12800000, guid: bbd6bde5df8351c4588eb61783c05b85, type: 3}
+    m_FontSize: 65
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
@@ -8757,7 +8840,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "<\uAE30 \uC640>"
+  m_Text: "<\uAE30 \uC640>\n"
 --- !u!222 &1189830259
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12297,6 +12380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photoPreviewUI: {fileID: 1122873022}
   photoPreviewPanel: {fileID: 627371961}
+  predefinedPhoto: {fileID: 2800000, guid: 1a2c45be8179468448e30ced570671bf, type: 3}
   shutterSound: {fileID: 1679622174}
   flashImage: {fileID: 1797145256}
   uiOverlayToHide:
