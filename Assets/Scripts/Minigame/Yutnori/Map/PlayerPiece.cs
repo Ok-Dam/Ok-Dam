@@ -17,6 +17,8 @@ public class PlayerPiece : MonoBehaviour
     [SerializeField] private HanokPart hanokPart;
     [SerializeField] private MapGenerator mapGenerator;
 
+    public bool isFinished = false;
+
     // 업기 관련
     public List<PlayerPiece> stackedPieces = new List<PlayerPiece>();
     public PlayerPiece parentPiece = null;
@@ -48,6 +50,10 @@ public class PlayerPiece : MonoBehaviour
             gameManager.SelectPiece(root);
     }
 
+    public bool HasStarted()
+    {
+        return currentNode.Type != POIType.Start;
+    }
 
     public void Highlight(bool highlight)
     {
@@ -70,6 +76,7 @@ public class PlayerPiece : MonoBehaviour
     private IEnumerator MoveByPath(PointOfInterest destination)
     {
         List<PointOfInterest> path = NodeManager.FindPath(currentNode, destination);
+        Debug.Log($"[MoveByPath] {name} from {currentNode.name} to {destination.name}, path.Count={path?.Count ?? 0}");
         if (path == null || path.Count < 2)
             yield break;
 
@@ -80,6 +87,19 @@ public class PlayerPiece : MonoBehaviour
             yield return MoveAlongArcWithStacked(start, end, 0.4f, 4.0f);
             currentNode = path[i];
         }
+
+        TryStackOnSameNode();
+        gameManager.setGameStage(GameStage.Interact);
+        gameManager.interactByPOI(this, currentNode);
+    }
+
+    // 빽도용 이동 함수 (뒤로 움직이는)
+    public IEnumerator MoveByBackdoPath(PointOfInterest prevNode)
+    {
+        Vector3 start = currentNode.transform.position + Vector3.up * 0.5f;
+        Vector3 end = prevNode.transform.position + Vector3.up * 0.5f;
+        yield return MoveAlongArcWithStacked(start, end, 0.4f, 4.0f);
+        currentNode = prevNode;
 
         TryStackOnSameNode();
         gameManager.setGameStage(GameStage.Interact);

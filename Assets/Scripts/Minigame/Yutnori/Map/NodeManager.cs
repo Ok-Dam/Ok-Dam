@@ -9,13 +9,41 @@ public class NodeManager : MonoBehaviour
     private List<PointOfInterest> highlightedNodes = new List<PointOfInterest>();
     public IReadOnlyList<PointOfInterest> HighlightedNodes => highlightedNodes; // 같은 리스트지만 읽기 전용으로 제공, 외부 참고용
 
+    // 분기점 때문에 직전 노드가 여러 개일 수도 있으니 List
+    public List<PointOfInterest> FindPreviousNodes(PointOfInterest node)
+    {
+        return node.PreviousPointsOfInterest;
+    }
 
-    public void HighlightReachableNodes(PointOfInterest startNode, int distance)
+    public void HighlightReachableNodes(PointOfInterest startNode, int distance, PlayerPiece piece)
     {
         ClearHighlights();
+
+        if (distance == -1)
+        {
+            if (!piece.HasStarted())
+            {
+                // 출발 전 빽도: 시작점만 하이라이트
+                var mapGen = FindObjectOfType<MapGenerator>();
+                var startPoint = mapGen.getStartingPoint();
+                HighlightNode(startPoint);
+            }
+            else
+            {
+                // 출발 후 빽도: 이전 노드들 하이라이트
+                var prevNodes = FindPreviousNodes(startNode);
+                foreach (var node in prevNodes)
+                    HighlightNode(node);
+            }
+            return;
+        }
+
+        // 기존: 일반 이동
         var reachableNodes = FindReachableNodes(startNode, distance);
-        foreach (var node in reachableNodes) HighlightNode(node);
+        foreach (var node in reachableNodes)
+            HighlightNode(node);
     }
+
 
     private List<PointOfInterest> FindReachableNodes(PointOfInterest start, int distance)
     {

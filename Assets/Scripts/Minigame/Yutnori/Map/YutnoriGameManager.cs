@@ -69,6 +69,9 @@ public class YutnoriGameManager : MonoBehaviour
 
     public void ProcessYutResult(string result)
     {
+        // 테스트용: 어떤 결과든 무조건 빽도로 처리
+        result = "빽도";
+
         CurrentPlayer.currentYutResult = result;
         switch (result)
         {
@@ -103,15 +106,38 @@ public class YutnoriGameManager : MonoBehaviour
         CurrentPlayer.piece = root;
         HighlightAllPieces(false);
         root.Highlight(true);
-        nodeManager.HighlightReachableNodes(root.currentNode, CurrentPlayer.moveDistance);
+
+        // 빽도 특수 처리
+        if (CurrentPlayer.moveDistance == -1)
+            nodeManager.HighlightReachableNodes(root.currentNode, -1, root);
+        else
+            nodeManager.HighlightReachableNodes(root.currentNode, CurrentPlayer.moveDistance, root);
     }
-
-
-
     public void MoveSelectedPieceTo(PointOfInterest node)
     {
         if (CurrentPlayer.piece != null && CurrentPlayer.piece.parentPiece == null)
         {
+            if (CurrentPlayer.moveDistance == -1)
+            {
+                if (!CurrentPlayer.piece.HasStarted())
+                {
+                    // 출발 전 빽도: 시작점 클릭 시 EndPOI 직전 노드로 이동
+                    var mapGen = FindObjectOfType<MapGenerator>();
+                    var beforeEndNodes = mapGen.GetNodesBeforeEndPOI();
+                    var targetNode = beforeEndNodes[0];
+                    nodeManager.ClearHighlights();
+                    CurrentPlayer.piece.MoveTo(targetNode);
+                    return;
+                }
+                else
+                {
+                    // 출발 후 빽도: 이전 노드(들)로 애니메이션 이동
+                    nodeManager.ClearHighlights();
+                    StartCoroutine(CurrentPlayer.piece.MoveByBackdoPath(node));
+                    return;
+                }
+            }
+
             nodeManager.ClearHighlights();
             CurrentPlayer.piece.MoveTo(node);
         }
@@ -120,6 +146,8 @@ public class YutnoriGameManager : MonoBehaviour
             Debug.Log("[MoveSelectedPieceTo] No valid root piece to move or piece is child");
         }
     }
+
+
     private void UseShortcut(PlayerPiece piece, PointOfInterest currentPoi)
     {
         PointOfInterest nextShortcut = FindNextShortcut(currentPoi, 10);
@@ -234,7 +262,21 @@ public class YutnoriGameManager : MonoBehaviour
                 else EndTurn();
                 break;
             case POIType.End:
-                setGameStage(GameStage.End);
+                piece.isFinished = true;
+                // 모든 말이 완주했는지 검사 (여기서 임시로 선언 > 이런 검사하고 사라질 변수들은 지역 변수로 하는 게 낫다)
+                bool allFinished = true;
+                foreach (var p in playerPieces)
+                {
+                    if (!p.isFinished)
+                    {
+                        allFinished = false;
+                        break;
+                    }
+                }
+                if (allFinished)
+                {
+                    setGameStage(GameStage.End);
+                }
                 break;
         }
     }
