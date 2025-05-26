@@ -1,0 +1,6 @@
+newmtl M_YFGM_SoilGravel03
+map_Kd T_YFGM_SoilGravel03_d.tga
+bump T_YFGM_SoilGravel03_n.tga
+Kd 0.9 0.855 0.855
+d 1
+
