@@ -9303,7 +9303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd943675abb8774b916149d7b7cdb08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelB: {fileID: 1403104273}
+  panelB: {fileID: 449424390}
   panelC: {fileID: 502215069}
 --- !u!1 &622384451 stripped
 GameObject:
