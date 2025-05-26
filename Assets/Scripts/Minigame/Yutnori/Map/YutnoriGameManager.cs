@@ -70,7 +70,7 @@ public class YutnoriGameManager : MonoBehaviour
     public void ProcessYutResult(string result)
     {
         // 테스트용: 어떤 결과든 무조건 빽도로 처리
-        result = "빽도";
+        result = "도";
 
         CurrentPlayer.currentYutResult = result;
         switch (result)
@@ -270,6 +270,7 @@ public class YutnoriGameManager : MonoBehaviour
                     if (!p.isFinished)
                     {
                         allFinished = false;
+                        setGameStage(GameStage.Throw);
                         break;
                     }
                 }
