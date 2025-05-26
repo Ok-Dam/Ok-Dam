@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -160,6 +161,8 @@ public class MapGenerator : MonoBehaviour
             // 이미 안 들어가있다면 이후/이전 노드 목록 갱신 
             if (!instance.NextPointsOfInterest.Contains(nextPOI))
                 instance.NextPointsOfInterest.Add(nextPOI);
+            if (!nextPOI.PreviousPointsOfInterest.Contains(instance))
+                nextPOI.PreviousPointsOfInterest.Add(instance);
 
             _numberOfConnections++;
         }
@@ -313,4 +316,12 @@ public class MapGenerator : MonoBehaviour
     {
         return startingPoint;
     }
+
+    // 빽도 관련
+    public List<PointOfInterest> GetNodesBeforeEndPOI()
+    {
+        // 마지막 행-1의 노드들을 반환
+        return _pointOfInterestsMap[_pointOfInterestsMap.Length - 2].ToList();
+    }
+
 }

@@ -1,10 +1,14 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class QuizManager : MonoBehaviour
 {
     public QuizDatabase quizDatabase;
     public QuizPanelUI quizPanelUI;
     private BuffManager buffManager;
+
+    // 이미 출제된 퀴즈 인덱스 기록
+    private List<int> usedQuizIndices = new List<int>();
 
     public void Start()
     {
@@ -17,11 +21,30 @@ public class QuizManager : MonoBehaviour
         var quizzes = quizDatabase.quizzes;
         if (quizzes.Count == 0) return;
 
-        var quiz = quizzes[Random.Range(0, quizzes.Count)];
+        // 아직 출제되지 않은 퀴즈 인덱스 목록 생성
+        List<int> availableIndices = new List<int>();
+        for (int i = 0; i < quizzes.Count; i++)
+        {
+            if (!usedQuizIndices.Contains(i))
+                availableIndices.Add(i);
+        }
+
+        // 모든 퀴즈가 출제됐으면 이력 초기화(한 바퀴 돌고 다시 시작)
+        if (availableIndices.Count == 0)
+        {
+            usedQuizIndices.Clear();
+            for (int i = 0; i < quizzes.Count; i++)
+                availableIndices.Add(i);
+        }
+
+        // 랜덤 인덱스 선택
+        int randomIdx = availableIndices[Random.Range(0, availableIndices.Count)];
+        usedQuizIndices.Add(randomIdx);
+
+        var quiz = quizzes[randomIdx];
         quizPanelUI.Show(quiz, (isCorrect) => OnQuizResult(isCorrect, playerState, onQuizEnd));
     }
 
-    // 퀴즈 결과 처리 및 버프 지급
     private void OnQuizResult(bool isCorrect, PlayerState playerState, System.Action<bool> onQuizEnd)
     {
         if (isCorrect)
@@ -37,7 +60,6 @@ public class QuizManager : MonoBehaviour
         {
             Debug.Log("오답! 버프가 적용되지 않습니다.");
         }
-        // 외부 콜백 호출 (게임 흐름 복귀 등)
         onQuizEnd?.Invoke(isCorrect);
     }
 

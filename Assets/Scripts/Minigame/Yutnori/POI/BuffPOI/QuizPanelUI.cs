@@ -16,11 +16,13 @@ public class QuizPanelUI : MonoBehaviour
     // (둘 다 활성화/비활성화로 상황에 따라 표시)
 
     private System.Action<bool> onQuizEnd;
+    private bool isCorrectCache; // 마지막 선택 결과 캐싱
 
     public void Show(QuizData quiz, System.Action<bool> onEnd)
     {
         gameObject.SetActive(true);
         onQuizEnd = onEnd;
+        isCorrectCache = false; // 초기화
 
         // 질문 텍스트
         questionText.text = quiz.questionText;
@@ -49,9 +51,7 @@ public class QuizPanelUI : MonoBehaviour
             bool hasText = quiz.choices != null && i < quiz.choices.Count && !string.IsNullOrEmpty(quiz.choices[i]);
             bool hasImage = quiz.choiceImages != null && i < quiz.choiceImages.Count && quiz.choiceImages[i] != null;
 
-            Debug.Log(hasText + "and" + hasImage);
             btn.gameObject.SetActive(hasText || hasImage);
-            Debug.Log($"{btn.name} activeBEFORE: {btn.gameObject.activeSelf}");
 
             var btnImage = btn.GetComponentsInChildren<Image>(true)
                   .FirstOrDefault(img => img.gameObject != btn.gameObject);
@@ -66,11 +66,8 @@ public class QuizPanelUI : MonoBehaviour
             else if (hasText)
             {
                 btnText.text = quiz.choices[i];
-                Debug.Log($"{btn.name} activeMID: {btn.gameObject.activeSelf}");
                 btnText.gameObject.SetActive(true);
                 btnImage.gameObject.SetActive(false);
-                Debug.Log($"choices[{i}]: '{quiz.choices[i]}'");
-                Debug.Log($"{btn.name} active: {btn.gameObject.activeSelf}");
             }
             else
             {
@@ -83,17 +80,20 @@ public class QuizPanelUI : MonoBehaviour
             btn.onClick.AddListener(() =>
             {
                 bool isCorrect = (idx == quiz.correctIndex);
-                Debug.Log(isCorrect ? "정답" : "오답");
+                isCorrectCache = isCorrect; // 결과 캐싱
                 explanationText.text = (isCorrect ? "정답!\n" : "오답!\n") + quiz.explanation;
                 explanationText.gameObject.SetActive(true);
-                onQuizEnd?.Invoke(isCorrect);
                 foreach (var b in choiceButtons) b.interactable = false;
                 closeButton.gameObject.SetActive(true);
             });
         }
 
         closeButton.onClick.RemoveAllListeners();
-        closeButton.onClick.AddListener(() => { gameObject.SetActive(false); });
+        closeButton.onClick.AddListener(() => {
+            gameObject.SetActive(false);
+            // 퀴즈를 닫을 때 콜백 실행
+            onQuizEnd?.Invoke(isCorrectCache);
+        });
         closeButton.gameObject.SetActive(false);
     }
 }
