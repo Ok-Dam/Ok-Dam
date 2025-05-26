@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameStage { Start, Throw, Move, Interact, End }
@@ -13,9 +14,10 @@ public class YutnoriGameManager : MonoBehaviour
     [SerializeField] private GameUIManager gameUIManager; // 턴수 화면에 띄우는 용
 
     // 현재 턴인 플레이어와 관련 정보(두 번 던지기 등)
-    public PlayerState[] playerStates;
-    private int currentPlayerIndex = 0;
-    public PlayerState CurrentPlayer => playerStates[currentPlayerIndex];
+    // 1인용: 단일 PlayerState만 사용
+    public PlayerState playerState;
+    //private int currentPlayerIndex = 0;
+    public PlayerState CurrentPlayer => playerState;
 
     // 몇 턴이나 지났는지
     private int turnCount = 1;
@@ -26,25 +28,21 @@ public class YutnoriGameManager : MonoBehaviour
 
     void Start()
     {
-        // PlayerState 배열이 null이거나 크기가 0이면 playerPieces.Length로 새로 생성
-        if (playerStates == null || playerStates.Length != playerPieces.Length)
-            playerStates = new PlayerState[playerPieces.Length];
+        if (playerState == null)
+            playerState = new PlayerState();
 
-        gameUIManager.UpdateTurn(turnCount); // ui 텍스트 초기화
+        gameUIManager.UpdateTurn(turnCount);
 
         quizManager = GetComponent<QuizManager>();
 
-        // 각 요소가 null이면 new PlayerState()로 생성
-        for (int i = 0; i < playerStates.Length; i++)
+        // 모든 말에 같은 PlayerState를 할당
+        for (int i = 0; i < playerPieces.Length; i++)
         {
-            if (playerStates[i] == null)
-                playerStates[i] = new PlayerState();
-
-            playerStates[i].piece = playerPieces[i];
-            playerPieces[i].playerState = playerStates[i];
+            playerPieces[i].playerState = playerState;
         }
         setGameStage(GameStage.Throw);
     }
+
 
 
     void Update() { }
@@ -96,25 +94,32 @@ public class YutnoriGameManager : MonoBehaviour
             piece.Highlight(highlight);
         }
     }
-
     public void SelectPiece(PlayerPiece piece)
     {
-        CurrentPlayer.piece = piece;
+        PlayerPiece root = piece;
+        while (root.parentPiece != null)
+            root = root.parentPiece;
+
+        CurrentPlayer.piece = root;
         HighlightAllPieces(false);
-        piece.Highlight(true);
-        nodeManager.HighlightReachableNodes(piece.currentNode, CurrentPlayer.moveDistance);
+        root.Highlight(true);
+        nodeManager.HighlightReachableNodes(root.currentNode, CurrentPlayer.moveDistance);
     }
+
+
 
     public void MoveSelectedPieceTo(PointOfInterest node)
     {
-        if (CurrentPlayer.piece != null)
+        if (CurrentPlayer.piece != null && CurrentPlayer.piece.parentPiece == null)
         {
             nodeManager.ClearHighlights();
             CurrentPlayer.piece.MoveTo(node);
-            // CurrentPlayer.piece = null; // 필요시 해제
+        }
+        else
+        {
+            Debug.Log("[MoveSelectedPieceTo] No valid root piece to move or piece is child");
         }
     }
-
     private void UseShortcut(PlayerPiece piece, PointOfInterest currentPoi)
     {
         PointOfInterest nextShortcut = FindNextShortcut(currentPoi, 10);
@@ -123,6 +128,14 @@ public class YutnoriGameManager : MonoBehaviour
         if (nextShortcut != null)
         {
             piece.SetShortcutUsed(true);
+
+            // 업힌 말(자식)이면 부모에서 분리
+            if (piece.parentPiece != null)
+            {
+                piece.parentPiece.stackedPieces.Remove(piece);
+                piece.parentPiece = null;
+            }
+
             CurrentPlayer.piece = piece;
             MoveSelectedPieceTo(nextShortcut);
         }
@@ -163,6 +176,9 @@ public class YutnoriGameManager : MonoBehaviour
 
     public void interactByPOI(PlayerPiece piece, PointOfInterest poi)
     {
+        // 업힌 말까지 포함해 상호작용 반복
+        var allStacked = piece.GetAllStacked();
+
         switch (poi.Type)
         {
             case POIType.Start:
@@ -174,19 +190,35 @@ public class YutnoriGameManager : MonoBehaviour
                 setGameStage(GameStage.Throw);
                 break;
             case POIType.Buff:
-                // 버프 자동 성공 버프 소멸 처리
-                if (piece.playerState.nextBuffAutoSuccess)
                 {
-                    // 버프 무조건 지급 처리
-                    piece.playerState.ConsumeNextBuffAutoSuccess();
-                }
-                quizManager.ShowRandomQuiz((isCorrect) =>
-                {
-                    // 퀴즈 결과에 따라 보너스 던지기 획득 등 처리됨
-                    EndTurn(); // setGameStage(GameStage.Throw) 대신 EndTurn 호출
-                }, piece.playerState);
-                break;
+                    int idx = 0;
 
+                    void ShowNextQuiz()
+                    {
+                        if (idx >= allStacked.Count)
+                        {
+                            EndTurn();
+                            return;
+                        }
+
+                        var targetPiece = allStacked[idx];
+                        idx++;
+
+                        if (targetPiece.playerState.nextBuffAutoSuccess)
+                        {
+                            Debug.Log($"[BuffPOI] {targetPiece.name}은(는) 버프 자동 성공");
+                            targetPiece.playerState.ConsumeNextBuffAutoSuccess();
+                        }
+                        quizManager.ShowRandomQuiz((isCorrect) =>
+                        {
+                            // 퀴즈 결과 처리 후 다음 퀴즈 호출
+                            ShowNextQuiz();
+                        }, targetPiece.playerState);
+                    }
+
+                    ShowNextQuiz(); // 첫 퀴즈부터 시작
+                    break;
+                }
             case POIType.Shortcut:
                 if (!piece.HasUsedShortcut())
                 {
@@ -195,7 +227,7 @@ public class YutnoriGameManager : MonoBehaviour
 
                     shortcutDialogUI.Show(
                         () => UseShortcut(piece, poi),
-                        () => { EndTurn(); }, // setGameStage(GameStage.Throw) 대신 EndTurn 호출
+                        () => { EndTurn(); },
                         isLastShortcut
                     );
                 }
@@ -206,4 +238,5 @@ public class YutnoriGameManager : MonoBehaviour
                 break;
         }
     }
+
 }
