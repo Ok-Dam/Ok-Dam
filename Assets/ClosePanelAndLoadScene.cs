@@ -3,14 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class ClosePanelAndLoadScene : MonoBehaviour
 {
-    public GameObject panelToClose;     // 닫을 패널
-    public string sceneToLoadName;      // 이동할 씬 이름
+    public string sceneToLoadName;  // 이동할 씬 이름
 
     public void CloseAndLoad()
     {
-        if (panelToClose != null)
-            panelToClose.SetActive(false);
-
         SceneManager.LoadScene(sceneToLoadName);
     }
 }
