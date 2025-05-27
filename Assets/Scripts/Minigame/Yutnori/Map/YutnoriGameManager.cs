@@ -9,7 +9,7 @@ public class YutnoriGameManager : MonoBehaviour
     [SerializeField] private NodeManager nodeManager;
     [SerializeField] private ShortcutDialogUI shortcutDialogUI;
     [SerializeField] private EndPanelUI endPanelUI;
-    [SerializeField] private PlayerPiece[] playerPieces;
+    [SerializeField] private List<PlayerPiece> playerPieces = new List<PlayerPiece>();
     private QuizManager quizManager;
     [SerializeField] private GameUIManager gameUIManager; // 턴수 화면에 띄우는 용
 
@@ -36,15 +36,12 @@ public class YutnoriGameManager : MonoBehaviour
         quizManager = GetComponent<QuizManager>();
 
         // 모든 말에 같은 PlayerState를 할당
-        for (int i = 0; i < playerPieces.Length; i++)
+        for (int i = 0; i < playerPieces.Count; i++)
         {
             playerPieces[i].playerState = playerState;
         }
         setGameStage(GameStage.Throw);
     }
-
-
-
     void Update() { }
 
     public void setGameStage(GameStage stage)
@@ -70,9 +67,13 @@ public class YutnoriGameManager : MonoBehaviour
     public void ProcessYutResult(string result)
     {
         // 테스트용: 어떤 결과든 무조건 빽도로 처리
-        result = "빽도";
+        //result = "도";
+        
 
         CurrentPlayer.currentYutResult = result;
+        // 테스트용: 이동거리 증가
+        CurrentPlayer.moveDistance = 8; return;
+
         switch (result)
         {
             case "도": CurrentPlayer.moveDistance = 1; break;
@@ -83,8 +84,8 @@ public class YutnoriGameManager : MonoBehaviour
             case "빽도": CurrentPlayer.moveDistance = -1; break;
             default: CurrentPlayer.moveDistance = 0; break;
         }
+        
     }
-
     public void startMoveStage()
     {
         HighlightAllPieces(true);
@@ -202,6 +203,30 @@ public class YutnoriGameManager : MonoBehaviour
         // (여기서 턴 카운트 UI 갱신 등 추가 처리)
     }
 
+    public void HandleFinishPiece(PlayerPiece piece)
+    {
+        // playerPieces에서 제거
+        playerPieces.Remove(piece);
+
+        // 업기 구조 정리
+        if (piece.parentPiece != null)
+            piece.parentPiece.stackedPieces.Remove(piece);
+        piece.parentPiece = null;
+        foreach (var child in new List<PlayerPiece>(piece.stackedPieces))
+        {
+            child.parentPiece = null;
+        }
+        piece.stackedPieces.Clear();
+
+        // 말 숨기기
+        piece.gameObject.SetActive(false);
+
+        // HUD에 이미지 추가
+        var hudManager = FindObjectOfType<FinishHudManager>();
+        if (hudManager != null)
+            hudManager.AddFinishedPiece(piece.finishHudSprite);
+    }
+
     public void interactByPOI(PlayerPiece piece, PointOfInterest poi)
     {
         // 업힌 말까지 포함해 상호작용 반복
@@ -262,22 +287,28 @@ public class YutnoriGameManager : MonoBehaviour
                 else EndTurn();
                 break;
             case POIType.End:
-                piece.isFinished = true;
-                // 모든 말이 완주했는지 검사 (여기서 임시로 선언 > 이런 검사하고 사라질 변수들은 지역 변수로 하는 게 낫다)
-                bool allFinished = true;
-                foreach (var p in playerPieces)
                 {
-                    if (!p.isFinished)
+                    // 1. 완주할 모든 말 리스트 복사 (업힌 말 포함)
+                    var finishedPieces = piece.GetAllStacked();
+
+                    // 2. 모든 완주 말에 대해 GameManager의 완주 처리 호출
+                    foreach (var finishedPiece in finishedPieces)
                     {
-                        allFinished = false;
-                        break;
+                        HandleFinishPiece(finishedPiece); // 아래에 구현
                     }
+
+                    // 3. 모든 말 완주 여부 검사
+                    if (playerPieces.Count == 0)
+                    {
+                        setGameStage(GameStage.End);
+                    }
+                    else
+                    {
+                        setGameStage(GameStage.Throw);
+                    }
+
+                    break;
                 }
-                if (allFinished)
-                {
-                    setGameStage(GameStage.End);
-                }
-                break;
         }
     }
 

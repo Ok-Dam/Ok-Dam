@@ -17,7 +17,7 @@ public class PlayerPiece : MonoBehaviour
     [SerializeField] private HanokPart hanokPart;
     [SerializeField] private MapGenerator mapGenerator;
 
-    public bool isFinished = false;
+    public Sprite finishHudSprite; // 완주시 띄울 본인 이미지
 
     // 업기 관련
     public List<PlayerPiece> stackedPieces = new List<PlayerPiece>();
@@ -76,7 +76,6 @@ public class PlayerPiece : MonoBehaviour
     private IEnumerator MoveByPath(PointOfInterest destination)
     {
         List<PointOfInterest> path = NodeManager.FindPath(currentNode, destination);
-        Debug.Log($"[MoveByPath] {name} from {currentNode.name} to {destination.name}, path.Count={path?.Count ?? 0}");
         if (path == null || path.Count < 2)
             yield break;
 
@@ -88,10 +87,14 @@ public class PlayerPiece : MonoBehaviour
             currentNode = path[i];
         }
 
-        TryStackOnSameNode();
+        // 1. 먼저 상호작용(BuffPOI 등) 처리
         gameManager.setGameStage(GameStage.Interact);
         gameManager.interactByPOI(this, currentNode);
+
+        // 2. 그 다음 업기 시도
+        TryStackOnSameNode();
     }
+
 
     // 빽도용 이동 함수 (뒤로 움직이는)
     public IEnumerator MoveByBackdoPath(PointOfInterest prevNode)
@@ -142,11 +145,10 @@ public class PlayerPiece : MonoBehaviour
         SetStackedPositions(end); // 마지막 위치도 맞추기
     }
 
-    // 부모 위치를 기준으로 업힌 말들을 배치하는 함수
+    // 부모 위치를 기준으로 업힌 말들을 배치하는 함수 (basePos가 항상 중앙)
     private void SetStackedPositions(Vector3 basePos)
     {
         int count = stackedPieces.Count + 1; // 부모 포함 전체 개수
-
         float offset = 1.2f; // 간격 조정
 
         if (count == 1)
@@ -156,42 +158,44 @@ public class PlayerPiece : MonoBehaviour
         }
         else if (count == 2)
         {
-            // 2개: 좌/우로 배치
+            // 2개: 좌/우로 배치 (basePos가 중앙)
             transform.position = basePos + Vector3.left * offset / 2f;
             stackedPieces[0].transform.position = basePos + Vector3.right * offset / 2f;
         }
         else if (count == 3)
         {
-            // 3개: 위(1), 아래(2) 삼각형 형태
-            float yOffset = 0.18f; // 세로 간격
-            transform.position = basePos + new Vector3(0, 0, yOffset); // 위 중앙
-            stackedPieces[0].transform.position = basePos + new Vector3(-offset / 2f, 0, -yOffset);
-            stackedPieces[1].transform.position = basePos + new Vector3(offset / 2f, 0, -yOffset);
-        }
-        else if (count == 4)
-        {
-            // 4개: 2x2 정사각형
-            float x = offset / 2f;
-            float z = offset / 2f;
-            transform.position = basePos + new Vector3(-x, 0, z);
-            stackedPieces[0].transform.position = basePos + new Vector3(x, 0, z);
-            stackedPieces[1].transform.position = basePos + new Vector3(-x, 0, -z);
-            stackedPieces[2].transform.position = basePos + new Vector3(x, 0, -z);
-        }
-        else
-        {
-            // 5개 이상: 일렬(혹은 추가 확장)
-            for (int i = 0; i < count; i++)
+            // 3개: basePos를 중심으로 정삼각형 배치
+            float radius = offset * 0.6f;
+            float angleStep = 2 * Mathf.PI / 3;
+            for (int i = 0; i < 3; i++)
             {
-                Vector3 pos = basePos + Vector3.right * offset * (i - (count - 1) / 2f);
+                float angle = angleStep * i - Mathf.PI / 2; // 시작 각도 위쪽
+                Vector3 pos = basePos + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
                 if (i == 0)
                     transform.position = pos;
                 else
                     stackedPieces[i - 1].transform.position = pos;
             }
         }
+        else if (count == 4)
+        {
+            // 4개: basePos를 중심으로 2x2 정사각형 배치
+            float half = offset / 2f;
+            Vector3[] positions = new Vector3[]
+            {
+            basePos + new Vector3(-half, 0, half),
+            basePos + new Vector3(half, 0, half),
+            basePos + new Vector3(-half, 0, -half),
+            basePos + new Vector3(half, 0, -half)
+            };
+            transform.position = positions[0];
+            stackedPieces[0].transform.position = positions[1];
+            stackedPieces[1].transform.position = positions[2];
+            stackedPieces[2].transform.position = positions[3];
+        }
     }
-    
+
+    //업기. 손자는 불가능.
     public void TryStackOnSameNode()
     {
         if (parentPiece != null)
@@ -209,17 +213,34 @@ public class PlayerPiece : MonoBehaviour
 
             if (sameNode && samePlayer && otherIsRoot)
             {
-                if (this.parentPiece == null && !other.stackedPieces.Contains(this))
+                // 1. 내 자식들 모두 이미 해당 노드에 있는 말의 자식으로 옮기기
+                foreach (var child in new List<PlayerPiece>(stackedPieces))
+                {
+                    child.parentPiece = other;
+                    if (!other.stackedPieces.Contains(child))
+                        other.stackedPieces.Add(child);
+                }
+                stackedPieces.Clear();
+
+                // 2. 내 기존 부모와의 관계 해제
+                if (parentPiece != null)
+                {
+                    parentPiece.stackedPieces.Remove(this);
+                    parentPiece = null;
+                }
+
+                // 3. 나도 기존 노드 말의 자식으로 편입
+                if (!other.stackedPieces.Contains(this))
                 {
                     this.parentPiece = other;
                     other.stackedPieces.Add(this);
-                    other.SetStackedPositions(other.transform.position);
                 }
+
+                other.SetStackedPositions(currentNode.transform.position);
                 return;
             }
         }
     }
-
     public List<PlayerPiece> GetAllStacked()
     {
         var result = new List<PlayerPiece>();
