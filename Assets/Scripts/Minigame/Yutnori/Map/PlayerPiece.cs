@@ -17,7 +17,7 @@ public class PlayerPiece : MonoBehaviour
     [SerializeField] private HanokPart hanokPart;
     [SerializeField] private MapGenerator mapGenerator;
 
-    public bool isFinished = false;
+    public Sprite finishHudSprite; // 완주시 띄울 본인 이미지
 
     // 업기 관련
     public List<PlayerPiece> stackedPieces = new List<PlayerPiece>();
