@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Playerinteraction : MonoBehaviour
 {
-    public float interactionDistance = 10f;
+    public float interactionDistance = 3f;
     public LayerMask interactableLayer;
 
     private Transform playerTransform;
