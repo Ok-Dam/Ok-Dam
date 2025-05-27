@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Photon.Chat;
@@ -38,7 +38,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         chatClient?.Service();
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        // âœ… NPC ëŒ€í™” ì¤‘ì´ë©´ ì±„íŒ… ìž…ë ¥ ë§‰ê¸°
+        if (!NPCUI.IsTalkingToNPC && Input.GetKeyDown(KeyCode.Return))
         {
             if (!IsChatActive)
             {
@@ -61,10 +62,12 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             }
         }
 
+        // ESCëŠ” ì±„íŒ…ì°½ì´ ì—´ë ¤ ìžˆì„ ë•Œë§Œ ìž‘ë™ (NPC ëŒ€í™” ì¤‘ ì—¬ë¶€ ìƒê´€ì—†ìŒ)
         if (IsChatActive && Input.GetKeyDown(KeyCode.Escape))
         {
             CloseChat();
         }
+
     }
 
     void OpenChat()
@@ -112,7 +115,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         scrollRect.verticalNormalizedPosition = 0f;
     }
 
-    // ÇÊ¼ö ÀÎÅÍÆäÀÌ½º ±¸Çö (ºó »óÅÂ À¯Áö °¡´É)
+    // í•„ìˆ˜ ì¸í„°íŽ˜ì´ìŠ¤ êµ¬í˜„ (ë¹ˆ ìƒíƒœ ìœ ì§€ ê°€ëŠ¥)
     public void OnChatStateChange(ChatState state) { }
     public void OnDisconnected() => Debug.Log("Disconnected from Photon Chat");
     public void OnSubscribed(string[] channels, bool[] results) { }

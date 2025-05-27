@@ -1,57 +1,59 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using TMPro;
+using System.Collections;
 
 public class NPCUI : MonoBehaviour
 {
-    public List<Button> choiceButtons; // Inspector¿¡¼­ À§¡æ¾Æ·¡ ¼ø¼­·Î ÇÒ´ç
+    public List<Button> choiceButtons;
     public GameObject dialoguePanel;
     public Text dialogueText;
+    public TMP_InputField inputField;
+    public GptRequester gpt;
+    public static bool IsTalkingToNPC { get; private set; } = false;
 
     private NPCController currentNPC;
     private int currentChoiceIndex = 0;
     private bool isChoiceActive = false;
-
-    private bool inputBuffer = false; // »óÈ£ÀÛ¿ë + ´ëÈ­ ¼±ÅÃÁö È®Á¤ + ´ëÈ­ È®ÀÎ µî ¸ðµç °É fÅ°·Î ÇÏ±â ¶§¹®¿¡ fÅ° ÇÑ ¹ø¸¸ ´­·¯µµ ¸ðµç °Ô ½ÇÇà µÅ¹ö¸®´Â °Å ¹æÁö¿ë
+    private bool inputBuffer = false;
 
     void Start()
     {
+        inputField.gameObject.SetActive(false);
 
+        // âœ… Enter ëˆŒë €ì„ ë•Œ GPTë¡œ ì „ì†¡ë˜ë„ë¡ ì„¤ì •
+        inputField.onSubmit.AddListener(OnSubmitMessage);
     }
+
     void Update()
     {
-        // ´ëÈ­ ÆÐ³ÎÀÌ ¶° ÀÖÀ» ¶§ FÅ° ´©¸£¸é ÆÐ³Î ´Ý°í ´Ù½Ã ¼±ÅÃÁö º¸¿©ÁÜ
         if (dialoguePanel.activeSelf && Input.GetKeyDown(KeyCode.F))
         {
             currentNPC?.EndDialogue();
         }
 
-        // ´ëÈ­ ¼±ÅÃÁö °ü·Ã -----------------------------------
         if (!isChoiceActive) return;
 
-        // ¼±ÅÃÁö UI°¡ È°¼ºÈ­µÈ Á÷ÈÄ Ã¹ ÇÁ·¹ÀÓÀº FÅ° ÀÔ·Â ¹«½Ã > FÅ° ÇÑ ¹ø ´­·¶´Âµ¥ ¿©·¯ ¹ø Ã³¸®µÇ´Â°Å ¹æÁö
         if (inputBuffer)
         {
-            if (!Input.GetKey(KeyCode.F)) // FÅ°¿¡¼­ ¼ÕÀ» ¶¿ ¶§±îÁö ´ë±â
-                inputBuffer = false;
+            if (!Input.GetKey(KeyCode.F)) inputBuffer = false;
             return;
         }
 
-        // ´ëÈ­ ¼±ÅÃÁö ¼±ÅÃ
-        // À§·Î ÀÌµ¿ (W)
         if (Input.GetKeyDown(KeyCode.W))
         {
             currentChoiceIndex = (currentChoiceIndex - 1 + choiceButtons.Count) % choiceButtons.Count;
             HighlightChoice(currentChoiceIndex);
         }
-        // ¾Æ·¡·Î ÀÌµ¿ (S)
+
         if (Input.GetKeyDown(KeyCode.S))
         {
             currentChoiceIndex = (currentChoiceIndex + 1) % choiceButtons.Count;
             HighlightChoice(currentChoiceIndex);
         }
-        // ¼±ÅÃ (F)
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             inputBuffer = true;
@@ -59,10 +61,8 @@ public class NPCUI : MonoBehaviour
         }
     }
 
-    // NPCControllerÀÇ ÀÌº¥Æ® ±¸µ¶
     public void ConnectToNPC(NPCController npc)
     {
-        // ÀÌÀü NPC ÀÌº¥Æ® ÇØÁ¦
         if (currentNPC != null)
         {
             currentNPC.OnInteractionStarted -= ShowChoices;
@@ -73,27 +73,25 @@ public class NPCUI : MonoBehaviour
 
         currentNPC = npc;
 
-        // »õ·Î¿î NPC ÀÌº¥Æ® ±¸µ¶
         currentNPC.OnInteractionStarted += ShowChoices;
         currentNPC.OnInteractionCanceled += HideChoices;
         currentNPC.OnDialogueStarted += ShowDialogueUI;
         currentNPC.OnDialogueEnded += HideDialogueUI;
     }
 
-    // ´ëÈ­ ¼±ÅÃÁö UI Ç¥½Ã
     private void ShowChoices(NPCController npc)
     {
         HideDialogueUI();
+
         foreach (var btn in choiceButtons)
             btn.gameObject.SetActive(true);
 
         isChoiceActive = true;
-        inputBuffer = true; // ¼±ÅÃÁö UI°¡ ¶ß´Â ¼ø°£ FÅ° ÀÔ·Â ¹«½Ã
+        inputBuffer = true;
         currentChoiceIndex = 0;
         HighlightChoice(currentChoiceIndex);
     }
 
-    // ¼±ÅÃÁö UI ¼û±è
     private void HideChoices()
     {
         foreach (var btn in choiceButtons)
@@ -102,30 +100,40 @@ public class NPCUI : MonoBehaviour
         isChoiceActive = false;
     }
 
-    // ´ëÈ­Ã¢ Ç¥½Ã
     private void ShowDialogueUI()
     {
         dialoguePanel.SetActive(true);
-        dialogueText.text = "¾È³çÇÏ¼¼¿ä";
+        dialogueText.text = "ðŸ¤– NPC: ì•ˆë…•í•˜ì„¸ìš”! ë¬´ì—‡ì´ ê¶ê¸ˆí•˜ì‹ ê°€ìš”?";
+        IsTalkingToNPC = true;
+
+        inputField.gameObject.SetActive(true);
+        inputField.text = "";
+        inputField.interactable = true;
+        inputField.Select();
+        inputField.ActivateInputField();
+
+        StartCoroutine(FocusInputDelayed());
+
         HideChoices();
     }
 
-    // ´ëÈ­Ã¢ ¼û±è
     private void HideDialogueUI()
     {
         dialoguePanel.SetActive(false);
+        inputField.gameObject.SetActive(false);
+        inputField.text = "";
+        IsTalkingToNPC = false;
     }
 
-    // ÇÏÀÌ¶óÀÌÆ®(¼±ÅÃ) Ç¥½Ã
     private void HighlightChoice(int idx)
     {
-        // EventSystemÀ» ÀÌ¿ëÇØ ¹öÆ° ÇÏÀÌ¶óÀÌÆ®
         EventSystem.current.SetSelectedGameObject(choiceButtons[idx].gameObject);
     }
 
     public void OnTalkBtnClicked()
     {
         currentNPC?.StartDialogue();
+        ShowDialogueUI();
     }
 
     public void OnCancelBtnClicked()
@@ -136,5 +144,31 @@ public class NPCUI : MonoBehaviour
     public bool getIsChoiceActive()
     {
         return isChoiceActive;
+    }
+
+    private void OnSubmitMessage(string message)
+    {
+        string userMessage = message.Trim();
+        if (string.IsNullOrEmpty(userMessage)) return;
+
+        inputField.text = "";
+        dialogueText.text = "ðŸ¤– NPCê°€ ìƒê° ì¤‘...";
+
+        gpt.OnGptResponse = (response) =>
+        {
+            dialogueText.text = "ðŸ¤– NPC: " + response;
+            inputField.Select();
+            inputField.ActivateInputField();
+        };
+
+        gpt.RequestGpt(userMessage);
+    }
+
+    private IEnumerator FocusInputDelayed()
+    {
+        yield return null;
+
+        inputField.Select();
+        inputField.ActivateInputField();
     }
 }
