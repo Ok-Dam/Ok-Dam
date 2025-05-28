@@ -12,6 +12,8 @@ public class InteractableObject : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip UIopenSound;
     public AudioClip dooropenSound;
+    public AudioClip narration;
+
 
     public bool isLeftDoor = true; // 왼쪽 문인지 여부 (왼쪽은 +90, 오른쪽은 -90)
     private bool isOpen = false; // 문 열림,닫힘 상태
@@ -36,6 +38,8 @@ public class InteractableObject : MonoBehaviour
         if (audioSource != null && UIopenSound != null)
             {
                 audioSource.PlayOneShot(UIopenSound);
+                audioSource.PlayOneShot(narration);
+
             }
             Debug.Log(gameObject.name + " popup UI opened!");
         }
@@ -51,6 +55,7 @@ public class InteractableObject : MonoBehaviour
         {
             popupUI.SetActive(false);
             isPopupOpen = false;
+            audioSource.Stop();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         Debug.Log(gameObject.name + " popup UI closed!");
