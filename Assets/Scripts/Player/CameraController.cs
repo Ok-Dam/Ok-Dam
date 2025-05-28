@@ -31,6 +31,8 @@ public class CameraController : MonoBehaviour
     {
         if (player == null) return;
 
+        //npcui 카메라 정지
+        if (NPCUI.IsTalkingToNPC) return;
         //마우스가 잠겨있을 때만 회전 허용(ui 나올때는 회전X)
         if (Cursor.lockState != CursorLockMode.Locked) return;
 
