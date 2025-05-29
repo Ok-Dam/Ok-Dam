@@ -126,7 +126,7 @@ public class YutController : MonoBehaviour
 
     private string GetYutResult(int faceUpCount)
     {
-        return "»ªµµ";
+        //return "»ªµµ";
         // »ªµµ À·ÀÌ ¹è¿­ÀÇ 0¹øÂ°¶ó°í °¡Á¤
         if (faceUpCount == 3)
         {
