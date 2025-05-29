@@ -88,10 +88,8 @@ public class QuizPanelUI : MonoBehaviour
             {
                 isCorrectCache = (idx == quiz.correctIndex);
                 foreach (var b in choiceButtons) b.interactable = false;
-                ShowExpPanel(isCorrectCache, lastExplanation, "", () => {
-                    quizPanel.SetActive(false);
-                    onQuizEnd?.Invoke(isCorrectCache);
-                });
+                // [수정] ExpPanel 호출을 여기서 제거. 대신 상위 매니저에서 처리
+                onQuizEnd?.Invoke(isCorrectCache); // 정답 여부만 콜백으로 넘김
             });
         }
     }

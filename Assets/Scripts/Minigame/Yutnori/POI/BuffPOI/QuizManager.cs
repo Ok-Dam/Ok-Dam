@@ -34,7 +34,7 @@ public class QuizManager : MonoBehaviour
         bool giveBuff = isCorrect || autoSuccess;
         Buff selectedBuff = null;
         string buffMessage = "";
-        string explanation = quizPanelUI.lastExplanation;
+        string explanation = quizPanelUI.lastExplanation; // [추가] 해설 전달
 
         if (giveBuff)
         {
@@ -47,13 +47,14 @@ public class QuizManager : MonoBehaviour
             {
                 ApplyBuff(selectedBuff, playerState);
             }
-            buffMessage = (autoSuccess ? "[자동 성공] " : "정답! ") + $"'{selectedBuff.description}' 버프 획득!";
+            buffMessage = (autoSuccess ? "[자동 성공] " : "정답! ") + $"'{selectedBuff.description}' 버프 획득!"; // [수정] 버프 메시지 생성
         }
         else
         {
-            buffMessage = "오답! 버프를 얻지 못했습니다.";
+            buffMessage = "오답! 버프를 얻지 못했습니다."; // [수정] 오답 메시지
         }
 
+        // [수정] 정답 처리 후 ExpPanel을 여기서 호출
         quizPanelUI.ShowExpPanel(
             isCorrect,
             explanation,
