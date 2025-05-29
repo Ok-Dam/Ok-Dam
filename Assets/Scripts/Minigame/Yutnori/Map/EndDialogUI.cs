@@ -16,7 +16,7 @@ public class EndPanelUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void OnRestartButton()
+    public void OnEndButton()
     {
         // 현재 씬 다시 로드
         UnityEngine.SceneManagement.SceneManager.LoadScene(

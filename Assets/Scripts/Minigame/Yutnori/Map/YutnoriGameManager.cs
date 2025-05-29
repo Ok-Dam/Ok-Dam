@@ -16,6 +16,8 @@ public class YutnoriGameManager : MonoBehaviour
     public PointOfInterest startingNode;
     public PointOfInterest beforeEndNode;
 
+    [SerializeField] private YnrModeController ynrModeController;
+
     // 현재 턴인 플레이어와 관련 정보(두 번 던지기 등)
     // 1인용: 단일 PlayerState만 사용
     public PlayerState playerState;
