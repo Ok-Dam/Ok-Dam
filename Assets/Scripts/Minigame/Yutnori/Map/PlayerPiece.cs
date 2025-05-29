@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public enum HanokPart
 {
@@ -13,8 +14,10 @@ public enum HanokPart
 public class PlayerPiece : MonoBehaviour
 {
     [SerializeField] private YutnoriGameManager gameManager;
+    private NodeManager nodeManager;
     [SerializeField] private Highlighter highlighter;
     [SerializeField] private HanokPart hanokPart;
+    public bool isFinished = false;
 
     public bool canMove = false;
 
@@ -31,9 +34,12 @@ public class PlayerPiece : MonoBehaviour
 
     private Coroutine blinkCoroutine;
 
+
+
     void Start()
     {
         SetCurrentNode(gameManager.startingNode);
+        nodeManager = FindObjectOfType<NodeManager>();
     }
 
     public void SetCurrentNode(PointOfInterest node)
@@ -41,14 +47,23 @@ public class PlayerPiece : MonoBehaviour
         currentNode = node;
     }
 
-    void OnMouseDown()
+    private void OnMouseDown()
     {
-        PlayerPiece root = this;
-        while (root.parentPiece != null)
-            root = root.parentPiece;
+        // 1. 현재 이동 단계이고, 내 currentNode가 하이라이트된 노드에 포함되어 있으면
+        if (gameManager != null && nodeManager != null &&
+            gameManager.stage == GameStage.Move &&
+            nodeManager.HighlightedNodes.Contains(currentNode))
+        {
+            // 이동 명령: 해당 노드로 이동 (노드 하이라이트 클릭과 동일)
+            gameManager.MoveSelectedPieceTo(currentNode);
+            return;
+        }
 
-        if (gameManager.stage == GameStage.Move)
-            gameManager.SelectPiece(root);
+        // 2. 그 외에는 기존대로 말 선택
+        if (gameManager != null && gameManager.stage == GameStage.Move)
+        {
+            gameManager.SelectPiece(this);
+        }
     }
 
     public bool HasStarted()
@@ -206,6 +221,7 @@ public class PlayerPiece : MonoBehaviour
         {
             return; // 이미 자식이면 업기 불가
         }
+        if (isFinished) return;
 
         var allPieces = FindObjectsOfType<PlayerPiece>();
         foreach (var other in allPieces)
@@ -245,6 +261,7 @@ public class PlayerPiece : MonoBehaviour
             }
         }
     }
+
     public List<PlayerPiece> GetAllStacked()
     {
         var result = new List<PlayerPiece>();
@@ -263,4 +280,7 @@ public class PlayerPiece : MonoBehaviour
 
     public void SetShortcutUsed(bool used) { shortcutUsed = used; }
     public bool HasUsedShortcut() { return shortcutUsed; }
+
+
+
 }

@@ -221,10 +221,6 @@ public class NodeManager : MonoBehaviour
         return null;
     }
 
-
-
-
-
     public void HighlightNode(PointOfInterest node, PlayerPiece piece)
     {
         if (nodeHighlightPrefab != null && uiCanvas != null && mainCamera != null)

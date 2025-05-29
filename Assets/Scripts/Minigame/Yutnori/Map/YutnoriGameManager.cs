@@ -14,6 +14,7 @@ public class YutnoriGameManager : MonoBehaviour
     private QuizManager quizManager;
     [SerializeField] private GameUIManager gameUIManager; // 턴수 화면에 띄우는 용
     public PointOfInterest startingNode;
+    public PointOfInterest beforeEndNode;
 
     // 현재 턴인 플레이어와 관련 정보(두 번 던지기 등)
     // 1인용: 단일 PlayerState만 사용
@@ -163,20 +164,17 @@ public class YutnoriGameManager : MonoBehaviour
                 if (!CurrentPlayer.piece.HasStarted())
                 {
                     // 출발 전 빽도: 시작점 클릭 시 EndPOI 직전 노드로 이동
-                    var mapGen = FindObjectOfType<MapGenerator>();
-                    var beforeEndNodes = mapGen.GetNodesBeforeEndPOI();
-                    var targetNode = beforeEndNodes[0];
                     nodeManager.ClearHighlights();
-                    CurrentPlayer.piece.MoveTo(targetNode);
+                    StartCoroutine(CurrentPlayer.piece.MoveByBackdoPath(node.PreviousPointsOfInterest[0]));
                     return;
                 }
                 else
                 {
                     // 출발 후 빽도: 이전 노드(들)로 애니메이션 이동
                     nodeManager.ClearHighlights();
-                    StartCoroutine(CurrentPlayer.piece.MoveByBackdoPath(node));
-                    return;
-                }
+                StartCoroutine(CurrentPlayer.piece.MoveByBackdoPath(node));
+                return;
+            }
             }
 
             nodeManager.ClearHighlights();
@@ -251,6 +249,8 @@ public class YutnoriGameManager : MonoBehaviour
     {
         // playerPieces에서 제거
         playerPieces.Remove(piece);
+
+        piece.isFinished = true;
 
         // 업기 구조 정리
         if (piece.parentPiece != null)
