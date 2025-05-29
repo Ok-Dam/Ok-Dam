@@ -23,7 +23,6 @@ public class BuffManager : MonoBehaviour
         if (buffs.Count == 0)
         {
             buffs.Add(new Buff(BuffType.ExtraThrow, "한 번 더 던지기"));
-            buffs.Add(new Buff(BuffType.StackPiece, "말 업기"));
             buffs.Add(new Buff(BuffType.NextMovePlus, "다음 이동 시 이동 거리 +1"));
             buffs.Add(new Buff(BuffType.NextBuffAutoSuccess, "다음 버프 노드에서 실패해도 버프 받음"));
         }

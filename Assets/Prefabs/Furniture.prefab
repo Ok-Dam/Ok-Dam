@@ -530,6 +530,90 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 9a0cd821063aaf941830cc2e4cd2202a, type: 3}
+--- !u!1 &3606817974188312335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7191751853438085948}
+  - component: {fileID: 6183869698921473136}
+  m_Layer: 0
+  m_Name: BoardImg
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7191751853438085948
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3606817974188312335}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0, z: 7.9}
+  m_LocalScale: {x: 0.5, y: 0.4, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3156430427174371800}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &6183869698921473136
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3606817974188312335}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 902667bf1f00f01468f5ce6b28bf6c3e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 10.24, y: 10.24}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &3851428598285332708
 GameObject:
   m_ObjectHideFlags: 0
@@ -3289,6 +3373,7 @@ MonoBehaviour:
   audioSource: {fileID: 3079348905161844153}
   UIopenSound: {fileID: 8300000, guid: d6f51b60a250a164fb88274c2481edf9, type: 3}
   dooropenSound: {fileID: 0}
+  narration: {fileID: 0}
   isLeftDoor: 1
 --- !u!82 &3079348905161844153
 AudioSource:
@@ -4446,6 +4531,7 @@ MonoBehaviour:
   audioSource: {fileID: 5368536566362405694}
   UIopenSound: {fileID: 8300000, guid: d6f51b60a250a164fb88274c2481edf9, type: 3}
   dooropenSound: {fileID: 0}
+  narration: {fileID: 0}
   isLeftDoor: 0
 --- !u!82 &5368536566362405694
 AudioSource:
@@ -5756,6 +5842,7 @@ MonoBehaviour:
   audioSource: {fileID: 6990906145635517929}
   UIopenSound: {fileID: 8300000, guid: d6f51b60a250a164fb88274c2481edf9, type: 3}
   dooropenSound: {fileID: 0}
+  narration: {fileID: 0}
   isLeftDoor: 1
 --- !u!82 &6990906145635517929
 AudioSource:
@@ -6501,7 +6588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 453722, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.048379056
+      value: 0.055587538
       objectReference: {fileID: 0}
     - target: {fileID: 453722, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6509,7 +6596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 453722, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.54
+      value: -2.511
       objectReference: {fileID: 0}
     - target: {fileID: 453722, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6568,6 +6655,10 @@ PrefabInstance:
       value: 19.867876
       objectReference: {fileID: 0}
     - target: {fileID: 4060608003994654416, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
+      propertyPath: narration
+      value: 
+      objectReference: {fileID: 8300000, guid: 903fba8117bcce14abaf2052d019271a, type: 3}
+    - target: {fileID: 4060608003994654416, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
       propertyPath: openSound
       value: 
       objectReference: {fileID: 8300000, guid: d6f51b60a250a164fb88274c2481edf9, type: 3}
@@ -6581,11 +6672,17 @@ PrefabInstance:
       objectReference: {fileID: 7309575962771821254}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 453722, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7191751853438085948}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 123198, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7309575962771821254}
+    - targetCorrespondingSourceObject: {fileID: 123198, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6163690908215892257}
   m_SourcePrefab: {fileID: 100100000, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
 --- !u!1 &3156430427174046908 stripped
 GameObject:
@@ -6688,6 +6785,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6163690908215892257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3156430427174046908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39903d2022e8468468479d13b5019e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explorationCamera: {fileID: 0}
+  miniMap: {fileID: 0}
+  yutnoriRootPrefab: {fileID: 3962310667137257531, guid: 4a9f96ea1f3cefd4db647667b177a93f, type: 3}
 --- !u!4 &3156430427174371800 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 453722, guid: b3f5665b7980adf40abc8544de5d7588, type: 3}
@@ -7827,6 +7939,7 @@ MonoBehaviour:
   audioSource: {fileID: 4284839178390182258}
   UIopenSound: {fileID: 8300000, guid: d6f51b60a250a164fb88274c2481edf9, type: 3}
   dooropenSound: {fileID: 0}
+  narration: {fileID: 0}
   isLeftDoor: 1
 --- !u!82 &4284839178390182258
 AudioSource:
@@ -9017,6 +9130,7 @@ MonoBehaviour:
   audioSource: {fileID: 3473095560629012930}
   UIopenSound: {fileID: 8300000, guid: d6f51b60a250a164fb88274c2481edf9, type: 3}
   dooropenSound: {fileID: 0}
+  narration: {fileID: 0}
   isLeftDoor: 1
 --- !u!82 &3473095560629012930
 AudioSource:
@@ -10390,6 +10504,7 @@ MonoBehaviour:
   audioSource: {fileID: 904753024337333263}
   UIopenSound: {fileID: 8300000, guid: d6f51b60a250a164fb88274c2481edf9, type: 3}
   dooropenSound: {fileID: 0}
+  narration: {fileID: 0}
   isLeftDoor: 0
 --- !u!82 &904753024337333263
 AudioSource:
@@ -12242,6 +12357,7 @@ MonoBehaviour:
   audioSource: {fileID: 5250938686100363804}
   UIopenSound: {fileID: 8300000, guid: d6f51b60a250a164fb88274c2481edf9, type: 3}
   dooropenSound: {fileID: 0}
+  narration: {fileID: 0}
   isLeftDoor: 0
 --- !u!82 &5250938686100363804
 AudioSource:

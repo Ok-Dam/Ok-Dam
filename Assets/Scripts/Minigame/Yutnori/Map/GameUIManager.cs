@@ -2,6 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -19,6 +21,23 @@ public class GameUIManager : MonoBehaviour
 
     // GameManager 참조 (Inspector에서 할당 또는 Start에서 FindObjectOfType로 할당)
     [SerializeField] private YutnoriGameManager gameManager;
+
+    public Button endButton;
+    public TotalYutnoriController yutnoriController; // Inspector에서 연결
+
+
+    public void OnEndButton()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        else
+        {
+            PhotonNetwork.LoadLevel("MapScene");
+        }
+    }
+
 
     public void UpdateTurn(int turnCount)
     {

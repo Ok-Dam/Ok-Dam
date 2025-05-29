@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class QuizManager : MonoBehaviour
 {
     public QuizDatabase quizDatabase;
     public QuizPanelUI quizPanelUI;
     private BuffManager buffManager;
+    public PlayerState state;
 
     // 이미 출제된 퀴즈 인덱스 기록
     private List<int> usedQuizIndices = new List<int>();
@@ -15,35 +17,26 @@ public class QuizManager : MonoBehaviour
         buffManager = GetComponent<BuffManager>();
     }
 
-    // 콜백과 PlayerState를 모두 받도록 시그니처 수정
-    public void ShowRandomQuiz(System.Action<bool> onQuizEnd, PlayerState playerState = null)
+    public void ShowQuizByNodeNumber(int nodeNumber, System.Action<bool> onQuizEnd, PlayerState playerState = null)
     {
         var quizzes = quizDatabase.quizzes;
-        if (quizzes.Count == 0) return;
+        var nodeQuizzes = quizzes.Where(q => q.nodeNumber == nodeNumber).ToList();
+        QuizData quizToShow = nodeQuizzes.Count > 0
+            ? nodeQuizzes[Random.Range(0, nodeQuizzes.Count)]
+            : quizzes[Random.Range(0, quizzes.Count)];
 
-        // 아직 출제되지 않은 퀴즈 인덱스 목록 생성
-        List<int> availableIndices = new List<int>();
-        for (int i = 0; i < quizzes.Count; i++)
+        // 자동 성공 버프가 있으면 바로 정답 처리
+        if (playerState != null && playerState.nextBuffAutoSuccess)
         {
-            if (!usedQuizIndices.Contains(i))
-                availableIndices.Add(i);
+            playerState.ConsumeNextBuffAutoSuccess();
+            Debug.Log("[BuffPOI] 버프 자동 성공");
+            OnQuizResult(true, playerState, onQuizEnd); // 정답 처리
+            return;
         }
 
-        // 모든 퀴즈가 출제됐으면 이력 초기화(한 바퀴 돌고 다시 시작)
-        if (availableIndices.Count == 0)
-        {
-            usedQuizIndices.Clear();
-            for (int i = 0; i < quizzes.Count; i++)
-                availableIndices.Add(i);
-        }
-
-        // 랜덤 인덱스 선택
-        int randomIdx = availableIndices[Random.Range(0, availableIndices.Count)];
-        usedQuizIndices.Add(randomIdx);
-
-        var quiz = quizzes[randomIdx];
-        quizPanelUI.Show(quiz, (isCorrect) => OnQuizResult(isCorrect, playerState, onQuizEnd));
+        quizPanelUI.Show(quizToShow, (isCorrect) => OnQuizResult(isCorrect, playerState, onQuizEnd));
     }
+
 
     private void OnQuizResult(bool isCorrect, PlayerState playerState, System.Action<bool> onQuizEnd)
     {
