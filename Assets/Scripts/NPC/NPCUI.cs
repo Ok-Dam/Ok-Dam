@@ -114,6 +114,9 @@ public class NPCUI : MonoBehaviour
 
         StartCoroutine(FocusInputDelayed());
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         HideChoices();
     }
 
@@ -123,6 +126,9 @@ public class NPCUI : MonoBehaviour
         inputField.gameObject.SetActive(false);
         inputField.text = "";
         IsTalkingToNPC = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void HighlightChoice(int idx)
@@ -159,6 +165,10 @@ public class NPCUI : MonoBehaviour
             dialogueText.text = "🤖 NPC: " + response;
             inputField.Select();
             inputField.ActivateInputField();
+
+            var scrollRect = dialoguePanel.GetComponentInChildren<ScrollRect>();
+            if (scrollRect != null)
+                scrollRect.verticalNormalizedPosition = 1f;
         };
 
         gpt.RequestGpt(userMessage);
