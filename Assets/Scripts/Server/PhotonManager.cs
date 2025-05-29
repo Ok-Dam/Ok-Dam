@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
+using static MapSceneInitializer;
 
 
 public class PhotonManager : MonoBehaviourPunCallbacks
@@ -15,6 +17,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     //Start보다 먼저 실행됨.
     private void Awake()
     {
+        if (PhotonNetwork.IsConnected) return;
         //같은 룸의 유저들에게 자동으로 씬을 로딩
         PhotonNetwork.AutomaticallySyncScene = true;
         //같은 버전의 유저끼리 접속 허용
@@ -42,6 +45,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}");
         PhotonNetwork.JoinRandomRoom(); //랜덤 매치메이킹 기능 제공
+
+
+
+        if (SceneManager.GetActiveScene().name == "MapScene" &&
+        GameObject.FindWithTag("Player") == null)
+        {
+            Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
+            int idx = Random.Range(1, points.Length);
+
+            PhotonNetwork.Instantiate("Player", points[idx].position, points[idx].rotation);
+        }
     }
 
     //랜덤한 룸 입장이 실패했을 경우 호출되는 콜백 함수
@@ -63,7 +77,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         Debug.Log("Created Room");
-        Debug.Log($"Room Name = { PhotonNetwork.CurrentRoom.Name}");
+        Debug.Log($"Room Name = {PhotonNetwork.CurrentRoom.Name}");
     }
 
     //룸에 입장한 후 호출되는 콜백 함수
@@ -72,29 +86,62 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log($"PhotoNetwork.InRoom = {PhotonNetwork.InRoom}");
         Debug.Log($"Player Count = {PhotonNetwork.CurrentRoom.PlayerCount}");
 
-        foreach(var player in PhotonNetwork.CurrentRoom.Players)
+        foreach (var player in PhotonNetwork.CurrentRoom.Players)
         {
             Debug.Log($"{player.Value.NickName},{player.Value.ActorNumber}");
         }
 
-        //캐릭터 출현 정보를 배열에 저장
-        Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
-        int idx = Random.Range(1, points.Length);
-        //캐릭터 생성
-        PhotonNetwork.Instantiate("Player", points[idx].position, points[idx].rotation, 0);
+        if (SceneManager.GetActiveScene().name == "MapScene" && GameObject.FindWithTag("Player") == null)
+        {
+            Vector3 spawnPos;
+            Quaternion spawnRot;
+
+            if (GameStateManager.isReturningFromMiniGame)
+            {
+                GameObject returnPoint = GameObject.Find("ReturnPoint");
+                if (returnPoint != null)
+                {
+                    spawnPos = returnPoint.transform.position;
+                    spawnRot = returnPoint.transform.rotation;
+                }
+                else
+                {
+                    Debug.LogWarning("ReturnPoint not found! Using default spawn.");
+                    Transform[] fallback = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
+                    int idx = Random.Range(1, fallback.Length);
+                    spawnPos = fallback[idx].position;
+                    spawnRot = fallback[idx].rotation;
+                }
+
+                GameStateManager.isReturningFromMiniGame = false;
+            }
+            else
+            {
+                Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
+                int idx = Random.Range(1, points.Length);
+                spawnPos = points[idx].position;
+                spawnRot = points[idx].rotation;
+            }
+
+            PhotonNetwork.Instantiate("Player", spawnPos, spawnRot);
+        }
     }
 
-   
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("MapScene");  // 룸 나가면 다시 맵 씬 로딩
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

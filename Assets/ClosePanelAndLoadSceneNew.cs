@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Photon.Pun;
+using static MapSceneInitializer;
 
 public class ClosePanelAndLoadSceneNew : MonoBehaviour
 {
@@ -11,14 +13,20 @@ public class ClosePanelAndLoadSceneNew : MonoBehaviour
 
     public void CloseAndLoad()
     {
-        StartCoroutine(CloseAndLoadCoroutine());
+        Debug.Log("씬 전환 시도 중...");
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
+        {
+            StartCoroutine(CloseAndLoadCoroutine());
+        }
+        else
+        {
+            Debug.LogWarning("Photon에 연결되지 않아서 씬 전환 안됨.");
+        }
     }
 
     private IEnumerator CloseAndLoadCoroutine()
     {
-        // 1. 기존 패널 닫기
-        if (panelToClose != null)
-            panelToClose.SetActive(false);
+
 
         // 2. 로딩 패널 보이기
         if (loadingPanel != null)
@@ -27,8 +35,10 @@ public class ClosePanelAndLoadSceneNew : MonoBehaviour
         // 3. 잠시 대기 (로딩 메시지 보여줄 시간 확보)
         yield return new WaitForSeconds(loadingDelay);
 
-        // 4. 씬 이동
-        SceneManager.LoadScene(sceneToLoadName);
+        Debug.Log("씬 이름 확인: " + sceneToLoadName);
+        MapSceneInitializer.SetRestartFlag();
+        GameStateManager.isReturningFromMiniGame = true;
+        SceneManager.LoadScene(sceneToLoadName, LoadSceneMode.Single);
     }
 }
 
