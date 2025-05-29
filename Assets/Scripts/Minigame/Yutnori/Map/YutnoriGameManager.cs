@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -62,7 +63,10 @@ public class YutnoriGameManager : MonoBehaviour
                 startMoveStage();
                 break;
             case GameStage.End:
-                endPanelUI.Show();
+                { 
+                    endPanelUI.Show();
+                    endPanelUI.SetEndButtonText($"{turnCount}턴 소요!");
+                }
                 break;
         }
     }
@@ -312,15 +316,8 @@ public class YutnoriGameManager : MonoBehaviour
                 {
                     var targetPiece = allStacked[0];
 
-                    if (targetPiece.playerState.nextBuffAutoSuccess)
-                    {
-                        Debug.Log($"[BuffPOI] {targetPiece.name}은(는) 버프 자동 성공");
-                        targetPiece.playerState.ConsumeNextBuffAutoSuccess();
-                        CheckTurnEndable(CurrentPlayer);
-                        break;
-                    }
-
-                    quizManager.ShowRandomQuiz((isCorrect) =>
+                    // currentNode.nodeNumber를 전달
+                    quizManager.ShowQuizByNodeNumber(targetPiece.currentNode.nodeNumber, (isCorrect) =>
                     {
                         CheckTurnEndable(CurrentPlayer);
                     }, targetPiece.playerState);

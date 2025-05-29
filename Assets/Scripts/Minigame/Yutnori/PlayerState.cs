@@ -11,7 +11,6 @@ public class PlayerState
     // 윷 결과 관련
     public string currentYutResult = "";
     public int throwsLeft = 1;
-    //public const int maxThrows = 3;
 
     // 이번 턴에 던진 모든 윷 결과 (도/개/걸/윷/모/빽도 인덱스)
     public List<int> yutResultIndices = new List<int>();
@@ -51,7 +50,8 @@ public class PlayerState
         if (idx >= 0)
             yutResultIndices.Add(idx);
 
-        moveDistance = GetMoveDistance(result);
+        moveDistance = GetMoveDistance(result) + nextMovePlus;
+        nextMovePlus = 0;
 
         // 윷/모면 보너스
         if (result == "윷" || result == "모")

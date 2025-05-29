@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -6,43 +7,49 @@ using System.Linq;
 
 public class QuizPanelUI : MonoBehaviour
 {
+    public GameObject quizPanel;
     public TextMeshProUGUI questionText;
-    public List<Image> questionImages; // 여러 질문 이미지 지원
+    public Sprite questionImages; // 여러 질문 이미지 지원
     public List<Button> choiceButtons; // 버튼 수만큼 Inspector에서 할당
-    public TextMeshProUGUI explanationText;
-    public Button closeButton;
+    public Button closeButton; // 퀴즈 패널의 확인 버튼
+    public Image questionImageUI;
 
-    // 선택지 버튼 내부에 Image, TextMeshProUGUI 모두 넣어둘 것!
-    // (둘 다 활성화/비활성화로 상황에 따라 표시)
+    // ExpPanel 관련
+    public GameObject expPanel; // ExpPanel 오브젝트 (퀴즈 패널과 별도)
+    public TextMeshProUGUI explanationText; // ExpPanel의 해설 텍스트
+    public TextMeshProUGUI buffTxt; // ExpPanel의 버프 텍스트
 
     private System.Action<bool> onQuizEnd;
     private bool isCorrectCache; // 마지막 선택 결과 캐싱
+    public string lastExplanation; // 마지막 해설 캐싱
 
     public void Show(QuizData quiz, System.Action<bool> onEnd)
     {
         gameObject.SetActive(true);
         onQuizEnd = onEnd;
-        isCorrectCache = false; // 초기화
+        isCorrectCache = false;
+        lastExplanation = quiz.explanation;
 
         // 질문 텍스트
+
         questionText.text = quiz.questionText;
 
+
+
         // 질문 이미지(여러 개 지원)
-        for (int i = 0; i < questionImages.Count; i++)
+        if (quiz.questionImages != null)
+            questionImages = quiz.questionImages;
+        if (quiz.questionImages != null)
         {
-            if (quiz.questionImages != null && i < quiz.questionImages.Count && quiz.questionImages[i] != null)
-            {
-                questionImages[i].sprite = quiz.questionImages[i];
-                questionImages[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                questionImages[i].gameObject.SetActive(false);
-            }
+            questionImageUI.sprite = quiz.questionImages;
+            questionImageUI.gameObject.SetActive(true);
+        }
+        else
+        {
+            questionImageUI.gameObject.SetActive(false);
         }
 
-        // 해설 비활성화
-        explanationText.gameObject.SetActive(false);
+
 
         // 선택지 표시
         for (int i = 0; i < choiceButtons.Count; i++)
@@ -54,7 +61,7 @@ public class QuizPanelUI : MonoBehaviour
             btn.gameObject.SetActive(hasText || hasImage);
 
             var btnImage = btn.GetComponentsInChildren<Image>(true)
-                  .FirstOrDefault(img => img.gameObject != btn.gameObject);
+            .FirstOrDefault(img => img.gameObject != btn.gameObject);
             var btnText = btn.GetComponentInChildren<TextMeshProUGUI>(true);
 
             if (hasImage)
@@ -79,21 +86,27 @@ public class QuizPanelUI : MonoBehaviour
             btn.onClick.RemoveAllListeners();
             btn.onClick.AddListener(() =>
             {
-                bool isCorrect = (idx == quiz.correctIndex);
-                isCorrectCache = isCorrect; // 결과 캐싱
-                explanationText.text = (isCorrect ? "정답!\n" : "오답!\n") + quiz.explanation;
-                explanationText.gameObject.SetActive(true);
+                isCorrectCache = (idx == quiz.correctIndex);
                 foreach (var b in choiceButtons) b.interactable = false;
-                closeButton.gameObject.SetActive(true);
+                // [수정] ExpPanel 호출을 여기서 제거. 대신 상위 매니저에서 처리
+                onQuizEnd?.Invoke(isCorrectCache); // 정답 여부만 콜백으로 넘김
             });
         }
+    }
+
+
+    /// 해설/버프 UI(ExpPanel) 표시, 닫기 버튼에서만 onClose 호출
+    public void ShowExpPanel(bool isCorrect, string explanation, string buffDescription, System.Action onClose)
+    {
+        expPanel.SetActive(true);
+        explanationText.text = (isCorrect ? "정답!\n" : "오답!\n") + explanation;
+        buffTxt.text = buffDescription;
 
         closeButton.onClick.RemoveAllListeners();
         closeButton.onClick.AddListener(() => {
-            gameObject.SetActive(false);
-            // 퀴즈를 닫을 때 콜백 실행
-            onQuizEnd?.Invoke(isCorrectCache);
+            expPanel.SetActive(false);
+            quizPanel.SetActive(false);
+            onClose?.Invoke();
         });
-        closeButton.gameObject.SetActive(false);
     }
 }
