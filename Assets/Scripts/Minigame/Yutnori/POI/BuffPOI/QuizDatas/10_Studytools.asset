@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeNumber: 10
   questionText: "\uC774 \uBB3C\uAC74\uC740 \uC5B4\uB290 \uBC29\uC5D0 \uC788\uC744\uAE4C\uC694?"
-  questionImages:
-  - {fileID: 21300000, guid: c18d582e12e8b6a4791d1527ebd3855a, type: 3}
+  questionImages: {fileID: 21300000, guid: c18d582e12e8b6a4791d1527ebd3855a, type: 3}
   choices:
   - "\uACF3\uAC04"
   - "\uD589\uB791\uCC44"

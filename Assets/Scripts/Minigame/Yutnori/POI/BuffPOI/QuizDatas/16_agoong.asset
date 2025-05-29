@@ -15,8 +15,7 @@ MonoBehaviour:
   nodeNumber: 16
   questionText: "\uC774 \uBB3C\uCCB4\uB294 \uC5B4\uB290 \uBC29\uACFC \uC5F0\uACB0\uB3FC
     \uC788\uC744\uAE4C\uC694?"
-  questionImages:
-  - {fileID: 21300000, guid: fd2240b1107a22041b374b6d01548cb0, type: 3}
+  questionImages: {fileID: 21300000, guid: fd2240b1107a22041b374b6d01548cb0, type: 3}
   choices:
   - "\uC0AC\uB791\uBC29"
   - "\uC548\uBC29"
