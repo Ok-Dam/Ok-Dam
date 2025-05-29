@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum GameStage { Start, Throw, Move, Interact, End }
@@ -6,12 +7,13 @@ public enum GameStage { Start, Throw, Move, Interact, End }
 public class YutnoriGameManager : MonoBehaviour
 {
     public GameStage stage;
-    [SerializeField] private NodeManager nodeManager;
-    [SerializeField] private ShortcutDialogUI shortcutDialogUI;
+    private NodeManager nodeManager;
+    //[SerializeField] private ShortcutDialogUI shortcutDialogUI;
     [SerializeField] private EndPanelUI endPanelUI;
     [SerializeField] private List<PlayerPiece> playerPieces = new List<PlayerPiece>();
     private QuizManager quizManager;
     [SerializeField] private GameUIManager gameUIManager; // 턴수 화면에 띄우는 용
+    public PointOfInterest startingNode;
 
     // 현재 턴인 플레이어와 관련 정보(두 번 던지기 등)
     // 1인용: 단일 PlayerState만 사용
@@ -33,6 +35,7 @@ public class YutnoriGameManager : MonoBehaviour
 
         gameUIManager.UpdateTurn(turnCount);
 
+        nodeManager = GetComponent<NodeManager>();
         quizManager = GetComponent<QuizManager>();
 
         // 모든 말에 같은 PlayerState를 할당
@@ -59,44 +62,34 @@ public class YutnoriGameManager : MonoBehaviour
                 break;
             case GameStage.End:
                 endPanelUI.Show();
-                Debug.Log("END");
                 break;
         }
     }
-
     public void ProcessYutResult(string result)
     {
-        // 테스트용: 어떤 결과든 무조건 빽도로 처리
-        //result = "도";
-        
 
-        CurrentPlayer.currentYutResult = result;
-        // 테스트용: 이동거리 증가
-        CurrentPlayer.moveDistance = 8; return;
+        // 1. PlayerState에 결과 등록(상태 변화 일괄 처리)
+        CurrentPlayer.RegisterYutResult(result);
 
-        switch (result)
+        // 2. UI 갱신
+        gameUIManager.ShowYutResults(CurrentPlayer.yutResultIndices);
+
+        // 3. 던질 횟수에 따라 다음 단계 결정
+        if (CurrentPlayer.throwsLeft > 0)
         {
-            case "도": CurrentPlayer.moveDistance = 1; break;
-            case "개": CurrentPlayer.moveDistance = 2; break;
-            case "걸": CurrentPlayer.moveDistance = 3; break;
-            case "윷": CurrentPlayer.moveDistance = 4; CurrentPlayer.bonusThrowCount++; break;
-            case "모": CurrentPlayer.moveDistance = 5; CurrentPlayer.bonusThrowCount++; break;
-            case "빽도": CurrentPlayer.moveDistance = -1; break;
-            default: CurrentPlayer.moveDistance = 0; break;
+            setGameStage(GameStage.Throw); // 계속 던지기
+                                           // 필요하다면 UI 안내, 버튼 활성화 등
         }
-        
+        else
+        {
+            setGameStage(GameStage.Move); // Move 단계로 전환
+                                          // 패/말 선택 등 Move 단계 로직 시작
+        }
     }
+
     public void startMoveStage()
     {
         HighlightAllPieces(true);
-    }
-
-    public void HighlightAllPieces(bool highlight)
-    {
-        foreach (var piece in playerPieces)
-        {
-            piece.Highlight(highlight);
-        }
     }
     public void SelectPiece(PlayerPiece piece)
     {
@@ -105,20 +98,67 @@ public class YutnoriGameManager : MonoBehaviour
             root = root.parentPiece;
 
         CurrentPlayer.piece = root;
+
         HighlightAllPieces(false);
         root.Highlight(true);
 
-        // 빽도 특수 처리
-        if (CurrentPlayer.moveDistance == -1)
-            nodeManager.HighlightReachableNodes(root.currentNode, -1, root);
+        if (CurrentPlayer.selectedResultIndex >= 0)
+        {
+            int moveDist = CurrentPlayer.GetSelectedMoveDistance();
+
+            // 빽도 특수 처리
+            if (moveDist == -1)
+            {
+                nodeManager.HighlightReachableNodes(root.currentNode, -1, root);
+            }
+            else
+            {
+                nodeManager.HighlightReachableNodes(root.currentNode, moveDist, root);
+            }
+        }
         else
-            nodeManager.HighlightReachableNodes(root.currentNode, CurrentPlayer.moveDistance, root);
+        {
+            nodeManager.ClearHighlights();
+        }
     }
+
+    public void OnYutResultSelected(int selectedIndex)
+    {
+        CurrentPlayer.selectedResultIndex = selectedIndex;
+
+        // 이미 말이 선택되어 있다면 전체 말 하이라이트를 다시 할 필요 없음
+        if (CurrentPlayer.piece != null)
+        {
+            HighlightReachableNodesBySelection();
+        }
+        else
+        {
+            // 말이 아직 선택되지 않았다면, 모든 말을 하이라이트해서 선택 유도
+            HighlightAllPieces(true);
+            nodeManager.ClearHighlights();
+        }
+    }
+
+    private void HighlightAllPieces(bool highlight)
+    {
+        foreach (var p in playerPieces)
+            p.Highlight(highlight);
+    }
+
+    private void HighlightReachableNodesBySelection()
+    {
+        nodeManager.ClearHighlights();
+        int moveDist = CurrentPlayer.GetSelectedMoveDistance();
+        nodeManager.HighlightReachableNodes(CurrentPlayer.piece.currentNode, moveDist, CurrentPlayer.piece);
+    }
+
+
+
     public void MoveSelectedPieceTo(PointOfInterest node)
     {
         if (CurrentPlayer.piece != null && CurrentPlayer.piece.parentPiece == null)
         {
-            if (CurrentPlayer.moveDistance == -1)
+            if (CurrentPlayer.GetSelectedMoveDistance() == -1)
             {
                 if (!CurrentPlayer.piece.HasStarted())
                 {
@@ -148,58 +188,58 @@ public class YutnoriGameManager : MonoBehaviour
         }
     }
 
+    // GameManager.cs
 
-    private void UseShortcut(PlayerPiece piece, PointOfInterest currentPoi)
+    // 이동 완료 후 호출되는 함수
+    public void OnPieceMoveComplete()
     {
-        PointOfInterest nextShortcut = FindNextShortcut(currentPoi, 10);
-        Debug.Log(nextShortcut != null ? nextShortcut.name : "No shortcut found");
+        // 1. 사용한 패 UI 삭제
+        gameUIManager.DeleteYutResultImage(CurrentPlayer.selectedResultIndex);
 
-        if (nextShortcut != null)
+        // 2. 패 리스트에서 삭제
+        if (CurrentPlayer.selectedResultIndex >= 0 && CurrentPlayer.selectedResultIndex < CurrentPlayer.yutResultIndices.Count)
         {
-            piece.SetShortcutUsed(true);
-
-            // 업힌 말(자식)이면 부모에서 분리
-            if (piece.parentPiece != null)
-            {
-                piece.parentPiece.stackedPieces.Remove(piece);
-                piece.parentPiece = null;
-            }
-
-            CurrentPlayer.piece = piece;
-            MoveSelectedPieceTo(nextShortcut);
+            CurrentPlayer.yutResultIndices.RemoveAt(CurrentPlayer.selectedResultIndex);
+            CurrentPlayer.selectedResultIndex = -1;
         }
     }
 
-    private PointOfInterest FindNextShortcut(PointOfInterest start, int maxStep = 10)
+
+    // 턴 넘겨도 되는지 확인
+    void CheckTurnEndable(PlayerState player)
     {
-        var current = start;
-        for (int i = 0; i < maxStep; i++)
+        // 1. 사용한 패 삭제
+        if (player.selectedResultIndex >= 0 && player.selectedResultIndex < player.yutResultIndices.Count)
         {
-            if (current.Type == POIType.Shortcut && i != 0)
-                return current;
-            if (current.NextPointsOfInterest == null || current.NextPointsOfInterest.Count == 0)
-                break;
-            current = current.NextPointsOfInterest[0];
+            player.yutResultIndices.RemoveAt(player.selectedResultIndex);
+            player.selectedResultIndex = -1;
         }
-        return null;
-    }
-    public void EndTurn()
-    {
-        // 보너스 던지기(윷/모/버프 등) 기회가 남아 있으면 턴 카운트 증가 없이 추가 던지기
-        if (CurrentPlayer.bonusThrowCount > 0)
+
+        // 2. 남은 패/던질 기회 분기
+        if (player.yutResultIndices.Count > 0)
         {
-            CurrentPlayer.bonusThrowCount--;
+            setGameStage(GameStage.Move);
+            return;
+        }
+        else if (player.throwsLeft > 0)
+        {
             setGameStage(GameStage.Throw);
         }
         else
         {
+            EndTurn();
+        }
+    }
+
+    public void EndTurn()
+    {
             turnCount++;
             gameUIManager.UpdateTurn(turnCount);
-            // (여러 플레이어라면 다음 플레이어로 인덱스 변경)
-            // currentPlayerIndex = (currentPlayerIndex + 1) % playerStates.Length;
-            setGameStage(GameStage.Throw);
-        }
-
+        // (여러 플레이어라면 다음 플레이어로 인덱스 변경)
+        // currentPlayerIndex = (currentPlayerIndex + 1) % playerStates.Length;
+        CurrentPlayer.ResetTurn();           // 플레이어 상태(패 기록 등) 초기화
+        gameUIManager.ClearYutResults();     // UI에 표시된 패 이미지 등 초기화
+        setGameStage(GameStage.Throw);
         // (여기서 턴 카운트 UI 갱신 등 추가 처리)
     }
 
@@ -235,58 +275,6 @@ public class YutnoriGameManager : MonoBehaviour
         switch (poi.Type)
         {
             case POIType.Start:
-                break;
-            case POIType.Component:
-                setGameStage(GameStage.Throw);
-                break;
-            case POIType.Upgrade:
-                setGameStage(GameStage.Throw);
-                break;
-            case POIType.Buff:
-                {
-                    int idx = 0;
-
-                    void ShowNextQuiz()
-                    {
-                        if (idx >= allStacked.Count)
-                        {
-                            EndTurn();
-                            return;
-                        }
-
-                        var targetPiece = allStacked[idx];
-                        idx++;
-
-                        if (targetPiece.playerState.nextBuffAutoSuccess)
-                        {
-                            Debug.Log($"[BuffPOI] {targetPiece.name}은(는) 버프 자동 성공");
-                            targetPiece.playerState.ConsumeNextBuffAutoSuccess();
-                        }
-                        quizManager.ShowRandomQuiz((isCorrect) =>
-                        {
-                            // 퀴즈 결과 처리 후 다음 퀴즈 호출
-                            ShowNextQuiz();
-                        }, targetPiece.playerState);
-                    }
-
-                    ShowNextQuiz(); // 첫 퀴즈부터 시작
-                    break;
-                }
-            case POIType.Shortcut:
-                if (!piece.HasUsedShortcut())
-                {
-                    var nextShortcut = FindNextShortcut(poi);
-                    bool isLastShortcut = (nextShortcut == null);
-
-                    shortcutDialogUI.Show(
-                        () => UseShortcut(piece, poi),
-                        () => { EndTurn(); },
-                        isLastShortcut
-                    );
-                }
-                else EndTurn();
-                break;
-            case POIType.End:
                 {
                     // 1. 완주할 모든 말 리스트 복사 (업힌 말 포함)
                     var finishedPieces = piece.GetAllStacked();
@@ -304,11 +292,38 @@ public class YutnoriGameManager : MonoBehaviour
                     }
                     else
                     {
-                        setGameStage(GameStage.Throw);
+                        
+                        CheckTurnEndable(CurrentPlayer);
                     }
 
                     break;
                 }
+            case POIType.Yard:
+                CheckTurnEndable(CurrentPlayer);
+                break;
+            case POIType.Event:
+                CheckTurnEndable(CurrentPlayer);
+                break;
+            case POIType.Room:
+                {
+                    var targetPiece = allStacked[0];
+
+                    if (targetPiece.playerState.nextBuffAutoSuccess)
+                    {
+                        Debug.Log($"[BuffPOI] {targetPiece.name}은(는) 버프 자동 성공");
+                        targetPiece.playerState.ConsumeNextBuffAutoSuccess();
+                        CheckTurnEndable(CurrentPlayer);
+                        break;
+                    }
+
+                    quizManager.ShowRandomQuiz((isCorrect) =>
+                    {
+                        CheckTurnEndable(CurrentPlayer);
+                    }, targetPiece.playerState);
+
+                    break;
+                }
+
         }
     }
 
