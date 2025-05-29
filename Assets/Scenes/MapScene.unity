@@ -3385,11 +3385,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5086873084775371691, guid: 84708512f90b2ff4eae8d04dd48a2f44, type: 3}
-  distance: 2.5
-  mouseSensitivity: 1600
+  distance: 4
+  mouseSensitivity: 800
   minVerticalAngle: -40
   maxVerticalAngle: 80
-  offset: {x: 0, y: 1.5, z: 0}
+  offset: {x: 0, y: 2.5, z: 0}
 --- !u!114 &318954239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10836,7 +10836,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 357497490}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11866,7 +11866,7 @@ Transform:
   m_GameObject: {fileID: 1315665590}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -5.47, y: 0, z: 45.45}
+  m_LocalPosition: {x: 15.34, y: 0, z: 46.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21096,6 +21096,30 @@ PrefabInstance:
     - target: {fileID: 7133656287223796049, guid: 81bab3379adac01439fec457235fc280, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444750757492210159, guid: 81bab3379adac01439fec457235fc280, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.014999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444750757492210159, guid: 81bab3379adac01439fec457235fc280, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.7010001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444750757492210159, guid: 81bab3379adac01439fec457235fc280, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -21.847
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677187067524689715, guid: 81bab3379adac01439fec457235fc280, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677187067524689715, guid: 81bab3379adac01439fec457235fc280, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.695
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677187067524689715, guid: 81bab3379adac01439fec457235fc280, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -22.04
       objectReference: {fileID: 0}
     - target: {fileID: 8345319989438079960, guid: 81bab3379adac01439fec457235fc280, type: 3}
       propertyPath: arrowUI
