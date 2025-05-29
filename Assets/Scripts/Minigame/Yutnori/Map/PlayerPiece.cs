@@ -15,7 +15,8 @@ public class PlayerPiece : MonoBehaviour
     [SerializeField] private YutnoriGameManager gameManager;
     [SerializeField] private Highlighter highlighter;
     [SerializeField] private HanokPart hanokPart;
-    [SerializeField] private MapGenerator mapGenerator;
+
+    public bool canMove = false;
 
     public Sprite finishHudSprite; // 완주시 띄울 본인 이미지
 
@@ -32,7 +33,7 @@ public class PlayerPiece : MonoBehaviour
 
     void Start()
     {
-        SetCurrentNode(mapGenerator.getStartingPoint());
+        SetCurrentNode(gameManager.startingNode);
     }
 
     public void SetCurrentNode(PointOfInterest node)
@@ -87,6 +88,7 @@ public class PlayerPiece : MonoBehaviour
             currentNode = path[i];
         }
 
+        gameManager.OnPieceMoveComplete();
         // 1. 먼저 상호작용(BuffPOI 등) 처리
         gameManager.setGameStage(GameStage.Interact);
         gameManager.interactByPOI(this, currentNode);
@@ -103,6 +105,8 @@ public class PlayerPiece : MonoBehaviour
         Vector3 end = prevNode.transform.position + Vector3.up * 0.5f;
         yield return MoveAlongArcWithStacked(start, end, 0.4f, 4.0f);
         currentNode = prevNode;
+
+        gameManager.OnPieceMoveComplete();
 
         TryStackOnSameNode();
         gameManager.setGameStage(GameStage.Interact);

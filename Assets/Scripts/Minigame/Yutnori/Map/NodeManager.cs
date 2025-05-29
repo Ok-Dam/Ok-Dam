@@ -1,101 +1,171 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NodeManager : MonoBehaviour
 {
-    [SerializeField] private YutnoriGameManager gameManager;
-    private List<PointOfInterest> highlightedNodes = new List<PointOfInterest>();
-    public IReadOnlyList<PointOfInterest> HighlightedNodes => highlightedNodes; // 같은 리스트지만 읽기 전용으로 제공, 외부 참고용
+    [Header("노드 부모 (Nodes 오브젝트)")]
+    [SerializeField] private Transform nodesParent; // Inspector에서 Nodes(Empty) 할당
 
-    // 분기점 때문에 직전 노드가 여러 개일 수도 있으니 List
+    [SerializeField] private Canvas uiCanvas; // Inspector에서 할당
+    [SerializeField] private Camera mainCamera; //
+
+    [Header("노드 하이라이트 프리팹")]
+    [SerializeField] private GameObject nodeHighlightPrefab; // Inspector에서 할당
+
+    private YutnoriGameManager gameManager;
+
+    private List<PointOfInterest> boardNodes; // 29개 노드, nodeNumber 순서대로
+
+    private List<GameObject> spawnedHighlights = new List<GameObject>(); // 동적으로 생성된 하이라이트 오브젝트
+    private List<PointOfInterest> highlightedNodes = new List<PointOfInterest>();
+    public IReadOnlyList<PointOfInterest> HighlightedNodes => highlightedNodes;
+
+    void Awake()
+    {
+        // 자식 노드 자동 수집 및 nodeNumber 순 정렬
+        boardNodes = new List<PointOfInterest>();
+        foreach (Transform child in nodesParent)
+        {
+            var poi = child.GetComponent<PointOfInterest>();
+            if (poi != null)
+                boardNodes.Add(poi);
+        }
+        boardNodes = boardNodes.OrderBy(n => n.nodeNumber).ToList();
+    }
+
+    private void Start()
+    {
+        gameManager = GetComponent<YutnoriGameManager>();
+    }
+
+    // 직전 노드(분기점 등) 반환
     public List<PointOfInterest> FindPreviousNodes(PointOfInterest node)
     {
         return node.PreviousPointsOfInterest;
     }
 
+    /// <summary>
+    /// 이동 가능 노드 하이라이트 (분기점 포함, 순환/고정 경로)
+    /// </summary>
     public void HighlightReachableNodes(PointOfInterest startNode, int distance, PlayerPiece piece)
     {
         ClearHighlights();
 
+        // 빽도(-1) 처리: 출발 전이면 29번(출발점), 출발 후면 PreviousPointsOfInterest
         if (distance == -1)
         {
             if (!piece.HasStarted())
             {
-                // 출발 전 빽도: 시작점만 하이라이트
-                var mapGen = FindObjectOfType<MapGenerator>();
-                var startPoint = mapGen.getStartingPoint();
-                HighlightNode(startPoint);
+                var startPoint = boardNodes.FirstOrDefault(n => n.nodeNumber == 29);
+                if (startPoint != null)
+                    HighlightNode(startPoint, piece);
+                else
+                    Debug.Log("HighlightReachableNodes - Baekdo: startPoint not found!");
             }
             else
             {
-                // 출발 후 빽도: 이전 노드들 하이라이트
                 var prevNodes = FindPreviousNodes(startNode);
                 foreach (var node in prevNodes)
-                    HighlightNode(node);
+                    HighlightNode(node, piece);
             }
             return;
         }
 
-        // 기존: 일반 이동
+        // 일반 이동: 분기점 포함, 여러 경로 모두 탐색
         var reachableNodes = FindReachableNodes(startNode, distance);
         foreach (var node in reachableNodes)
-            HighlightNode(node);
+            HighlightNode(node, piece);
     }
 
 
     private List<PointOfInterest> FindReachableNodes(PointOfInterest start, int distance)
     {
-        List<PointOfInterest> result = new List<PointOfInterest>();
-        Queue<NodeWithDistance> queue = new Queue<NodeWithDistance>();
-        queue.Enqueue(new NodeWithDistance(start, 0));
-        HashSet<PointOfInterest> visited = new HashSet<PointOfInterest> { start };
+        List<PointOfInterest> result = new();
+        Queue<(PointOfInterest node, int depth)> queue = new();
+        HashSet<(int, int)> visited = new();
 
+        // 1. 시작점이 junction이면 shortcutTarget만 enqueue
+        if (start.isJunction && start.shortcutTarget != null)
+        {
+            queue.Enqueue((start.shortcutTarget, 1));
+            visited.Add((start.shortcutTarget.nodeNumber, 1));
+        }
+        else
+        {
+            foreach (var next in start.NextPointsOfInterest)
+            {
+                queue.Enqueue((next, 1));
+                visited.Add((next.nodeNumber, 1));
+            }
+        }
+
+        // 2. 이후는 무조건 NextPointsOfInterest만 탐색
         while (queue.Count > 0)
         {
-            var current = queue.Dequeue();
+            var (current, depth) = queue.Dequeue();
 
-            // dead end 처리: 더 이상 갈 곳이 없고, 아직 moveDistance에 도달하지 못했을 때
-            if (current.node.NextPointsOfInterest == null || current.node.NextPointsOfInterest.Count == 0)
+            // 도착점(29)에 도달하면 무조건 멈춤
+            if (current.nodeNumber == 29 && (current != start || depth > 0))
             {
-                // dead end에 도달하면 결과에 추가
-                result.Add(current.node);
+                if (depth == distance)
+                    result.Add(current);
                 continue;
             }
 
-            if (current.distance == distance)
+            if (depth == distance)
             {
-                result.Add(current.node);
+                result.Add(current);
                 continue;
             }
 
-            foreach (var next in current.node.NextPointsOfInterest.Where(n => !visited.Contains(n)))
+            foreach (var next in current.NextPointsOfInterest)
             {
-                visited.Add(next);
-                queue.Enqueue(new NodeWithDistance(next, current.distance + 1));
+                if (!visited.Contains((next.nodeNumber, depth + 1)))
+                {
+                    queue.Enqueue((next, depth + 1));
+                    visited.Add((next.nodeNumber, depth + 1));
+                }
             }
         }
         return result;
     }
 
-    // 출발 노드에서 목적지 노드까지의 경로를 반환 (최단 경로)
-    // 왜 static? 클래스 전체에서 공유되는 유틸리티 기능이기 때문. 인스턴스 없이도 호출할 수 있고, 여러 곳에서 재사용
     public static List<PointOfInterest> FindPath(PointOfInterest start, PointOfInterest end)
     {
         var queue = new Queue<List<PointOfInterest>>();
         var visited = new HashSet<PointOfInterest>();
-        queue.Enqueue(new List<PointOfInterest> { start });
-        visited.Add(start);
+
+        // 1. 시작점이 junction이면 shortcutTarget만 enqueue
+        if (start.isJunction && start.shortcutTarget != null)
+        {
+            var path = new List<PointOfInterest> { start, start.shortcutTarget };
+            queue.Enqueue(path);
+            visited.Add(start);
+            visited.Add(start.shortcutTarget);
+        }
+        else
+        {
+            queue.Enqueue(new List<PointOfInterest> { start });
+            visited.Add(start);
+        }
 
         while (queue.Count > 0)
         {
             var path = queue.Dequeue();
-            var last = path.Last();
-            if (last == end)
+            var current = path.Last();
+
+            // 도착
+            if (current == end)
                 return path;
 
-            foreach (var next in last.NextPointsOfInterest)
+            // 도착점(29)에 도달하면 멈춤 (단, 출발점에서 바로 멈추면 안 됨)
+            if (current.nodeNumber == 29 && (current != start || path.Count > 1))
+                continue;
+
+            // 이후는 무조건 NextPointsOfInterest만 탐색
+            foreach (var next in current.NextPointsOfInterest)
             {
                 if (!visited.Contains(next))
                 {
@@ -105,40 +175,55 @@ public class NodeManager : MonoBehaviour
                 }
             }
         }
-        return null; // 경로 없음
+        Debug.Log("FindPath - 경로 없음");
+        return null;
     }
 
 
-    private void HighlightNode(PointOfInterest node)
+
+    public void HighlightNode(PointOfInterest node, PlayerPiece piece)
     {
-        Highlighter highlighter = node.GetComponentInChildren<Highlighter>();
-        if (highlighter != null)
+        if (nodeHighlightPrefab != null && uiCanvas != null && mainCamera != null)
         {
-            highlighter.StartBlink();
-            highlightedNodes.Add(node);
-            gameManager.CurrentPlayer.canMove = true; // 노드 클릭 시 말 움직일지 말지 제어하는 bool
-        }
-    }
+            GameObject highlight = Instantiate(nodeHighlightPrefab, uiCanvas.transform);
+            RectTransform highlightRect = highlight.GetComponent<RectTransform>();
+            Vector2 anchoredPos = WorldToCanvasPosition(uiCanvas, mainCamera, node.transform.position);
+            highlightRect.anchoredPosition = anchoredPos;
+            spawnedHighlights.Add(highlight);
 
+            // 클릭 이벤트 연결
+            Button btn = highlight.GetComponent<Button>();
+            if (btn != null)
+            {
+                btn.onClick.RemoveAllListeners();
+                btn.onClick.AddListener(() => gameManager.MoveSelectedPieceTo(node));
+            }
+        }
+        highlightedNodes.Add(node);
+        piece.canMove = true;
+    }
     public void ClearHighlights()
     {
-        foreach (var node in highlightedNodes)
+        // 기존 하이라이트 프리팹 모두 제거
+        foreach (var go in spawnedHighlights)
         {
-            Highlighter highlighter = node.GetComponentInChildren<Highlighter>();
-            if (highlighter != null) highlighter.StopBlink();
+            Destroy(go);
         }
+        spawnedHighlights.Clear();
+
         highlightedNodes.Clear();
-        gameManager.CurrentPlayer.canMove = false;
+        if (gameManager != null && gameManager.CurrentPlayer != null)
+            gameManager.CurrentPlayer.canMove = false;
     }
 
-    private class NodeWithDistance
+    // 하이라이트 이미지로 하게 바껴서 canvas에다 표시해야됨 > canvass에 좌표 전달용
+    public static Vector2 WorldToCanvasPosition(Canvas canvas, Camera camera, Vector3 worldPosition)
     {
-        public PointOfInterest node;
-        public int distance;
-        public NodeWithDistance(PointOfInterest node, int distance)
-        {
-            this.node = node;
-            this.distance = distance;
-        }
+        Vector2 viewportPosition = camera.WorldToViewportPoint(worldPosition);
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+        return new Vector2(
+            (viewportPosition.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f),
+            (viewportPosition.y * canvasRect.sizeDelta.y) - (canvasRect.sizeDelta.y * 0.5f)
+        );
     }
 }

@@ -1,13 +1,19 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public enum POIType { Start, Component, Upgrade, Shortcut, Buff, End }
+public enum POIType { Start, Room, Yard, Event }
 
 public class PointOfInterest : MonoBehaviour
 {
     public POIType Type;
-    // 직후 노드. 여러 분기 가능해서 List 
-    public List<PointOfInterest> NextPointsOfInterest { get; set; } = new();
+    public List<PointOfInterest> NextPointsOfInterest = new();
     public List<PointOfInterest> PreviousPointsOfInterest = new();
+    public string description;
 
+    [Header("분기점 여부 (Inspector에서 직접 체크)")]
+    public bool isJunction = false;
+    public PointOfInterest shortcutTarget;
+
+    [Header("노드 번호 (1~29)")]
+    public int nodeNumber;
 }
