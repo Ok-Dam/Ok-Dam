@@ -1093,6 +1093,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &72278853 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5887456511182287408, guid: 3436e8b0ca5f1d047a8244109f08ff93, type: 3}
+  m_PrefabInstance: {fileID: 1622477929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c7c826a5dc709f4687beca7d8977d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &72351900
 GameObject:
   m_ObjectHideFlags: 0
@@ -10263,6 +10274,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1261178860}
   m_SourcePrefab: {fileID: 100100000, guid: 7607a9dce0cf64c4f9461d826e1be0b7, type: 3}
+--- !u!114 &1117674601 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8065082114311273960, guid: 3436e8b0ca5f1d047a8244109f08ff93, type: 3}
+  m_PrefabInstance: {fileID: 1622477929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c7c826a5dc709f4687beca7d8977d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1122873020
 GameObject:
   m_ObjectHideFlags: 0
@@ -10814,7 +10836,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 357497490}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15201,10 +15223,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5887456511182287408, guid: 3436e8b0ca5f1d047a8244109f08ff93, type: 3}
+      propertyPath: shortcutTarget
+      value: 
+      objectReference: {fileID: 1117674601}
     - target: {fileID: 6363240048211070109, guid: 3436e8b0ca5f1d047a8244109f08ff93, type: 3}
       propertyPath: m_Name
       value: YutnoriGame
       objectReference: {fileID: 0}
+    - target: {fileID: 6969881192523082974, guid: 3436e8b0ca5f1d047a8244109f08ff93, type: 3}
+      propertyPath: shortcutTarget
+      value: 
+      objectReference: {fileID: 72278853}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
