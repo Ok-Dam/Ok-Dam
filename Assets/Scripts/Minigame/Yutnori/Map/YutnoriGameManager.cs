@@ -196,13 +196,17 @@ public class YutnoriGameManager : MonoBehaviour
         // 1. 사용한 패 UI 삭제
         gameUIManager.DeleteYutResultImage(CurrentPlayer.selectedResultIndex);
 
-        // 2. 패 리스트에서 삭제
+        // 2. 내부 리스트에서 삭제
         if (CurrentPlayer.selectedResultIndex >= 0 && CurrentPlayer.selectedResultIndex < CurrentPlayer.yutResultIndices.Count)
         {
             CurrentPlayer.yutResultIndices.RemoveAt(CurrentPlayer.selectedResultIndex);
             CurrentPlayer.selectedResultIndex = -1;
         }
+
+        // 3. UI 재갱신 (중요!)
+        gameUIManager.ShowYutResults(CurrentPlayer.yutResultIndices);
     }
+
 
 
     // 턴 넘겨도 되는지 확인

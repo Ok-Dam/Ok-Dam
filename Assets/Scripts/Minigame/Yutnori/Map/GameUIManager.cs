@@ -93,8 +93,10 @@ public class GameUIManager : MonoBehaviour
         {
             Destroy(spawnedYutResultImages[idx]);
             spawnedYutResultImages.RemoveAt(idx);
+            selectedIndex = -1;
         }
     }
+
 
 
     // 추후 나가기 버튼 등도 여기에 추가
