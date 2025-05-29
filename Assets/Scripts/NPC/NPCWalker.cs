@@ -194,4 +194,16 @@ public class NPCWalker : MonoBehaviour
             spawner.OnNPCDespawn(gameObject);
         Destroy(gameObject);
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("NPC"))
+        {
+            // 오른쪽으로 30도 회전
+            transform.Rotate(0f, 30f, 0f);
+
+            // 새로운 목적지로 이동하게 하고 싶으면 아래도 추가
+            // SetNewDestination();
+        }
+    }
 }

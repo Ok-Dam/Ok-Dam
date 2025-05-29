@@ -46,9 +46,7 @@ public class NodeManager : MonoBehaviour
         return node.PreviousPointsOfInterest;
     }
 
-    /// <summary>
-    /// 이동 가능 노드 하이라이트 (분기점 포함, 순환/고정 경로)
-    /// </summary>
+    // 이동 가능 노드 하이라이트 (분기점 포함, 순환/고정 경로)
     public void HighlightReachableNodes(PointOfInterest startNode, int distance, PlayerPiece piece)
     {
         ClearHighlights();
@@ -78,19 +76,27 @@ public class NodeManager : MonoBehaviour
         foreach (var node in reachableNodes)
             HighlightNode(node, piece);
     }
-
-
     private List<PointOfInterest> FindReachableNodes(PointOfInterest start, int distance)
     {
         List<PointOfInterest> result = new();
         Queue<(PointOfInterest node, int depth)> queue = new();
         HashSet<(int, int)> visited = new();
 
-        // 1. 시작점이 junction이면 shortcutTarget만 enqueue
-        if (start.isJunction && start.shortcutTarget != null)
+        HashSet<int> shortcutLine = new() { 1, 8, 12, 13, 18, 22 };
+
+        // 1. 시작점 처리
+        if (start.nodeNumber == 6)
         {
             queue.Enqueue((start.shortcutTarget, 1));
             visited.Add((start.shortcutTarget.nodeNumber, 1));
+        }
+        else if (shortcutLine.Contains(start.nodeNumber))
+        {
+            if (start.shortcutTarget != null)
+            {
+                queue.Enqueue((start.shortcutTarget, 1));
+                visited.Add((start.shortcutTarget.nodeNumber, 1));
+            }
         }
         else
         {
@@ -101,16 +107,13 @@ public class NodeManager : MonoBehaviour
             }
         }
 
-        // 2. 이후는 무조건 NextPointsOfInterest만 탐색
         while (queue.Count > 0)
         {
             var (current, depth) = queue.Dequeue();
 
-            // 도착점(29)에 도달하면 무조건 멈춤
             if (current.nodeNumber == 29 && (current != start || depth > 0))
             {
-                if (depth == distance)
-                    result.Add(current);
+                result.Add(current);
                 continue;
             }
 
@@ -120,34 +123,63 @@ public class NodeManager : MonoBehaviour
                 continue;
             }
 
-            foreach (var next in current.NextPointsOfInterest)
+            // **탐색 중에는 start가 shortcutLine에 있을 때만 shortcutTarget만 타도록**
+            if (shortcutLine.Contains(start.nodeNumber))
             {
-                if (!visited.Contains((next.nodeNumber, depth + 1)))
+                if (current.shortcutTarget != null && !visited.Contains((current.shortcutTarget.nodeNumber, depth + 1)))
                 {
-                    queue.Enqueue((next, depth + 1));
-                    visited.Add((next.nodeNumber, depth + 1));
+                    queue.Enqueue((current.shortcutTarget, depth + 1));
+                    visited.Add((current.shortcutTarget.nodeNumber, depth + 1));
+                }
+            }
+            else
+            {
+                foreach (var next in current.NextPointsOfInterest)
+                {
+                    if (!visited.Contains((next.nodeNumber, depth + 1)))
+                    {
+                        queue.Enqueue((next, depth + 1));
+                        visited.Add((next.nodeNumber, depth + 1));
+                    }
                 }
             }
         }
         return result;
     }
 
+
     public static List<PointOfInterest> FindPath(PointOfInterest start, PointOfInterest end)
     {
         var queue = new Queue<List<PointOfInterest>>();
         var visited = new HashSet<PointOfInterest>();
 
-        // 1. 시작점이 junction이면 shortcutTarget만 enqueue
-        if (start.isJunction && start.shortcutTarget != null)
+        HashSet<int> shortcutLine = new() { 1, 8, 12, 13, 18, 22 };
+
+        // 1. 시작점 처리
+        if (start.nodeNumber == 6)
         {
-            var path = new List<PointOfInterest> { start, start.shortcutTarget };
-            queue.Enqueue(path);
-            visited.Add(start);
-            visited.Add(start.shortcutTarget);
+            if (start.shortcutTarget != null)
+            {
+                var path = new List<PointOfInterest> { start, start.shortcutTarget };
+                queue.Enqueue(path);
+                visited.Add(start);
+                visited.Add(start.shortcutTarget);
+            }
+        }
+        else if (shortcutLine.Contains(start.nodeNumber))
+        {
+            if (start.shortcutTarget != null)
+            {
+                var path = new List<PointOfInterest> { start, start.shortcutTarget };
+                queue.Enqueue(path);
+                visited.Add(start);
+                visited.Add(start.shortcutTarget);
+            }
         }
         else
         {
-            queue.Enqueue(new List<PointOfInterest> { start });
+            var path = new List<PointOfInterest> { start };
+            queue.Enqueue(path);
             visited.Add(start);
         }
 
@@ -156,28 +188,40 @@ public class NodeManager : MonoBehaviour
             var path = queue.Dequeue();
             var current = path.Last();
 
-            // 도착
             if (current == end)
                 return path;
 
-            // 도착점(29)에 도달하면 멈춤 (단, 출발점에서 바로 멈추면 안 됨)
             if (current.nodeNumber == 29 && (current != start || path.Count > 1))
                 continue;
 
-            // 이후는 무조건 NextPointsOfInterest만 탐색
-            foreach (var next in current.NextPointsOfInterest)
+            // **탐색 중에는 start가 shortcutLine에 있을 때만 shortcutTarget만 타도록**
+            if (shortcutLine.Contains(start.nodeNumber))
             {
-                if (!visited.Contains(next))
+                if (current.shortcutTarget != null && !visited.Contains(current.shortcutTarget))
                 {
-                    var newPath = new List<PointOfInterest>(path) { next };
+                    var newPath = new List<PointOfInterest>(path) { current.shortcutTarget };
                     queue.Enqueue(newPath);
-                    visited.Add(next);
+                    visited.Add(current.shortcutTarget);
+                }
+            }
+            else
+            {
+                foreach (var next in current.NextPointsOfInterest)
+                {
+                    if (!visited.Contains(next))
+                    {
+                        var newPath = new List<PointOfInterest>(path) { next };
+                        queue.Enqueue(newPath);
+                        visited.Add(next);
+                    }
                 }
             }
         }
         Debug.Log("FindPath - 경로 없음");
         return null;
     }
+
+
 
 
 
