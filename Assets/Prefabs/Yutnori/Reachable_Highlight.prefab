@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9006551793092161068}
   - component: {fileID: 5107957024874953327}
   - component: {fileID: 5817415425713474585}
+  - component: {fileID: 2037040940977647797}
   m_Layer: 5
   m_Name: Reachable_Highlight
   m_TagString: Untagged
@@ -120,3 +121,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2037040940977647797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7619198274691454911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d3360b43321d04dafb3ea03067e70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetNode: {fileID: 0}

@@ -126,6 +126,7 @@ public class YutController : MonoBehaviour
 
     private string GetYutResult(int faceUpCount)
     {
+        //return "빽도";
         // 빽도 윷이 배열의 0번째라고 가정
         if (faceUpCount == 3)
         {

@@ -358,6 +358,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnCountText: {fileID: 1831368486824867924}
+  yutResultImagePrefab: {fileID: 0}
+  yutResultImageContainer: {fileID: 0}
+  yutResultSprites: []
+  gameManager: {fileID: 0}
 --- !u!1 &810562639862223170
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,11 +527,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7027469269333154477}
+  - {fileID: 6538951077344997207}
   - {fileID: 8608841786184795490}
   - {fileID: 8533474014635464574}
   - {fileID: 5102408956800593734}
-  - {fileID: 6538951077344997207}
-  - {fileID: 7027469269333154477}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1122,7 +1126,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3730780491498409346}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.18304361, y: 0.35976002, z: 1}
   m_ConstrainProportionsScale: 0
