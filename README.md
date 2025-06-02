@@ -7,8 +7,17 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
 ## 작품 개요
 최근 한류 열풍은 외국인뿐 아니라 내국인의 관심까지 이끌고 있습니다. 그러나 정작 전통문화보다는 현대문화에 집중된 관심이 아쉽게 느껴졌습니다. 이에 우리는 한국의 전통건축물인 한옥을 주제로한 콘텐츠를 기획했습니다. 3D월드에 설치된 각종 설명과 AI 연동 NPC로 교육적인면을 챙기고, 3가지 미니게임으로 재미도 챙겼습니다.
 
-팀명: 마루담<br>
-팀원: 이승언, 김나영, 조연우, 최서영
+<br><br>
+
+## 팀원 소개
+
+| 이름 | 역할 |
+|------|------|
+| [이승언](https://github.com/unvictory2) | - 플레이어 <br>- 윷놀이<br> - NPC |
+| [김나영](https://github.com/kny02) | - 맵<br>- UI|
+| [조연우](https://github.com/yeonwoo616) | - 서버(클라우드 및 네트워크 관리) |
+| [최서영](https://github.com/CSY5316) | - 구들장 보수 미니게임 <br>- 구들 미로 미니게임|
+
 <br><br>
 
 ## 주요 콘텐츠
@@ -24,6 +33,11 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
   현실 한옥을 기반으로 제작된 3D 맵을 자유롭게 탐험할 수 있습니다.
 - **설명 콘텐츠**  
   상호작용이 표시된 곳에서 한옥 요소에 대한 설명을 UI 텍스트로 제공합니다.
+
+|![Image](https://github.com/user-attachments/assets/f051c312-6134-4e55-9769-89177e1b5883)|![Image](https://github.com/user-attachments/assets/759c907b-38c4-4441-8562-debd2380144a)
+|:---:|:---:|
+|사진 찍기 전|찍은 후|
+
 - **카메라 기능**  
   카메라가 표시된 위치에서 사진을 찍으면, 동일한 구도의 실제 사진이 나타납니다.
 
@@ -33,7 +47,7 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
 <table>
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/3c00089f-e5f6-4860-a253-c7bf9b50ae1d" width="420" height="250"/><br/>
+      <img src="https://github.com/user-attachments/assets/46927874-d768-41be-8454-c09c78ad2769" width="420" height="250"/><br/>
       윷놀이
     </td>
     <td align="center">
@@ -49,10 +63,26 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
 
 
 - **윷놀이**
-  + 기존의 윷놀이에 로그라이크 장르에서 채용하는 형식의 맵을 결합.
-  + 플레이어의 말은 총 4마리로, 각자 맵의 `부품 칸`에서 한옥의 지붕, 기둥, 벽, 바닥을 수집해 최대한 빨리 도착하는 게 목적.
-  + 도개걸윷모 + 빽도를 이용한 이동 방식이나 업기 등 기존 윷놀이 규칙을 채용해 재미 요소 확보.
-  + `부품 칸`과 `업그레이드 칸`에서는 한옥 구조에 대해 설명하고, `버프 칸`에서는 한옥 맵에 있던 설명에 대한 시험을 봄으로써 교육 요소 확보.
+  
+  + 구현된 한옥을 위에서 보면 네모 모양인데, 이를 윷놀이 판에 맞춰서 결합한 미니게임
+  + 기존 윷놀이처럼 윷을 던져 말을 이동
+  + 윷놀이 판은 구현된 한옥 위에 떠있는데, 각 칸은 위치상 일치하는 한옥 방이 존재
+  + 각 칸에 도착하면 일치하는 방에 대한 퀴즈가 진행된다. 퀴즈 내용은 기존에 맵을 돌아다니며 얻은 정보에 기반
+  <details>
+  <summary>윷놀이 평면도</summary>
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/3b8c668f-909a-4c44-9028-09b88e13d1a2"><br>
+        한옥 평면도
+      </td>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/e9721154-65ac-4584-b3d2-85399402254e"><br>
+        윷놀이와 결합안
+      </td>
+    </tr>
+  </table>
+</details>
   
 - **구들 미로 게임**
 
@@ -85,8 +115,13 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
 | 🎮 Unity | 게임 엔진 (3D 맵, 인터랙션, UI 구현) |
 | ☁️ Photon Cloud | 서버, 멀티플레이어 네트워크 연동 |
 | 🧠 ChatGPT| AI 대화 시스템 구현 |
+| 👽️ Mixamo | 애니메이션 생성 |
 | 🎵 Suno | 배경 음악 생성 |
 | 🧱 Meshy | 3D 모델링 생성 AI |
 | 🧑‍💻 Visual Studio | 코드 작성 및 디버깅 도구 |
+| 🌐 Node.js | GPT용 서버 |
 
+  <br><br>
+## 기술 스택  
+![Image](https://github.com/user-attachments/assets/da5c5af5-506b-40a5-9ec9-40539b4a3ef7)
 
