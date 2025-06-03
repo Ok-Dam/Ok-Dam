@@ -46,16 +46,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}");
         PhotonNetwork.JoinRandomRoom(); //랜덤 매치메이킹 기능 제공
 
-
-
-        if (SceneManager.GetActiveScene().name == "MapScene" &&
-        GameObject.FindWithTag("Player") == null)
-        {
-            Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
-            int idx = Random.Range(1, points.Length);
-
-            PhotonNetwork.Instantiate("Player", points[idx].position, points[idx].rotation);
-        }
     }
 
     //랜덤한 룸 입장이 실패했을 경우 호출되는 콜백 함수
