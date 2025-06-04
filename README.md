@@ -109,7 +109,7 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
   Photon 서버를 통해 플레이어 간 실시간 상호작용이 가능합니다.
   <br><br>
 ### 시연 영상 링크
-- 발표 영상 주소:
+- 발표 영상 주소: https://youtu.be/bH1tXeaYUk8
 - 시연 영상 주소: https://youtu.be/--Muxnh8ahc
 
 <br><br>
