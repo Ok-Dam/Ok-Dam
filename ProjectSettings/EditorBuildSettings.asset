@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MapScene.unity
+    path: Assets/01. Scenes/MapScene.unity
     guid: cde74497455dc604eb112eb55753bfd4
   - enabled: 1
     path: Assets/Scenes/GudleJangScene.unity
