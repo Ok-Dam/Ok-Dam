@@ -47,6 +47,7 @@ TagManager:
   - ARROW_9
   - ARROW_10
   - ARROW_11
+  - Block
   layers:
   - Default
   - TransparentFX
