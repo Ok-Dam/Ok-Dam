@@ -23,10 +23,15 @@ public class GameManager : MonoBehaviour
     public float blockHeight = 0.5f;
     public float defaultBlockWidth = 10f;
 
+    [Header("House Background")]
+    public GameObject houseBackground;
+    public float houseDropPerFloor = 0.1f;
+
     [HideInInspector]
     public float currentBlockWidth;
 
     private int currentFloor = 0;
+    private Vector3 houseStartPos;
 
     private void Awake()
     {
@@ -36,6 +41,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ShowStartUI();
+        houseStartPos = houseBackground.transform.position;
 
     }
 
@@ -53,9 +59,13 @@ public class GameManager : MonoBehaviour
 
         ClearAllBlocks();
 
+        houseStartPos = houseBackground.transform.position;
+
         startPanel.SetActive(false);
         resultPanel.SetActive(false);
         gamePanel.SetActive(true);
+
+        houseBackground.SetActive(true);
 
         SpawnNextBlock();
         UpdateFloorText();
@@ -73,6 +83,15 @@ public class GameManager : MonoBehaviour
         block.transform.localScale = scale;
 
         cameraFollow.SetTarget(block.transform);
+
+
+
+        if (currentFloor == 5)
+        {
+            Vector3 roofSpawnPos = spawnPos + new Vector3(3f, -1f, 0f);
+            GameObject roof = Instantiate(houseBackground, roofSpawnPos, Quaternion.identity);
+            roof.tag = "Block";
+        }
     }
 
     public void NextFloor()
@@ -80,7 +99,9 @@ public class GameManager : MonoBehaviour
         currentFloor++;
         UpdateFloorText();
         SpawnNextBlock();
+
         
+
     }
 
     private void UpdateFloorText()
@@ -95,6 +116,7 @@ public class GameManager : MonoBehaviour
         resultText.text = $"당신의 기록은 {currentFloor - 5}층입니다!";
         cameraFollow.EnableFollow(false);
 
+        houseBackground.SetActive(false);
     }
 
     public void Restart()
