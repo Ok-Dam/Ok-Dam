@@ -9,7 +9,10 @@ public class QuizManager : MonoBehaviour
     private BuffManager buffManager;
     public PlayerState state;
 
-    // 이미 출제된 퀴즈 인덱스 기록
+    // Hanok Info 데이터 리스트 - Inspector에서 할당
+    [Header("Hanok Info 데이터")]
+    public List<HanokInfoData> hanokInfoDataList;
+
     private List<int> usedQuizIndices = new List<int>();
 
     public void Start()
@@ -34,7 +37,7 @@ public class QuizManager : MonoBehaviour
         bool giveBuff = isCorrect || autoSuccess;
         Buff selectedBuff = null;
         string buffMessage = "";
-        string explanation = quizPanelUI.lastExplanation; // [추가] 해설 전달
+        string explanation = quizPanelUI.lastExplanation;
 
         if (giveBuff)
         {
@@ -47,14 +50,13 @@ public class QuizManager : MonoBehaviour
             {
                 ApplyBuff(selectedBuff, playerState);
             }
-            buffMessage = (autoSuccess ? "[자동 성공] " : "정답! ") + $"'{selectedBuff.description}' 버프 획득!"; // [수정] 버프 메시지 생성
+            buffMessage = (autoSuccess ? "[자동 성공] " : "정답! ") + $"'{selectedBuff.description}' 버프 획득!";
         }
         else
         {
-            buffMessage = "오답! 버프를 얻지 못했습니다."; // [수정] 오답 메시지
+            buffMessage = "오답! 버프를 얻지 못했습니다.";
         }
 
-        // [수정] 정답 처리 후 ExpPanel을 여기서 호출
         quizPanelUI.ShowExpPanel(
             isCorrect,
             explanation,
@@ -79,55 +81,20 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-
-    private void OnQuizResult(bool isCorrect, PlayerState playerState, System.Action<bool> onQuizEnd)
+    // 한옥 정보 안내 함수 추가
+    public void ShowHanokInfoByNodeAndPart(int nodeNumber, HanokPart part, System.Action onEnd)
     {
-        bool autoSuccess = playerState != null && playerState.nextBuffAutoSuccess;
-        Buff selectedBuff = null;
-        string buffMessage = "";
-        string explanation = quizPanelUI.lastExplanation; // QuizPanelUI에 lastExplanation 추가 필요
-
-        if (autoSuccess)
+        var infoData = hanokInfoDataList.Find(x => x.nodeNumber == nodeNumber);
+        if (infoData != null)
         {
-            // 자동 성공 버프 소모
-            playerState.ConsumeNextBuffAutoSuccess();
-            // 버프 지급 (정답/오답 상관없이)
-            selectedBuff = buffManager.GetRandomBuff();
-            if (playerState != null)
+            var partInfo = infoData.infos.Find(i => i.part == part)
+                        ?? infoData.infos.FirstOrDefault();
+            if (partInfo != null)
             {
-                ApplyBuff(selectedBuff, playerState);
+                quizPanelUI.ShowInformation(partInfo.infoText, partInfo.image, onEnd);
+                return;
             }
-            buffMessage = $"[자동 성공] '{selectedBuff.description}' 버프!";
-            Debug.Log($"자동 성공! '{selectedBuff.description}' 버프가 적용되었습니다.");
         }
-        else if (isCorrect)
-        {
-            selectedBuff = buffManager.GetRandomBuff();
-            if (playerState != null)
-            {
-                ApplyBuff(selectedBuff, playerState);
-            }
-            buffMessage = $"'{selectedBuff.description}' 버프!";
-            Debug.Log($"'{selectedBuff.description}' 버프가 적용.");
-        }
-        else
-        {
-            buffMessage = "버프를 얻지 못했습니다.";
-            Debug.Log("버프가 적용되지 않습니다.");
-        }
-
-        // ExpPanel에 해설과 버프 메시지 표시
-        // onQuizEnd가 Action<bool>인 경우
-        quizPanelUI.ShowExpPanel(
-            isCorrect,
-            explanation,
-            buffMessage,
-            () => { onQuizEnd?.Invoke(isCorrect); } // 반드시 람다로 감싸서 전달!
-        );
-
-
-        // onQuizEnd는 여기서 직접 호출하지 않는다!
+        quizPanelUI.ShowInformation("해당 정보를 찾을 수 없습니다.", null, onEnd);
     }
-
-
 }

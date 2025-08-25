@@ -23,7 +23,6 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private YutnoriGameManager gameManager;
 
     public Button endButton;
-    public TotalYutnoriController yutnoriController; // Inspector에서 연결
 
 
     public void OnEndButton()

@@ -3,20 +3,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public enum HanokPart
-{
-    Roof,   // ÁöºØ
-    Column, // º®
-    Wall,   // ±âµÕ
-    Floor   // ¹Ù´Ú
-}
-
 public class PlayerPiece : MonoBehaviour
 {
     [SerializeField] private YutnoriGameManager gameManager;
     private NodeManager nodeManager;
     [SerializeField] private Highlighter highlighter;
-    [SerializeField] private HanokPart hanokPart;
+    [SerializeField] public HanokPart hanokPart;
     public bool isFinished = false;
 
     public bool canMove = false;
@@ -33,9 +25,6 @@ public class PlayerPiece : MonoBehaviour
     public PointOfInterest currentNode { get; private set; }
 
     private Coroutine blinkCoroutine;
-
-
-
     void Start()
     {
         SetCurrentNode(gameManager.startingNode);
