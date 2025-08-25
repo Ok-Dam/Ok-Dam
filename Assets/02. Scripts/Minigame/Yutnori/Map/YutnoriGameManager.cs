@@ -190,8 +190,6 @@ public class YutnoriGameManager : MonoBehaviour
         }
     }
 
-    // GameManager.cs
-
     // 이동 완료 후 호출되는 함수
     public void OnPieceMoveComplete()
     {
@@ -205,11 +203,9 @@ public class YutnoriGameManager : MonoBehaviour
             CurrentPlayer.selectedResultIndex = -1;
         }
 
-        // 3. UI 재갱신 (중요!)
+        // 3. UI 재갱신 
         gameUIManager.ShowYutResults(CurrentPlayer.yutResultIndices);
     }
-
-
 
     // 턴 넘겨도 되는지 확인
     void CheckTurnEndable(PlayerState player)
@@ -307,7 +303,11 @@ public class YutnoriGameManager : MonoBehaviour
                     break;
                 }
             case POIType.Yard:
-                CheckTurnEndable(CurrentPlayer);
+                quizManager.ShowHanokInfoByNodeAndPart(
+                    piece.currentNode.nodeNumber,
+                    piece.hanokPart,
+                    () => { CheckTurnEndable(CurrentPlayer); }
+                );
                 break;
             case POIType.Event:
                 CheckTurnEndable(CurrentPlayer);
