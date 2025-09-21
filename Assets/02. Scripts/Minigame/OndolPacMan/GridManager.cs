@@ -38,9 +38,6 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x < gridWidth; x++)
             {
-                if ((x == 11 && y == 0) || (x == 11 && y == 12))
-                    gridMap[x, y] = 0; // 涝备, 免备绰 后 沫栏肺 贸府
-                else
                     gridMap[x, y] = designedMap[y, x];
             }
         }
