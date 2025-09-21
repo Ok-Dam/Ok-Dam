@@ -1,27 +1,27 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     [Header("Target")]
-    [SerializeField] private Transform player; // ÃßÀû ´ë»ó (ÇÃ·¹ÀÌ¾î Transform ÇÒ´ç ÇÊ¼ö)
+    [SerializeField] private Transform player; // ì¶”ì  ëŒ€ìƒ (í”Œë ˆì´ì–´ Transform í• ë‹¹ í•„ìˆ˜)
 
     [Header("Settings")]
-    [SerializeField] private float distance = 5f; // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸®
-    [SerializeField] private float mouseSensitivity = 1600f; // ¸¶¿ì½º È¸Àü °¨µµ
-    [SerializeField] private float minVerticalAngle = -40f; // Ä«¸Ş¶ó ¼öÁ÷ È¸Àü ÃÖ¼Ò°¢ (ÇÏ¹æ Á¦ÇÑ)
-    [SerializeField] private float maxVerticalAngle = 80f; // Ä«¸Ş¶ó ¼öÁ÷ È¸Àü ÃÖ´ë°¢ (»ó¹æ Á¦ÇÑ)
-    [SerializeField] private Vector3 offset = new Vector3(0, 1.5f, 0); // ÇÃ·¹ÀÌ¾î À§Ä¡ ±âÁØ ¿ÀÇÁ¼Â (YÃà ³ôÀÌ Á¶Á¤)
+    [SerializeField] private float distance = 5f; // í”Œë ˆì´ì–´ì™€ì˜ ê±°ë¦¬
+    [SerializeField] private float mouseSensitivity = 1600f; // ë§ˆìš°ìŠ¤ íšŒì „ ê°ë„
+    [SerializeField] private float minVerticalAngle = -40f; // ì¹´ë©”ë¼ ìˆ˜ì§ íšŒì „ ìµœì†Œê° (í•˜ë°© ì œí•œ)
+    [SerializeField] private float maxVerticalAngle = 80f; // ì¹´ë©”ë¼ ìˆ˜ì§ íšŒì „ ìµœëŒ€ê° (ìƒë°© ì œí•œ)
+    [SerializeField] private Vector3 offset = new Vector3(0, 1.5f, 0); // í”Œë ˆì´ì–´ ìœ„ì¹˜ ê¸°ì¤€ ì˜¤í”„ì…‹ (Yì¶• ë†’ì´ ì¡°ì •)
 
-    private float xRotation; // ÇöÀç XÃà È¸Àü°ª (»óÇÏ)
-    private float yRotation; // ÇöÀç YÃà È¸Àü°ª (ÁÂ¿ì)
-    private Vector3 smoothVelocity; // SmoothDamp¿¡ »ç¿ëµÇ´Â ¼Óµµ ÂüÁ¶ º¯¼ö
+    private float xRotation; // í˜„ì¬ Xì¶• íšŒì „ê°’ (ìƒí•˜)
+    private float yRotation; // í˜„ì¬ Yì¶• íšŒì „ê°’ (ì¢Œìš°)
+    private Vector3 smoothVelocity; // SmoothDampì— ì‚¬ìš©ë˜ëŠ” ì†ë„ ì°¸ì¡° ë³€ìˆ˜
 
     void Start()
     {
-        // ¸¶¿ì½º Ä¿¼­¸¦ È­¸é Áß¾Ó¿¡ °íÁ¤ ¹× ¼û±è
+        // ë§ˆìš°ìŠ¤ ì»¤ì„œë¥¼ í™”ë©´ ì¤‘ì•™ì— ê³ ì • ë° ìˆ¨ê¹€
         Cursor.lockState = CursorLockMode.Locked;
 
-        // ÃÊ±â Ä«¸Ş¶ó È¸Àü°ª ¼³Á¤
+        // ì´ˆê¸° ì¹´ë©”ë¼ íšŒì „ê°’ ì„¤ì •
         Vector3 angles = transform.eulerAngles;
         xRotation = angles.x;
         yRotation = angles.y;
@@ -31,32 +31,32 @@ public class CameraController : MonoBehaviour
     {
         if (player == null) return;
 
-        //npcui Ä«¸Ş¶ó Á¤Áö
+        //npcui ì¹´ë©”ë¼ ì •ì§€
         if (NPCUI.IsTalkingToNPC) return;
-        //¸¶¿ì½º°¡ Àá°ÜÀÖÀ» ¶§¸¸ È¸Àü Çã¿ë(ui ³ª¿Ã¶§´Â È¸ÀüX)
+        //ë§ˆìš°ìŠ¤ê°€ ì ê²¨ìˆì„ ë•Œë§Œ íšŒì „ í—ˆìš©(ui ë‚˜ì˜¬ë•ŒëŠ” íšŒì „X)
         if (Cursor.lockState != CursorLockMode.Locked) return;
 
-        // ¸¶¿ì½º ÀÔ·Â Ã³¸® (µ¨Å¸Å¸ÀÓ °öÇØ ÇÁ·¹ÀÓ·ü µ¶¸³Àû)
+        // ë§ˆìš°ìŠ¤ ì…ë ¥ ì²˜ë¦¬ (ë¸íƒ€íƒ€ì„ ê³±í•´ í”„ë ˆì„ë¥  ë…ë¦½ì )
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // È¸Àü °¢µµ °è»ê
-        yRotation += mouseX; // ÁÂ¿ì È¸Àü ´©Àû
-        xRotation -= mouseY; // »óÇÏ È¸Àü ´©Àû
-        xRotation = Mathf.Clamp(xRotation, minVerticalAngle, maxVerticalAngle); // »óÇÏ °¢µµ Á¦ÇÑ
+        // íšŒì „ ê°ë„ ê³„ì‚°
+        yRotation += mouseX; // ì¢Œìš° íšŒì „ ëˆ„ì 
+        xRotation -= mouseY; // ìƒí•˜ íšŒì „ ëˆ„ì 
+        xRotation = Mathf.Clamp(xRotation, minVerticalAngle, maxVerticalAngle); // ìƒí•˜ ê°ë„ ì œí•œ
 
-        // ÃÖÁ¾ È¸Àü°ª °è»ê (ÄõÅÍ´Ï¾ğÀ¸·Î º¯È¯)
+        // ìµœì¢… íšŒì „ê°’ ê³„ì‚° (ì¿¼í„°ë‹ˆì–¸ìœ¼ë¡œ ë³€í™˜)
         Quaternion targetRotation = Quaternion.Euler(xRotation, yRotation, 0);
 
-        // ÇÃ·¹ÀÌ¾î À§Ä¡ ±âÁØ Ä«¸Ş¶ó À§Ä¡ °è»ê
-        // 1. ÇÃ·¹ÀÌ¾î À§Ä¡ + ¿ÀÇÁ¼Â Àû¿ë
-        // 2. È¸Àü ¹æÇâÀÇ ¹İ´ë ¹æÇâ(-forward)À¸·Î distance¸¸Å­ ÀÌµ¿
+        // í”Œë ˆì´ì–´ ìœ„ì¹˜ ê¸°ì¤€ ì¹´ë©”ë¼ ìœ„ì¹˜ ê³„ì‚°
+        // 1. í”Œë ˆì´ì–´ ìœ„ì¹˜ + ì˜¤í”„ì…‹ ì ìš©
+        // 2. íšŒì „ ë°©í–¥ì˜ ë°˜ëŒ€ ë°©í–¥(-forward)ìœ¼ë¡œ distanceë§Œí¼ ì´ë™
         Vector3 targetPosition = player.position + offset - targetRotation * Vector3.forward * distance;
 
-        // ºÎµå·¯¿î È¸Àü Àû¿ë (Slerp: ±¸¸é ¼±Çü º¸°£)
+        // ë¶€ë“œëŸ¬ìš´ íšŒì „ ì ìš© (Slerp: êµ¬ë©´ ì„ í˜• ë³´ê°„)
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
 
-        // ºÎµå·¯¿î À§Ä¡ ÀÌµ¿ (SmoothDamp: °¨¼è È¿°ú)
+        // ë¶€ë“œëŸ¬ìš´ ìœ„ì¹˜ ì´ë™ (SmoothDamp: ê°ì‡  íš¨ê³¼)
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref smoothVelocity, 0.1f);
     }
 }
