@@ -2,47 +2,54 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    public int gridWidth = 10; // 가로로 몇 칸. 실제 길이 x
-    public int gridHeight = 10; // 세로로 몇 칸
-    public float cellSize = 1f; // 한 칸의 크기
+    public int gridWidth = 23;
+    public int gridHeight = 13;
+    public float cellSize = 20f;
 
     public int[,] gridMap;
 
-    void Start()
+    // 맵 데이터 (0=빈칸, 1=벽, 2=입구, 3=출구, 4=부품)
+    int[,] designedMap = new int[,]
     {
-        // 0으로 초기화 (빈 칸)
+        {1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1},
+        {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1},
+        {1,0,1,1,0,1,1,1,0,1,1,1,1,1,0,1,1,1,0,1,1,0,1},
+        {1,0,1,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,0,1,0,1},
+        {1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,0,1},
+        {1,1,1,1,1,0,1,1,1,0,0,4,0,0,1,1,1,0,1,1,1,1,1},
+        {1,0,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,0,1},
+        {1,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,1},
+        {1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1},
+        {1,0,1,1,0,1,0,1,1,1,1,0,1,1,1,1,0,1,0,1,1,0,1},
+        {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1},
+        {1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1},
+    };
+
+    void Awake()
+    {
         gridMap = new int[gridWidth, gridHeight];
         InitializeGrid();
-        ShowGridBounds();
     }
 
     void InitializeGrid()
     {
-        // 예시: 테두리를 벽(1)으로 설정
-        for (int x = 0; x < gridWidth; x++)
-        {
-            gridMap[x, 0] = 1;
-            gridMap[x, gridHeight - 1] = 1;
-        }
         for (int y = 0; y < gridHeight; y++)
         {
-            gridMap[0, y] = 1;
-            gridMap[gridWidth - 1, y] = 1;
+            for (int x = 0; x < gridWidth; x++)
+            {
+                if ((x == 11 && y == 0) || (x == 11 && y == 12))
+                    gridMap[x, y] = 0; // 입구, 출구는 빈 칸으로 처리
+                else
+                    gridMap[x, y] = designedMap[y, x];
+            }
         }
-        // 필요 시 추가 벽 지정 가능
     }
 
-    // 모든 셀 타입 출력 확인용 로그함수 (디버그)
-    void ShowGridBounds()
-    {
-        Debug.Log($"Grid Size: {gridWidth}x{gridHeight}");
-    }
-
-    // 그리드 좌표 → 월드 위치 변환 함수
     public Vector3 CoordToWorldPos(int x, int y)
     {
-        float worldX = x * cellSize;
-        float worldZ = y * cellSize;
-        return new Vector3(worldX, 0, worldZ); // y=0면 평면
+        float worldX = x * cellSize ;
+        float worldZ = (gridHeight - 1 - y) * cellSize + cellSize * 0.5f;  // y축 반전 + 중앙 위치 조정
+        return new Vector3(worldX, 0, worldZ);
     }
 }

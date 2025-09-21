@@ -8,6 +8,8 @@ public class WallSpawner : MonoBehaviour
     void Start()
     {
         gridManager = GetComponent<GridManager>();
+        if (gridManager == null)
+            Debug.LogError("GridManager is not set in WallSpawner!");
         SpawnWalls();
     }
 
@@ -19,10 +21,15 @@ public class WallSpawner : MonoBehaviour
             {
                 if (gridManager.gridMap[x, y] == 1)
                 {
-                    Vector3 pos = gridManager.CoordToWorldPos(x, y);
+                    // Ä­ ÁÂÇÏ´Ü ±âÁØ À§Ä¡ °è»ê (Áß¾Ó offset Á¦°Å)
+                    float worldX = x * gridManager.cellSize;
+                    float worldZ = (gridManager.gridHeight - 1 - y) * gridManager.cellSize;
+
+                    Vector3 pos = new Vector3(worldX, 0, worldZ);
                     Instantiate(wallPrefab, pos, Quaternion.identity);
                 }
             }
         }
     }
+
 }
