@@ -6,6 +6,7 @@ public class QuizManager : MonoBehaviour
 {
     public QuizDatabase quizDatabase;
     public QuizPanelUI quizPanelUI;
+    public HanokInfoPanelUI hanokInfoPanelUI;
     private BuffManager buffManager;
     public PlayerState state;
 
@@ -81,7 +82,7 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-    // 한옥 정보 안내 함수 추가
+    // 한옥 정보 안내 함수
     public void ShowHanokInfoByNodeAndPart(int nodeNumber, HanokPart part, System.Action onEnd)
     {
         var infoData = hanokInfoDataList.Find(x => x.nodeNumber == nodeNumber);
@@ -91,10 +92,10 @@ public class QuizManager : MonoBehaviour
                         ?? infoData.infos.FirstOrDefault();
             if (partInfo != null)
             {
-                quizPanelUI.ShowInformation(partInfo.infoText, partInfo.image, onEnd);
+                hanokInfoPanelUI.Show(partInfo.infoText, partInfo.image, onEnd);
                 return;
             }
         }
-        quizPanelUI.ShowInformation("해당 정보를 찾을 수 없습니다.", null, onEnd);
+        hanokInfoPanelUI.Show("해당 정보를 찾을 수 없습니다.", null, onEnd);
     }
 }
