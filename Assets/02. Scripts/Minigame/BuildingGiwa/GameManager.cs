@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
         startPanel.SetActive(true);
         gamePanel.SetActive(false);
         resultPanel.SetActive(false);
+
+        houseBackground.SetActive(false);
+        ClearAllBlocks();
     }
 
     public void StartGame()
@@ -117,6 +120,7 @@ public class GameManager : MonoBehaviour
         cameraFollow.EnableFollow(false);
 
         houseBackground.SetActive(false);
+        ClearAllBlocks();
     }
 
     public void Restart()

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using System.Linq;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -27,13 +28,13 @@ public class GameUIManager : MonoBehaviour
 
     public void OnEndButton()
     {
-        if (PhotonNetwork.InRoom)
+        var localPlayer = FindObjectsOfType<PhotonView>()
+        .FirstOrDefault(pv => pv.IsMine && pv.CompareTag("Player"))?.gameObject;
+
+        var ynrMode = FindObjectOfType<YnrModeController>();
+        if (localPlayer != null && ynrMode != null)
         {
-            PhotonNetwork.LeaveRoom();
-        }
-        else
-        {
-            PhotonNetwork.LoadLevel("MapScene");
+            ynrMode.ExitYutnoriMode(localPlayer);
         }
     }
 

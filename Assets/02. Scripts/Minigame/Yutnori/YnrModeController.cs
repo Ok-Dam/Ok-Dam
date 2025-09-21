@@ -59,4 +59,33 @@ public class YnrModeController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 
     }
+
+    public void ExitYutnoriMode(GameObject player)
+    {
+        foreach (var script in player.GetComponentsInChildren<MonoBehaviour>())
+        {
+            if (script is PhotonView || script is Animator) continue;
+            script.enabled = true;
+        }
+        foreach (var col in player.GetComponentsInChildren<Collider>())
+        {
+            col.enabled = true;
+        }
+        foreach (var rb in player.GetComponentsInChildren<Rigidbody>())
+        {
+            rb.isKinematic = false;
+        }
+
+        if (miniMap != null) miniMap.SetActive(true);
+        if (explorationCamera != null) explorationCamera.gameObject.SetActive(true);
+        if (yutnoriCamera != null) yutnoriCamera.gameObject.SetActive(false);
+        if (yutnoriUI != null) yutnoriUI.SetActive(false);
+        if (boardRoot != null) boardRoot.SetActive(false);
+        if (gameManager != null) gameManager.SetActive(false);
+        if (yuts != null) yuts.SetActive(false);
+        if (players != null) players.SetActive(false);
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 }
