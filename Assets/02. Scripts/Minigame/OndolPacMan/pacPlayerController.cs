@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,11 @@ public class pacPlayerController : MonoBehaviour
     // 배열 인덱스 기준 방향 (위가 y+1)
     private Vector2Int currentDirection;
 
+    private Vector3 targetWorldPos;
+    private bool isMoving = false;
+
+    private Vector2Int? reservedDirection = null; // 이동 중 예약할 방향
+
     void Start()
     {
         internalGridPos = FindEntrancePosition();
@@ -35,7 +41,7 @@ public class pacPlayerController : MonoBehaviour
         HandleInput();
 
         moveTimer += Time.deltaTime;
-        if (moveTimer >= moveCooldown)
+        if (moveTimer >= moveCooldown && !isMoving)
         {
             MoveForward();
             moveTimer = 0f;
@@ -59,27 +65,46 @@ public class pacPlayerController : MonoBehaviour
 
     void HandleInput()
     {
-        // 배열에서랑 실제 인겜에서랑 y좌표 반대라 반대로 설정
-        if (Input.GetKeyDown(KeyCode.W) && currentDirection != Vector2Int.down)
+        Vector2Int inputDir = currentDirection;
+
+        if (Input.GetKeyDown(KeyCode.W))
+            inputDir = Vector2Int.down;
+        else if (Input.GetKeyDown(KeyCode.S))
+            inputDir = Vector2Int.up;
+        else if (Input.GetKeyDown(KeyCode.A))
+            inputDir = Vector2Int.left;
+        else if (Input.GetKeyDown(KeyCode.D))
+            inputDir = Vector2Int.right;
+
+        // 반대 방향 전환 방지
+        if (inputDir != currentDirection && inputDir != -currentDirection)
         {
-            currentDirection = Vector2Int.down;
-        }
-        else if (Input.GetKeyDown(KeyCode.S) && currentDirection != Vector2Int.up)
-        {
-            currentDirection = Vector2Int.up;
-        }
-        else if (Input.GetKeyDown(KeyCode.A) && currentDirection != Vector2Int.right)
-        {
-            currentDirection = Vector2Int.left;
-        }
-        else if (Input.GetKeyDown(KeyCode.D) && currentDirection != Vector2Int.left)
-        {
-            currentDirection = Vector2Int.right;
+            if (isMoving)
+            {
+                reservedDirection = inputDir;
+            }
+            else
+            {
+                currentDirection = inputDir;
+            }
         }
     }
 
+
     void MoveForward()
     {
+        if (isMoving)
+            return;
+
+        if (reservedDirection.HasValue)
+        {
+            currentDirection = reservedDirection.Value;
+            reservedDirection = null;
+
+            // 예약 방향으로 회전은 바로 적용
+            UpdateRotation();
+        }
+
         if (gridManager == null)
         {
             Debug.LogError("GridManager is null!");
@@ -93,15 +118,11 @@ public class pacPlayerController : MonoBehaviour
 
         Vector2Int newPos = internalGridPos + currentDirection;
 
-        if (newPos.x < 0 || newPos.x >= gridManager.gridWidth
-            || newPos.y < 0 || newPos.y >= gridManager.gridHeight
-            || gridManager.gridMap[newPos.x, newPos.y] == 1)
-        {
-            return;
-        }
-
+        if (gridManager.gridMap[newPos.x, newPos.y] == 1) return;
+       
         MoveTo(newPos);
     }
+
 
     void MoveTo(Vector2Int newPos)
     {
@@ -117,14 +138,44 @@ public class pacPlayerController : MonoBehaviour
 
         internalGridPos = newPos;
         UpdateDisplayedGridPos();
-        UpdateWorldPosition();
+
+        // 방향 회전 먼저 즉시 적용
+        UpdateRotation();
+
+        // 부드러운 위치 이동 시작
+        targetWorldPos = gridManager.CoordToWorldPos(internalGridPos.x, internalGridPos.y);
+        targetWorldPos = new Vector3(targetWorldPos.x, 0, targetWorldPos.z - gridManager.cellSize * 0.5f);
+
+        if (!isMoving)
+        {
+            StartCoroutine(SmoothMove());
+        }
     }
 
-    void UpdateWorldPosition()
+    IEnumerator SmoothMove()
     {
-        Vector3 worldPos = gridManager.CoordToWorldPos(internalGridPos.x, internalGridPos.y);
-        transform.position = new Vector3(worldPos.x, 0, worldPos.z - gridManager.cellSize * 0.5f);
+        isMoving = true;
 
+        Vector3 startPos = transform.position;
+        float elapsed = 0f;
+        float duration = moveCooldown;
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startPos, targetWorldPos, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetWorldPos;
+
+        // 위치 이동 완료 후 회전 갱신(필요시)
+        UpdateRotation();
+
+        isMoving = false;
+    }
+
+    void UpdateRotation()
+    {
         float zRotationDegrees = 0f;
 
         if (currentDirection == Vector2Int.up)
@@ -140,9 +191,13 @@ public class pacPlayerController : MonoBehaviour
         transform.rotation = baseRotation;
     }
 
-
-
-
+    void UpdateWorldPosition()
+    {
+        // 기존 이동 즉시 위치 갱신 대신 부드러운 이동을 쓴다면 삭제하거나 주석 처리 가능
+        Vector3 worldPos = gridManager.CoordToWorldPos(internalGridPos.x, internalGridPos.y);
+        transform.position = new Vector3(worldPos.x, 0, worldPos.z - gridManager.cellSize * 0.5f);
+        UpdateRotation();
+    }
 
     void UpdateDisplayedGridPos()
     {
