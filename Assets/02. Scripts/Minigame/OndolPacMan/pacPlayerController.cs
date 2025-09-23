@@ -12,6 +12,7 @@ public class pacPlayerController : MonoBehaviour
     private Vector2Int internalGridPos;
 
     // 인스펙터에 보이는 y좌표 반전 값
+    // 배열이랑 실제 유니티 화면에서랑 y축이 반대라서 배열 검사에선 internaGridPos쓰고, 내가 좌표 확인 할 땐 displayedGridPos로 확인
     [SerializeField]
     private Vector2Int displayedGridPos;
 
@@ -30,11 +31,14 @@ public class pacPlayerController : MonoBehaviour
     {
         internalGridPos = FindEntrancePosition();
         UpdateDisplayedGridPos();
-        UpdateWorldPosition();
 
-        // 초기 방향을 화면에서 위쪽 움직임에 맞게 아래 방향으로 설정 (y축 반전 보정)
-        currentDirection = Vector2Int.down; // (0, -1)
+        // internalGridPos에 맞춰 플레이어 게임 오브젝트의 위치를 명확히 설정
+        Vector3 startWorldPos = gridManager.CoordToWorldPos(internalGridPos.x, internalGridPos.y);
+        transform.position = new Vector3(startWorldPos.x, 0, startWorldPos.z - gridManager.cellSize * 0.5f);
+
+        currentDirection = Vector2Int.down; // 초기 방향 설정
     }
+
 
     void Update()
     {
@@ -56,12 +60,13 @@ public class pacPlayerController : MonoBehaviour
             {
                 if (gridManager.gridMap[x, y] == 2)
                 {
-                    return new Vector2Int(x, y);
+                    return gridManager.ClampToGrid(new Vector2Int(x, y));
                 }
             }
         }
-        return new Vector2Int(1, 1);
+        return gridManager.ClampToGrid(new Vector2Int(1, 1));
     }
+
 
     void HandleInput()
     {
@@ -122,7 +127,6 @@ public class pacPlayerController : MonoBehaviour
        
         MoveTo(newPos);
     }
-
 
     void MoveTo(Vector2Int newPos)
     {
@@ -204,8 +208,13 @@ public class pacPlayerController : MonoBehaviour
         displayedGridPos = new Vector2Int(internalGridPos.x, gridManager.gridHeight - 1 - internalGridPos.y);
     }
 
-    public Vector2Int gridPos
+    public Vector2Int DisplayedGridPos
     {
         get { return displayedGridPos; }
     }
+    public Vector2Int InternalGridPos
+    {
+        get { return internalGridPos; }
+    }
+
 }
