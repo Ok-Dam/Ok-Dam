@@ -15,11 +15,18 @@ public class EnemyAI : MonoBehaviour
 
     private enum State { RandomMove, ChasePlayer }
     private State currentState = State.RandomMove;
+    // 시야에서 사라져도 몇 초 동안은 계속 쫓아옴
+    private float chaseTimer = 0f;
+    private float chaseDuration = 3f; 
 
     private float moveCooldown = 0.3f;
     private float moveTimer = 0f;
 
     private pacPlayerController playerController;
+
+    private bool isMoving = false; // 이동 중 상태 플래그
+    private Vector3 targetWorldPos; // 부드러운 이동 목표 위치
+    private Vector2Int currentDirection = Vector2Int.down; // 현재 이동 방향 (초기값은 아래쪽)
 
     void Start()
     {
@@ -29,22 +36,38 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        // 이동 중이면 이동 처리를 먼저
+        if (isMoving) return;
+
         moveTimer += Time.deltaTime;
         if (moveTimer >= moveCooldown)
         {
             moveTimer = 0f;
-            // player GridPos는 pacPlayerController의 내부 GridPos로부터 가져오기
             playerGridPos = playerController.InternalGridPos;
 
             if (CanSeePlayer(enemyGridPos, playerGridPos))
             {
                 Debug.Log("Chase Player");
                 currentState = State.ChasePlayer;
+                chaseTimer = chaseDuration;  // 시야 확보 시 타이머 리셋
             }
             else
             {
-                currentState = State.RandomMove;
+                if (currentState == State.ChasePlayer)
+                {
+                    // 시야를 잃었지만 타이머가 남았으면 계속 ChasePlayer 유지
+                    chaseTimer -= moveCooldown;
+                    if (chaseTimer <= 0f)
+                    {
+                        currentState = State.RandomMove;
+                    }
+                }
+                else
+                {
+                    currentState = State.RandomMove;
+                }
             }
+
             switch (currentState)
             {
                 case State.RandomMove:
@@ -57,7 +80,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    // 월드 좌표 → 그리드 배열 좌표 변환 함수
+
     Vector2Int FindEnemyGridPos()
     {
         Vector3 worldPos = transform.position;
@@ -161,7 +184,48 @@ public class EnemyAI : MonoBehaviour
     void MoveTo(Vector2Int newGridPos)
     {
         enemyGridPos = newGridPos;
-        Vector3 worldPos = gridManager.CoordToWorldPos(newGridPos.x, newGridPos.y);
-        transform.position = new Vector3(worldPos.x, 0, worldPos.z - gridManager.cellSize * 0.5f);
+        currentDirection = newGridPos - enemyGridPos; // 이동 방향 갱신 (moveTo 후 enemyGridPos가 바뀌므로 임시변수 필요)
+        targetWorldPos = gridManager.CoordToWorldPos(newGridPos.x, newGridPos.y);
+        targetWorldPos = new Vector3(targetWorldPos.x, 0, targetWorldPos.z - gridManager.cellSize * 0.5f);
+
+        StartCoroutine(SmoothMove());
+    }
+
+    IEnumerator SmoothMove()
+    {
+        isMoving = true;
+
+        Vector3 startPos = transform.position;
+        float elapsed = 0f;
+        float duration = moveCooldown;
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startPos, targetWorldPos, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetWorldPos;
+        UpdateRotation();
+
+        isMoving = false;
+    }
+
+    void UpdateRotation()
+    {
+        float zRotationDegrees = 0f;
+
+        if (currentDirection == Vector2Int.up)
+            zRotationDegrees = 0f;
+        else if (currentDirection == Vector2Int.down)
+            zRotationDegrees = 180f;
+        else if (currentDirection == Vector2Int.left)
+            zRotationDegrees = 90f;
+        else if (currentDirection == Vector2Int.right)
+            zRotationDegrees = -90f;
+
+        Quaternion baseRotation = Quaternion.Euler(-10.0f, 0, zRotationDegrees);
+        transform.rotation = baseRotation;
     }
 }

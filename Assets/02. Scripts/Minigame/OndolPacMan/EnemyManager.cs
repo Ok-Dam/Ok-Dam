@@ -57,7 +57,4 @@ public class EnemyManager : MonoBehaviour
 
         enemies.Add(enemy);
     }
-
-
-    // 추후 적 이동/상태 관련 함수 추가 예정
 }
