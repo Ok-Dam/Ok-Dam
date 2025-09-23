@@ -42,11 +42,17 @@ public class GridManager : MonoBehaviour
             }
         }
     }
-
     public Vector3 CoordToWorldPos(int x, int y)
     {
         float worldX = x * cellSize ;
         float worldZ = (gridHeight - 1 - y) * cellSize + cellSize * 0.5f;  // y축 반전 + 중앙 위치 조정
         return new Vector3(worldX, 0, worldZ);
+    }
+
+    public Vector2Int ClampToGrid(Vector2Int pos)
+    {
+        int x = Mathf.Clamp(pos.x, 0, gridWidth - 1);
+        int y = Mathf.Clamp(pos.y, 0, gridHeight - 1);
+        return new Vector2Int(x, y);
     }
 }
