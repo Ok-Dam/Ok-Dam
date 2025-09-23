@@ -1,125 +1,169 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
 using static MapSceneInitializer;
+using System.Linq;
 
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    //¹öÀü ÀÔ·Â
+    //ë²„ì „ ì…ë ¥
     private readonly string version = "1.0f";
-    // »ç¿ëÀÚ ¾ÆÀÌµğ ÀÔ·Â
+    // ì‚¬ìš©ì ì•„ì´ë”” ì…ë ¥
     private string userid;
 
-    //Startº¸´Ù ¸ÕÀú ½ÇÇàµÊ.
+    //Startë³´ë‹¤ ë¨¼ì € ì‹¤í–‰ë¨.
     private void Awake()
     {
         if (PhotonNetwork.IsConnected) return;
-        //°°Àº ·ëÀÇ À¯Àúµé¿¡°Ô ÀÚµ¿À¸·Î ¾ÀÀ» ·Îµù
+        //ê°™ì€ ë£¸ì˜ ìœ ì €ë“¤ì—ê²Œ ìë™ìœ¼ë¡œ ì”¬ì„ ë¡œë”©
         PhotonNetwork.AutomaticallySyncScene = true;
-        //°°Àº ¹öÀüÀÇ À¯Àú³¢¸® Á¢¼Ó Çã¿ë
+        //ê°™ì€ ë²„ì „ì˜ ìœ ì €ë¼ë¦¬ ì ‘ì† í—ˆìš©
         PhotonNetwork.GameVersion = version;
-        //À¯Àú ¾ÆÀÌµğ ÇÒ´ç
+        //ìœ ì € ì•„ì´ë”” í• ë‹¹
         userid = "User" + Random.Range(1000, 9999);
         PhotonNetwork.NickName = userid;
-        //Æ÷Åæ ¼­¹ö¿Í Åë½Å È½¼ö ¼³Á¤.(ÃÊ´ç 30È¸)
+        //í¬í†¤ ì„œë²„ì™€ í†µì‹  íšŸìˆ˜ ì„¤ì •.(ì´ˆë‹¹ 30íšŒ)
         Debug.Log(PhotonNetwork.SendRate);
         Debug.Log($"My NickName: {PhotonNetwork.NickName}");
-        //¼­¹ö Á¢¼Ó
+        //ì„œë²„ ì ‘ì†
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    //Æ÷Åæ ¼­¹ö Á¢¼Ó ÈÄ È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö
+    //í¬í†¤ ì„œë²„ ì ‘ì† í›„ í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected to Master");
-        Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}"); //·Îºñ È®ÀÎ
+        Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}"); //ë¡œë¹„ í™•ì¸
         PhotonNetwork.JoinLobby();
     }
 
-    //·Îºñ¿¡ Á¢¼Ó ÈÄ È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö
+    //ë¡œë¹„ì— ì ‘ì† í›„ í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜
     public override void OnJoinedLobby()
     {
         Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}");
-        PhotonNetwork.JoinRandomRoom(); //·£´ı ¸ÅÄ¡¸ŞÀÌÅ· ±â´É Á¦°ø
+        PhotonNetwork.JoinRandomRoom(); //ëœë¤ ë§¤ì¹˜ë©”ì´í‚¹ ê¸°ëŠ¥ ì œê³µ
 
     }
 
-    //·£´ıÇÑ ·ë ÀÔÀåÀÌ ½ÇÆĞÇßÀ» °æ¿ì È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö
+    //ëœë¤í•œ ë£¸ ì…ì¥ì´ ì‹¤íŒ¨í–ˆì„ ê²½ìš° í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log($"JoinRandom Failed {returnCode}:{message}");
 
-        //roomÀÇ ¼Ó¼º Á¤ÀÇ
+        //roomì˜ ì†ì„± ì •ì˜
         RoomOptions ro = new RoomOptions();
-        ro.MaxPlayers = 20;      //ÃÖ´ë Á¢¼ÓÀÚ ¼ö
-        ro.IsOpen = true;        //·ëÀÇ ¿ÀÇÂ ¿©ºÎ
-        ro.IsVisible = true;    //·Îºñ¿¡¼­ ·ë ¸ñ·Ï¿¡ ³ëÃâ ½ÃÅ³ ½Ã ¿©ºÎ
+        ro.MaxPlayers = 20;      //ìµœëŒ€ ì ‘ì†ì ìˆ˜
+        ro.IsOpen = true;        //ë£¸ì˜ ì˜¤í”ˆ ì—¬ë¶€
+        ro.IsVisible = true;    //ë¡œë¹„ì—ì„œ ë£¸ ëª©ë¡ì— ë…¸ì¶œ ì‹œí‚¬ ì‹œ ì—¬ë¶€
 
-        //·ë »ı¼º
+        //ë£¸ ìƒì„±
         PhotonNetwork.CreateRoom("My Room", ro);
     }
 
-    //·ë »ı¼º ¿Ï·á ÈÄ Äİ¹éÇÔ¼ö
+    //ë£¸ ìƒì„± ì™„ë£Œ í›„ ì½œë°±í•¨ìˆ˜
     public override void OnCreatedRoom()
     {
         Debug.Log("Created Room");
         Debug.Log($"Room Name = {PhotonNetwork.CurrentRoom.Name}");
     }
 
-    //·ë¿¡ ÀÔÀåÇÑ ÈÄ È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö
+    //ë£¸ì— ì…ì¥í•œ í›„ í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜
     public override void OnJoinedRoom()
     {
         Debug.Log($"PhotoNetwork.InRoom = {PhotonNetwork.InRoom}");
         Debug.Log($"Player Count = {PhotonNetwork.CurrentRoom.PlayerCount}");
 
         foreach (var player in PhotonNetwork.CurrentRoom.Players)
-        {
             Debug.Log($"{player.Value.NickName},{player.Value.ActorNumber}");
-        }
 
-        if (SceneManager.GetActiveScene().name == "MapScene" && GameObject.FindWithTag("Player") == null)
+        // MapSceneì—ì„œë§Œ, ê·¸ë¦¬ê³  ì•„ì§ ë‚´ Playerê°€ ì—†ì„ ë•Œë§Œ ìŠ¤í°
+        if (SceneManager.GetActiveScene().name == "MapScene" &&
+            GameObject.FindWithTag("Player") == null)
         {
-            Vector3 spawnPos;
-            Quaternion spawnRot;
+            Vector3 spawnPos = Vector3.zero;
+            Quaternion spawnRot = Quaternion.identity;
+            bool chosen = false;
 
+            // 0) ë³µê·€ë¼ë©´: MapSceneInitializerê°€ Awakeì—ì„œ ë§Œë“¤ì–´ë‘” "ReturnPoint" ìµœìš°ì„ 
             if (GameStateManager.isReturningFromMiniGame)
             {
-                GameObject returnPoint = GameObject.Find("ReturnPoint");
-                if (returnPoint != null)
+                var rp = GameObject.Find("ReturnPoint");
+                if (rp != null)
                 {
-                    spawnPos = returnPoint.transform.position;
-                    spawnRot = returnPoint.transform.rotation;
+                    spawnPos = rp.transform.position + new Vector3(0f, -1.9f, 0f);
+                    spawnRot = rp.transform.rotation;
+                    chosen = true;
+                    Debug.Log("[Photon] Spawning at ReturnPoint.");
                 }
-                else
-                {
-                    Debug.LogWarning("ReturnPoint not found! Using default spawn.");
-                    Transform[] fallback = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
-                    int idx = Random.Range(1, fallback.Length);
-                    spawnPos = fallback[idx].position;
-                    spawnRot = fallback[idx].rotation;
-                }
-
-                GameStateManager.isReturningFromMiniGame = false;
             }
-            else
+
+            // 1) (ë³´ì¡°) í‚¤ ê¸°ë°˜ ìŠ¤í°: ì•„ì§ ëª» ê³¨ëê³ , SpawnPoint(Key) ìˆìœ¼ë©´ ì‚¬ìš©
+            if (!chosen && ReturnSpawn.HasKey)
             {
-                Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
-                int idx = Random.Range(1, points.Length);
-                spawnPos = points[idx].position;
-                spawnRot = points[idx].rotation;
+                var key = ReturnSpawn.Consume();
+                var all = Object.FindObjectsOfType<SpawnPoint>(true);
+                var byKey = all.FirstOrDefault(sp => sp.Key == key);
+                if (byKey != null)
+                {
+                    spawnPos = byKey.transform.position;
+                    spawnRot = byKey.transform.rotation;
+                    chosen = true;
+                    Debug.Log($"[Photon] Spawning by key '{key}'.");
+                }
             }
 
+            // 2) (í´ë°±) SpawnPoint(Default) ì‚¬ìš©
+            if (!chosen)
+            {
+                var all = Object.FindObjectsOfType<SpawnPoint>(true);
+                var def = all.FirstOrDefault(sp => sp.Key == "Default");
+                if (def != null)
+                {
+                    spawnPos = def.transform.position;
+                    spawnRot = def.transform.rotation;
+                    chosen = true;
+                    Debug.Log("[Photon] Spawning at SpawnPoint 'Default'.");
+                }
+            }
+
+            // 3) (ìµœì¢… í´ë°±) SpawnPointGroup ëœë¤
+            if (!chosen)
+            {
+                var group = GameObject.Find("SpawnPointGroup");
+                if (group != null)
+                {
+                    var points = group.GetComponentsInChildren<Transform>();
+                    if (points != null && points.Length > 1)
+                    {
+                        int idx = Random.Range(1, points.Length); // 0ì€ ê·¸ë£¹ ìì‹ 
+                        spawnPos = points[idx].position;
+                        spawnRot = points[idx].rotation;
+                        chosen = true;
+                        Debug.Log("[Photon] Spawning from SpawnPointGroup (random).");
+                    }
+                }
+
+                if (!chosen)
+                    Debug.LogWarning("[Photon] No spawn point found. Using (0,0,0).");
+            }
+
+            // ì‹¤ì œ ìŠ¤í°
             PhotonNetwork.Instantiate("Player", spawnPos, spawnRot);
+
+            // 1íšŒì„± í”Œë˜ê·¸ ì •ë¦¬
+            GameStateManager.isReturningFromMiniGame = false;
         }
     }
 
+
+
     public override void OnLeftRoom()
     {
-        SceneManager.LoadScene("MapScene");  // ·ë ³ª°¡¸é ´Ù½Ã ¸Ê ¾À ·Îµù
+        SceneManager.LoadScene("MapScene");  // ë£¸ ë‚˜ê°€ë©´ ë‹¤ì‹œ ë§µ ì”¬ ë¡œë”©
     }
 
 

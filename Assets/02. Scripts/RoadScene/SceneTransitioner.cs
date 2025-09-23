@@ -22,6 +22,13 @@ public static class SceneTransitioner
         SceneManager.LoadScene(miniGameSceneName, LoadSceneMode.Single);
     }
 
+    public static void EnterMiniGame(string miniGameSceneName, string returnSpawnKey)
+    {
+        ReturnSpawn.Set(returnSpawnKey);                 // 돌아올 곳 키 저장
+        GameStateManager.isReturningFromMiniGame = false;
+        SceneManager.LoadScene(miniGameSceneName, LoadSceneMode.Single);
+    }
+
     /// <summary>
     /// 맵으로 복귀 (복귀 플래그 ON → 맵 로드 후 복원 로직이 동작)
     /// </summary>
