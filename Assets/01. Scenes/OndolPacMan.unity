@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 1970444174}
   - component: {fileID: 1970444172}
   - component: {fileID: 1970444171}
+  - component: {fileID: 1970444175}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -381,6 +382,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1970444175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970444170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0576e025bb8f7c1469687b052b1837f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 800952131310398007, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
+  player: {fileID: 1505790719655493400}
 --- !u!1 &2051048273
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,70 +555,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
---- !u!1001 &2823103393792086992
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 800952131310398007, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_Name
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 1068037236144738284, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 220.56342
-      objectReference: {fileID: 0}
-    - target: {fileID: 1068037236144738284, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.4403856
-      objectReference: {fileID: 0}
-    - target: {fileID: 1068037236144738284, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 236.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1068037236144738284, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1068037236144738284, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1068037236144738284, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1068037236144738284, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1068037236144738284, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1068037236144738284, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1068037236144738284, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2374ccc3883fd2c4bb665619d5087bca, type: 3}
+--- !u!1 &1505790719655493400 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3490491955612362060, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+  m_PrefabInstance: {fileID: 1505790719655493399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 315396256}
   - {fileID: 2051048275}
-  - {fileID: 1970444174}
   - {fileID: 679550208}
+  - {fileID: 1970444174}
   - {fileID: 1505790719655493399}
-  - {fileID: 2823103393792086992}
