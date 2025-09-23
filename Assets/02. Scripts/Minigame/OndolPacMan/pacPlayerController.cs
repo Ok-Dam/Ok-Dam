@@ -95,6 +95,14 @@ public class pacPlayerController : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        IPlayerInteractable interactable = other.GetComponent<IPlayerInteractable>();
+        if (interactable != null)
+        {
+            interactable.OnPlayerInteract(gameObject);
+        }
+    }
 
     void MoveForward()
     {
@@ -176,6 +184,25 @@ public class pacPlayerController : MonoBehaviour
         UpdateRotation();
 
         isMoving = false;
+
+        AfterMoveCheck();
+    }
+
+    // 출구 도착했으면 부품 다 모았는지 검사
+    void AfterMoveCheck()
+    {
+        if (gridManager == null) return;
+
+        int x = internalGridPos.x;
+        int y = internalGridPos.y;
+
+        if (x < 0 || x >= gridManager.gridWidth || y < 0 || y >= gridManager.gridHeight)
+            return;
+
+        if (gridManager.gridMap[x, y] == 3) // Exit tile detected
+        {
+            pacGameManager.Instance.CheckWinCondition();
+        }
     }
 
     void UpdateRotation()

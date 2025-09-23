@@ -3,6 +3,8 @@ using System.Collections;
 
 public class pacGameManager : MonoBehaviour
 {
+    public static pacGameManager Instance { get; private set; }
+
     private EnvironmentSpawner environmentSpawner;
     private EnemyManager enemyManager;
     private GridManager gridManager;
@@ -11,10 +13,23 @@ public class pacGameManager : MonoBehaviour
     [SerializeField] float firstEnemyGenTime = 3.0f;
     [SerializeField] float enemyGenTime = 15.0f;
 
+    private int totalCollectibles = 5;
+    private int collectedCount = 0;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
     void Start()
     {
         environmentSpawner = GetComponent<EnvironmentSpawner>();
-        enemyManager = GetComponent<EnemyManager>();  
+        enemyManager = GetComponent<EnemyManager>();
         gridManager = GetComponent<GridManager>();
 
         // Initialize environment features
@@ -25,7 +40,7 @@ public class pacGameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("env spawner or gridmgr gone");
+            Debug.LogError("EnvironmentSpawner or GridManager is missing!");
         }
 
         // Spawn enemies after a delay (or directly)
@@ -38,22 +53,54 @@ public class pacGameManager : MonoBehaviour
             Debug.LogError("EnemyManager not assigned in GameManager.");
         }
 
-        // Initialize player if needed, e.g. reset position (optional)
+        // Initialize player if needed
         if (playerController != null)
         {
-            // playerController.Setup() if needed (depending on design)
+            // playerController.Setup() if needed
         }
     }
 
     IEnumerator SpawnEnemiesRepeatedly()
     {
-        yield return new WaitForSeconds(firstEnemyGenTime); // Initial delay of 3 seconds
+        yield return new WaitForSeconds(firstEnemyGenTime); // Initial delay
 
         while (true)
         {
             enemyManager.SpawnEnemyAtExit();
-            yield return new WaitForSeconds(enemyGenTime); // Spawn every 15 seconds after the first spawn
+            yield return new WaitForSeconds(enemyGenTime);
         }
     }
 
+    // Called by collectible on pickup
+    public void CollectibleCollected()
+    {
+        collectedCount++;
+        Debug.Log($"Collectibles collected: {collectedCount} / {totalCollectibles}");
+    }
+
+    public bool HasCollectedAll()
+    {
+        return collectedCount >= totalCollectibles;
+    }
+
+    // Called when player reaches exit
+    public void CheckWinCondition()
+    {
+        if (HasCollectedAll())
+            WinGame();
+        else
+            LoseGame();
+    }
+
+    private void WinGame()
+    {
+        Debug.Log("You win!");
+        // TODO: add win UI, scene transition, etc.
+    }
+
+    private void LoseGame()
+    {
+        Debug.Log("You lose!");
+        // TODO: add lose UI, retry logic, etc.
+    }
 }

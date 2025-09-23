@@ -59,10 +59,6 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            if (currentState != State.RandomMove)
-            {
-                Debug.Log("[State] Switching to RandomMove");
-            }
             currentState = State.RandomMove;
         }
 
@@ -71,11 +67,9 @@ public class EnemyAI : MonoBehaviour
             switch (currentState)
             {
                 case State.RandomMove:
-                    Debug.Log("[Action] RandomMove called");
                     RandomMove();
                     break;
                 case State.ChasePlayer:
-                    Debug.Log("[Action] ChasePlayerWithAStar called");
                     ChasePlayerWithAStar();
                     break;
             }
@@ -169,7 +163,6 @@ public class EnemyAI : MonoBehaviour
         if (currentPath != null && pathIndex < currentPath.Count)
         {
             Vector2Int nextGridPos = currentPath[pathIndex];
-            Debug.Log($"[Movement] Next path node: {nextGridPos}, Current position: {enemyGridPos}, PathIndex: {pathIndex}");
 
             if (!IsAdjacent(enemyGridPos, nextGridPos))
             {
@@ -180,7 +173,6 @@ public class EnemyAI : MonoBehaviour
 
             if (IsWalkable(nextGridPos))
             {
-                Debug.Log($"[Movement] Moving to {nextGridPos}");
                 MoveTo(nextGridPos);
                 pathIndex++;
             }
