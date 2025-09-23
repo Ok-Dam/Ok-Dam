@@ -15,13 +15,12 @@ public class EnemyManager : MonoBehaviour
     {
         gridManager = GetComponent<GridManager>();
         exitPos = FindExitPosition();
-        StartCoroutine(DelayedSpawn());
     }
-    IEnumerator DelayedSpawn()
-    {
-        yield return new WaitForSeconds(2.0f); // 2초 대기 (원하는 시간으로 수정)
-        SpawnEnemyAtExit();
-    }
+    //IEnumerator DelayedSpawn()
+    //{
+    //    yield return new WaitForSeconds(2.0f); // 2초 대기 (원하는 시간으로 수정)
+    //    SpawnEnemyAtExit();
+    //}
 
     // 출구 위치를 gridMap에서 특정 값(예: 3)으로 찾아 저장
     Vector2Int FindExitPosition()

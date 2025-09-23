@@ -352,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallPrefab: {fileID: 2011020546118669180, guid: d603c0ad4cae2c240845b7545d93fd9c, type: 3}
+  collectiblePrefab: {fileID: 348815198831877259, guid: 3837163496fa32641b5160ca5557d5ff, type: 3}
 --- !u!114 &1970444172
 MonoBehaviour:
   m_ObjectHideFlags: 0
