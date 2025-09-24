@@ -8,6 +8,8 @@ public class pacPlayerController : MonoBehaviour
     public float moveCooldown = 0.3f; // 이동 속도 조절용 딜레이
     private float moveTimer = 0f;
 
+    public Animator animator;
+
     // 내부적으로 배열 인덱스 기준 gridPos 유지
     private Vector2Int internalGridPos;
 
@@ -29,6 +31,8 @@ public class pacPlayerController : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
+
         internalGridPos = FindEntrancePosition();
         UpdateDisplayedGridPos();
 
@@ -43,6 +47,8 @@ public class pacPlayerController : MonoBehaviour
     void Update()
     {
         HandleInput();
+
+        bool isWalking = isMoving;
 
         moveTimer += Time.deltaTime;
         if (moveTimer >= moveCooldown && !isMoving)
