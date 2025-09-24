@@ -7,17 +7,17 @@ public class TailManager : MonoBehaviour
     public int tailLength = 0;
 
     private List<GameObject> tailObjects = new List<GameObject>();
-    private List<Vector2Int> tailPositions = new List<Vector2Int>();  // Grid 기준 위치 리스트
+    private List<Vector2Int> tailPositions = new List<Vector2Int>();
 
     public GridManager gridManager;
-    private Vector2Int previousHeadPos; // 꼬리 위치용
+    private Vector2Int previousHeadPos;
 
-    private List<Vector3> tailWorldPositions = new List<Vector3>(); // 실제 꼬리 위치(부드러운 이동용)
+    private List<Vector3> tailWorldPositions = new List<Vector3>();
 
-    private Vector2Int entrancePos;  // 입구 좌표 저장
-    private List<Vector2Int> regenCells = new List<Vector2Int>();  // 재생성 가능한 3개 그리드 좌표
+    private Vector2Int entrancePos;
+    private List<Vector2Int> regenCells = new List<Vector2Int>();
 
-    [SerializeField]private float regenInterval = 0.5f;  // 재생성 딜레이 (초)
+    [SerializeField] private float regenInterval = 0.5f;
     private float regenTimer = 0f;
 
     private pacPlayerController playerController;
@@ -27,21 +27,21 @@ public class TailManager : MonoBehaviour
         playerController = GetComponent<pacPlayerController>();
         entrancePos = gridManager.ReturnEntrancePosition();
 
-        // 입구 바로 위 칸과 양옆 칸 좌표 계산 및 리스트에 저장
-        // 입구가 (x, y)라 하면 위 칸은 (x, y - 1), 양옆은 (x-1, y-1), (x+1, y-1)
+        previousHeadPos = playerController.InternalGridPos;
+        tailPositions.Clear();
+
         regenCells.Clear();
-        int x = entrancePos.x;
-        int y = entrancePos.y;
+        int x = entrancePos.x, y = entrancePos.y;
 
         regenCells.Add(new Vector2Int(x, y - 1));
         regenCells.Add(new Vector2Int(x - 1, y - 1));
         regenCells.Add(new Vector2Int(x + 1, y - 1));
+
+        Debug.Log("[TailManager Start] Initialized with entrance at " + entrancePos);
     }
 
     void Update()
     {
-        Vector2Int currentHeadPos = playerController.InternalGridPos;
-
         if (playerController.isMoving)
         {
             SmoothFollowUpdate();
@@ -55,8 +55,8 @@ public class TailManager : MonoBehaviour
         if (playerController == null) return;
         Vector2Int playerPos = playerController.InternalGridPos;
 
-        // 플레이어 위치가 재생성 가능한 셀 3개 중 하나에 있는지 확인
         bool inRegenZone = regenCells.Contains(playerPos);
+        Debug.Log($"[RegenerationCheck] Player pos: {playerPos} In regen zone: {inRegenZone} Regen timer: {regenTimer}");
 
         if (inRegenZone)
         {
@@ -64,32 +64,55 @@ public class TailManager : MonoBehaviour
             if (regenTimer >= regenInterval)
             {
                 regenTimer = 0f;
-
-                // 꼬리 길이 1 증가, 최대 꼬리 길이 제한 적용 필요하면 여기서 처리
+                Debug.Log("[RegenerationCheck] Regenerating tail length.");
                 SetTailLength(tailLength + 1);
             }
         }
         else
         {
-            // 재생성 영역 벗어나면 타이머 리셋 (선택 사항)
+            if (regenTimer > 0f)
+                Debug.Log("[RegenerationCheck] Regen zone exit, reset timer.");
             regenTimer = 0f;
         }
     }
 
     public void SetTailLength(int length)
     {
+        int oldLength = tailLength;
         tailLength = Mathf.Max(0, length);
+
+        Debug.Log($"[SetTailLength] Tail length changing from {oldLength} to {tailLength}");
+
+        if (tailLength > oldLength && tailPositions.Count == 0)
+        {
+            Vector2Int currentHead = playerController.InternalGridPos;
+            Vector2Int tailStartPos = currentHead - playerController.LastMoveDirection;
+            tailPositions.Insert(0, tailStartPos);
+            Debug.Log($"[SetTailLength] Added initial tail start position {tailStartPos} behind head {currentHead}");
+        }
+
         UpdateTailObjects();
+        InitializeTailWorldPositions();
+        UpdateTailObjectsPositionInstant();
     }
 
     public void UpdateHeadPosition(Vector2Int newHeadPos)
     {
-        if (tailLength > 0)
+        Debug.Log($"[UpdateHeadPosition] Called with new head pos: {newHeadPos}; previousHeadPos: {previousHeadPos}");
+
+        if (tailLength > 0 && newHeadPos != previousHeadPos)
         {
             tailPositions.Insert(0, previousHeadPos);
-            if (tailPositions.Count > tailLength)
-                tailPositions.RemoveAt(tailPositions.Count - 1);
+            int maxCount = tailLength;
+
+            if (tailPositions.Count > maxCount)
+            {
+                tailPositions.RemoveRange(maxCount, tailPositions.Count - maxCount);
+                Debug.Log("[UpdateHeadPosition] Trimmed tail positions list to max count: " + maxCount);
+            }
+            Debug.Log($"[UpdateHeadPosition] Inserted previous head pos: {previousHeadPos}. Tail positions count: {tailPositions.Count}");
         }
+
         previousHeadPos = newHeadPos;
 
         UpdateTailObjects();
@@ -99,52 +122,61 @@ public class TailManager : MonoBehaviour
 
     void InitializeTailWorldPositions()
     {
-        // 새 꼬리가 생기거나 길이가 바뀌었을 때 부드러운 위치 배열 초기화
+        Debug.Log("[InitializeTailWorldPositions] Syncing tailWorldPositions list.");
         while (tailWorldPositions.Count < tailLength)
         {
-            Vector3 pos = tailPositions.Count > tailWorldPositions.Count
-                ? gridManager.CoordToWorldPos(tailPositions[tailWorldPositions.Count].x, tailPositions[tailWorldPositions.Count].y)
-                : tailWorldPositions.Count > 0 ? tailWorldPositions[tailWorldPositions.Count - 1] : transform.position;
+            int idx = tailWorldPositions.Count;
+            Vector3 pos = idx < tailPositions.Count
+                ? gridManager.CoordToWorldPos(tailPositions[idx].x, tailPositions[idx].y)
+                : (tailWorldPositions.Count > 0 ? tailWorldPositions[tailWorldPositions.Count - 1] : gridManager.CoordToWorldPos(entrancePos.x, entrancePos.y));
             tailWorldPositions.Add(pos);
+
+            Debug.Log($"[InitializeTailWorldPositions] Added world position {pos} at index {idx}");
         }
         while (tailWorldPositions.Count > tailLength)
         {
             tailWorldPositions.RemoveAt(tailWorldPositions.Count - 1);
+            Debug.Log("[InitializeTailWorldPositions] Removed excess tail world position.");
         }
     }
 
     void SmoothFollowUpdate()
     {
-        const float followSpeed = 10f;  // 조정 가능, 꼬리 부드러움 정도
-        if (tailObjects.Count == 0) return;
+        const float followSpeed = 3f;  // Slower follow speed now
+        if (tailObjects.Count == 0 || tailWorldPositions.Count < tailObjects.Count)
+            return;
 
-        // 머리 위치 월드 좌표
-        Vector3 headWorldPos = gridManager.CoordToWorldPos(previousHeadPos.x, previousHeadPos.y);
-        headWorldPos.z -= gridManager.cellSize * 0.5f;
-
-        // 첫 꼬리 목표 위치는 머리 위치
-        Vector3 previousPos = headWorldPos;
+        Vector3 prevPos = playerController.transform.position;
 
         for (int i = 0; i < tailObjects.Count; i++)
         {
             Vector3 targetPos = tailWorldPositions[i];
-            // 목표 위치를 따라 부드럽게 이동 (lerp)
-            tailWorldPositions[i] = Vector3.Lerp(targetPos, previousPos, Time.deltaTime * followSpeed);
+            float lerpFactor = Mathf.Clamp01(Time.deltaTime * followSpeed);
+            tailWorldPositions[i] = Vector3.Lerp(targetPos, prevPos, lerpFactor);
+            // Or alternatively:
+            // float maxMoveDist = followSpeed * Time.deltaTime;
+            // tailWorldPositions[i] = Vector3.MoveTowards(targetPos, prevPos, maxMoveDist);
 
-            // 꼬리 오브젝트 위치 업데이트
             tailObjects[i].transform.position = tailWorldPositions[i];
-            // 꼬리 방향(회전)은 간단히 머리 방향 따르도록 기본 유지 가능
-
-            previousPos = tailWorldPositions[i];
+            prevPos = tailWorldPositions[i];
         }
     }
 
-    // 꼬리 프리팹 생성/삭제 동기화 함수, 앞서 구현된 함수 그대로 유지
+
     void UpdateTailObjects()
     {
+        Debug.Log($"[UpdateTailObjects] Tail length: {tailLength}, Tail objects count: {tailObjects.Count}");
         while (tailObjects.Count < tailLength)
         {
-            GameObject tailObj = Instantiate(tailPrefab, Vector3.zero, Quaternion.identity, transform);
+            int idx = tailObjects.Count;
+            Vector2Int spawnGridPos = idx < tailPositions.Count ? tailPositions[idx] : playerController.InternalGridPos - playerController.LastMoveDirection;
+            Vector3 spawnWorldPos = gridManager.CoordToWorldPos(spawnGridPos.x, spawnGridPos.y);
+            spawnWorldPos.z -= gridManager.cellSize * 0.5f;
+
+            Debug.Log($"[UpdateTailObjects] Spawning tail segment {idx} at grid {spawnGridPos}, world pos {spawnWorldPos}");
+
+            GameObject tailObj = Instantiate(tailPrefab, spawnWorldPos, Quaternion.identity, transform);
+
             TailSegment segment = tailObj.GetComponent<TailSegment>();
             if (segment != null)
             {
@@ -155,32 +187,39 @@ public class TailManager : MonoBehaviour
             }
             tailObjects.Add(tailObj);
         }
+
         while (tailObjects.Count > tailLength)
         {
             GameObject toRemove = tailObjects[tailObjects.Count - 1];
             tailObjects.RemoveAt(tailObjects.Count - 1);
             Destroy(toRemove);
+            Debug.Log("[UpdateTailObjects] Removed excess tail object.");
         }
     }
 
-    // 꼬리 위치 즉시 동기화 (초기화용)
     void UpdateTailObjectsPositionInstant()
     {
         for (int i = 0; i < tailObjects.Count; i++)
         {
             if (i >= tailPositions.Count) break;
 
-            Vector3 pos = gridManager.CoordToWorldPos(tailPositions[i].x, tailPositions[i].y);
-            tailObjects[i].transform.position = new Vector3(pos.x, 0, pos.z - gridManager.cellSize * 0.5f);
+            Vector2Int gridPos = tailPositions[i];
+            Vector3 pos = gridManager.CoordToWorldPos(gridPos.x, gridPos.y);
+            Vector3 adjustedPos = new Vector3(pos.x, 0, pos.z - gridManager.cellSize * 0.5f);
+
+            tailObjects[i].transform.position = adjustedPos;
+
+            Debug.Log($"[UpdateTailObjectsPositionInstant] Tail segment {i} position set to GridPos: {gridPos}, WorldPos: {adjustedPos}");
         }
     }
 
-    // 꼬리 충돌처리 등 기존 기능 유지
     public void HandleTailCollision(TailSegment collidedSegment, GameObject collider)
     {
         collidedSegment.DeleteSegment();
 
         int indexToRemove = tailObjects.FindIndex(obj => obj == collidedSegment.gameObject);
+        Debug.Log("[HandleTailCollision] Collision detected on tail index " + indexToRemove);
+
         if (indexToRemove >= 0)
         {
             int removeCount = tailObjects.Count - indexToRemove;
@@ -188,12 +227,14 @@ public class TailManager : MonoBehaviour
             tailPositions.RemoveRange(indexToRemove, removeCount);
             tailWorldPositions.RemoveRange(indexToRemove, removeCount);
             tailLength = Mathf.Max(0, tailLength - removeCount);
+
+            Debug.Log($"[HandleTailCollision] Removed {removeCount} tail segments. New tail length: {tailLength}");
         }
 
         if (collider.CompareTag("Enemy"))
         {
             Destroy(collider);
+            Debug.Log("[HandleTailCollision] Enemy destroyed on collision.");
         }
-        // 게임오버 조건 체크는 별도 함수에서 처리 예정
     }
 }

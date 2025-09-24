@@ -237,7 +237,6 @@ public class EnemyAI : MonoBehaviour, IPlayerInteractable
     {
         if (gridPos.x < 0 || gridPos.x >= gridManager.gridWidth || gridPos.y < 0 || gridPos.y >= gridManager.gridHeight)
         {
-            Debug.Log("[IsWalkable] Out-of-bounds: " + gridPos + $" (grid size: {gridManager.gridWidth}, {gridManager.gridHeight})");
             return false;
         }
         if (gridManager.gridMap[gridPos.x, gridPos.y] == 1) // º®

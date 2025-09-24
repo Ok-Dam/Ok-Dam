@@ -24,6 +24,7 @@ public class pacPlayerController : MonoBehaviour
 
     // 배열 인덱스 기준 방향 (위가 y+1)
     private Vector2Int currentDirection;
+    private Vector2Int lastMoveDirection;
 
     private Vector3 targetWorldPos;
     public bool isMoving = false;
@@ -43,6 +44,7 @@ public class pacPlayerController : MonoBehaviour
         transform.position = new Vector3(startWorldPos.x, 0, startWorldPos.z - gridManager.cellSize * 0.5f);
 
         currentDirection = Vector2Int.down; // 초기 방향 설정
+       lastMoveDirection = Vector2Int.down;
     }
 
 
@@ -134,7 +136,8 @@ public class pacPlayerController : MonoBehaviour
     internalGridPos = newPos;
     UpdateDisplayedGridPos();
 
-    tailManager?.UpdateHeadPosition(internalGridPos);
+        lastMoveDirection = currentDirection;
+        tailManager?.UpdateHeadPosition(internalGridPos);
 
     // 방향 회전 먼저 즉시 적용
     UpdateRotation();
@@ -242,6 +245,10 @@ public class pacPlayerController : MonoBehaviour
     public Vector2Int InternalGridPos
     {
         get { return internalGridPos; }
+    }
+    public Vector2Int LastMoveDirection
+    {
+        get { return lastMoveDirection; }
     }
 
 }
