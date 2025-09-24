@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour
     public GameObject houseBackground;
     public float houseDropPerFloor = 0.1f;
 
+    [Header("Sounds")]
+    public AudioSource audioSource;
+    public AudioClip perfectSound;
+
     [HideInInspector]
     public float currentBlockWidth;
 
@@ -140,6 +144,11 @@ public class GameManager : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(ShowPerfectText());
+
+        if (audioSource != null && perfectSound != null)
+        {
+            audioSource.PlayOneShot(perfectSound);
+        }
     }
 
     private IEnumerator ShowPerfectText()
