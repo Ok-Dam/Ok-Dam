@@ -22730,6 +22730,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 379806391}
     m_Modifications:
+    - target: {fileID: 3850364469396369184, guid: 68f460d6467f0b54d9c5937914fb7ec4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 25a686124f8e35f4798faaac425607ad, type: 3}
     - target: {fileID: 6713887167953345497, guid: 68f460d6467f0b54d9c5937914fb7ec4, type: 3}
       propertyPath: m_Name
       value: InfoPanel

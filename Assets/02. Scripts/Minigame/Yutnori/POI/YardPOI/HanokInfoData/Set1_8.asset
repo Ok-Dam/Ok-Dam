@@ -20,11 +20,19 @@ MonoBehaviour:
       \uC5F4\uACFC \uC2B5\uB3C4 \uC870\uC808\uC5D0 \uD070 \uB3C4\uC6C0\uC774 \uB429\uB2C8\uB2E4."
     image: {fileID: 21300000, guid: 25a686124f8e35f4798faaac425607ad, type: 3}
   - part: 1
-    infoText: 
-    image: {fileID: 0}
+    infoText: "\uC8FC\uCDA7\uB3CC \uC704\uC758 \uAE30\uB465\uC740 \uC6B8\uD241\uBD88\uD241\uD55C
+      \uC8FC\uCD94\uC5D0 \uB9DE\uAC8C \uAE30\uB465 \uC544\uB7AB\uBD80\uBD84\uC744
+      \uAE4E\uC544\uB0B4\uB294 \uADF8\uB7AD\uC774\uC9C8\uC744 \uD558\uAC8C \uB429\uB2C8\uB2E4.
+      \uB9E4\uB048\uD558\uAC8C \uB2E4\uB4EC\uB294 \uAC83\uBCF4\uB2E4 \uC5B4\uB835\uC9C0\uB9CC
+      \uC77C\uB2E8 \uC644\uC131\uC774 \uB418\uBA74 \uBB34\uC5C7\uBCF4\uB2E4\uB3C4
+      \uD2BC\uD2BC\uD558\uAC8C \uACB0\uD569\uB429\uB2C8\uB2E4. "
+    image: {fileID: 21300000, guid: 6e0b53ab450165140b589c872b6392bc, type: 3}
   - part: 2
-    infoText: 
-    image: {fileID: 0}
+    infoText: "\uD55C\uC625\uC758 \uBCBD\uC740 \uD770 \uD68C\uBC18\uC8FD\uC73C\uB85C
+      \uB3FC\uC788\uB294\uB370, \uAC04\uC811 \uBC18\uC0AC\uAD11\uC744 \uD295\uACA8\uB0B4\uB294
+      \uB370 \uB6F0\uC5B4\uB0A9\uB2C8\uB2E4. "
+    image: {fileID: 21300000, guid: b92a3cc96efcca846802aa9364433085, type: 3}
   - part: 3
-    infoText: 
-    image: {fileID: 0}
+    infoText: "\uD55C\uC625\uC758 \uAE30\uB2E8(\uBC14\uB2E5)\uC740 \uB192\uAC8C \uC9C0\uC5B4
+      \uC2B5\uAE30, \uBE57\uBB3C\uACFC \uBC8C\uB808\uB97C \uBC29\uC9C0\uD588\uC2B5\uB2C8\uB2E4."
+    image: {fileID: 21300000, guid: 6280c54ad9ef61d47be89260f679c36d, type: 3}

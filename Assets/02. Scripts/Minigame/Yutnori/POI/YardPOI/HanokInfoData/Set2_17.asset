@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60dccbd70b5776d4aaee948a699eb7e6, type: 3}
+  m_Name: Set2_17
+  m_EditorClassIdentifier: 
+  nodeNumber: 17
+  infos:
+  - part: 0
+    infoText: "\uCC98\uB9C8\uB294 \uAE38\uACE0 \uAE4A\uAC8C \uBED7\uC5B4 \uC788\uB294\uB370,
+      \uACC4\uC808\uBCC4 \uD0DC\uC591 \uACE0\uB3C4\uC5D0 \uB530\uB77C \uD587\uBE5B\uC744
+      \uC790\uB3D9\uC73C\uB85C \uC870\uC808\uD574\uC90D\uB2C8\uB2E4."
+    image: {fileID: 21300000, guid: 56280e6a512c3464d90a97f97f42f9bb, type: 3}
+  - part: 1
+    infoText: "\uD55C\uC625\uC740 \uAE30\uB465 \uC704\uCABD\uC758 \uB300\uB4E4\uBCF4\uAC00
+      \uBB34\uAC8C \uC911\uC2EC\uC778\uB370, \uBB34\uAC8C \uC911\uC2EC\uC774 \uC704\uC5D0
+      \uC788\uAE30 \uB54C\uBB38\uC5D0 \uAE30\uB465\uC774 \uC369\uC5B4\uB3C4 \uBB34\uB108\uC9C0\uC9C0
+      \uC54A\uACE0 \uAD50\uCCB4\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    image: {fileID: 21300000, guid: f6566f8f26fd0de48a1782d48289ee30, type: 3}
+  - part: 2
+    infoText: "\uB4E4\uC5B4\uAC78\uAC1C\uBB38 \uD639\uC740 \uBD84\uD569\uBB38\uC740
+      \uBB38\uC758 \uD55C \uD615\uD0DC\uB85C, \uBB38\uC9DD\uC744 \uC704\uB85C \uB4E4\uC5B4
+      \uC62C\uB824 \uC5F4\uACE0 \uB2EB\uB294 \uB3C5\uD2B9\uD55C \uAD6C\uC870\uB97C
+      \uAC00\uC9C0\uACE0 \uC788\uC2B5\uB2C8\uB2E4. \uC774\uB97C \uD1B5\uD574 \uACF5\uAC04\uC744
+      \uD544\uC694\uC5D0 \uB530\uB77C \uC5F4\uAC70\uB098 \uB2EB\uC544 \uD658\uAE30\uC640
+      \uD1B5\uD48D\uC758 \uC591\uC744 \uC870\uC808\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    image: {fileID: 21300000, guid: 209b1c34903254d4ab9e20d2316ed636, type: 3}
+  - part: 3
+    infoText: "\uB9C8\uB8E8\uB294 \uB098\uBB34 \uB110\uD310\uC73C\uB85C \uAD6C\uC131\uB3FC
+      \uBC14\uB78C\uC774 \uC798 \uD1B5\uD558\uACE0, \uBC11 \uACF5\uAC04\uC744 \uBE44\uC6CC\uC11C
+      \uD658\uAE30\uC5D0 \uC6A9\uC774\uD569\uB2C8\uB2E4."
+    image: {fileID: 21300000, guid: 7d5932a69bec10e43acde8f5fc6d8441, type: 3}
