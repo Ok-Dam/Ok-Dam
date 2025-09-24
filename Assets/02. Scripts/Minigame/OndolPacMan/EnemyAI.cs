@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IPlayerInteractable
 {
-    public GridManager gridManager;
-    public GameObject player;
+    private GridManager gridManager;
+    private GameObject player;
 
     private Vector2Int enemyGridPos;    // Grid ÁÂÇ¥ (¹è¿­ ÀÎµ¦½º)
     private Vector2Int playerGridPos;   // Grid ÁÂÇ¥ (¹è¿­ ÀÎµ¦½º)
@@ -76,6 +76,15 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    public void Init(GridManager grd, GameObject player) { 
+        this.gridManager = grd;
+        this.player = player;
+    }
+
+    public void OnPlayerInteract(GameObject player)
+    {
+        Destroy(gameObject);
+    }
 
 
     Vector2Int FindEnemyGridPos()
@@ -148,10 +157,8 @@ public class EnemyAI : MonoBehaviour
         // Recalculate path if needed
         if (currentPath == null || currentPath.Count == 0 || pathIndex >= currentPath.Count || currentPath[currentPath.Count - 1] != playerGridPos)
         {
-            Debug.Log($"[Pathfinding] Calculating new path from {enemyGridPos} to {playerGridPos}");
             currentPath = FindPath(enemyGridPos, playerGridPos);
             pathIndex = 0;
-            Debug.Log($"[Pathfinding] New path length: {currentPath.Count}");
         }
 
         // Skip nodes that equal enemyGridPos to avoid moving "onto" itself repeatedly

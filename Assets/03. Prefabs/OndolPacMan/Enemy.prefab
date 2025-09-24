@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1068037236144738284}
   - component: {fileID: 1215729832372421731}
+  - component: {fileID: 3163745240313750616}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -45,8 +46,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9b74530298f4a478e0369146609bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridManager: {fileID: 0}
-  player: {fileID: 0}
+--- !u!65 &3163745240313750616
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800952131310398007}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15, y: 20, z: 15}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2137511643378814741
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -43,16 +43,13 @@ public class EnemyManager : MonoBehaviour
     public void SpawnEnemyAtExit()
     {
         Vector2Int clampedExitPos = gridManager.ClampToGrid(exitPos);
-        Debug.Log("<Enemy Spawn> ExitPos: " + exitPos + ", ClampedExitPos: " + clampedExitPos);
 
         Vector3 worldPos = gridManager.CoordToWorldPos(clampedExitPos.x, clampedExitPos.y);
-        Debug.Log("<Enemy Spawn> WorldPos: " + worldPos);
 
         GameObject enemy = Instantiate(enemyPrefab, new Vector3(worldPos.x, 0, worldPos.z), Quaternion.identity);
 
         EnemyAI ai = enemy.GetComponent<EnemyAI>();
-        ai.gridManager = gridManager;
-        ai.player = player;
+        ai.Init(gridManager, player);
 
         enemies.Add(enemy);
     }

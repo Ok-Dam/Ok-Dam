@@ -16,6 +16,9 @@ public class pacGameManager : MonoBehaviour
     private int totalCollectibles = 5;
     private int collectedCount = 0;
 
+    // 데운 그리드 수 
+    private int heatedCount = 0;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -69,6 +72,17 @@ public class pacGameManager : MonoBehaviour
             enemyManager.SpawnEnemyAtExit();
             yield return new WaitForSeconds(enemyGenTime);
         }
+    }
+
+    public void IncrementHeatedCount()
+    {
+        heatedCount++;
+        Debug.Log($"Heated cells count: {heatedCount}");
+    }
+
+    public int GetHeatedCount()
+    {
+        return heatedCount;
     }
 
     // Called by collectible on pickup

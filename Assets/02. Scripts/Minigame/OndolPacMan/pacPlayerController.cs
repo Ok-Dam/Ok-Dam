@@ -183,6 +183,20 @@ public class pacPlayerController : MonoBehaviour
         // 위치 이동 완료 후 회전 갱신(필요시)
         UpdateRotation();
 
+        // 해당 그리드 열 받음 처리 
+        HeatMapManager heatMapManager = FindObjectOfType<HeatMapManager>();
+        if (heatMapManager != null)
+        {
+            int x = internalGridPos.x;
+            int y = internalGridPos.y;
+
+            // Only heat allowed cell types via HeatCell internally
+            if (heatMapManager.HeatCell(x, y))
+            {
+                pacGameManager.Instance.IncrementHeatedCount();
+            }
+        }
+
         isMoving = false;
 
         AfterMoveCheck();
