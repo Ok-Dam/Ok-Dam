@@ -89,7 +89,7 @@ public class HeatMapManager : MonoBehaviour
         // 3. 플레이어가 이동 완료 후 pacPlayercontroller에서 좌표 주면 그걸로 아까의 투명 텍스쳐도 같은 위치를 빨갛게 칠한다.
         // 유니티 texture 2d 좌표랑 내가 쓰는 좌표 달라서 보정.
         // gridWidth - 1 - x로 전달하면 x좌표가 21~1이고, -x-1로 하면 -2~-22다. 근데 둘 다 된다. 대체 왜지?????
-        Debug.Log($"Original x: {x}, Converted x: {-x-1}");
+        //Debug.Log($"Original x: {x}, Converted x: {-x-1}");
         heatTexture.SetPixel(-x-1, y, heatColor);
         heatTexture.Apply();
 

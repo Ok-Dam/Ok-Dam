@@ -532,6 +532,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 638146663195114633, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 638146663195114633, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 638146663195114633, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 638146663195114633, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 220.56342
       objectReference: {fileID: 0}
@@ -579,6 +591,10 @@ PrefabInstance:
       propertyPath: gridManager
       value: 
       objectReference: {fileID: 1970444172}
+    - target: {fileID: 6240791374528888788, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6240791374528888788, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
       propertyPath: m_Controller
       value: 

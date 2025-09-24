@@ -8,10 +8,13 @@ public class EnemyAI : MonoBehaviour, IPlayerInteractable
     private GridManager gridManager;
     private GameObject player;
 
+    private Animator animator;
+    private Collider enemyCollider; // 죽고 나서 서서히 사라질 때 충돌처리는 바로 끄는용
+
     private Vector2Int enemyGridPos;    // Grid 좌표 (배열 인덱스)
     private Vector2Int playerGridPos;   // Grid 좌표 (배열 인덱스)
 
-    private enum State { RandomMove, ChasePlayer }
+    private enum State { RandomMove, ChasePlayer, Dead }
     private State currentState = State.RandomMove;
 
     private float chaseTimer = 0f;
@@ -30,12 +33,20 @@ public class EnemyAI : MonoBehaviour, IPlayerInteractable
 
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
+        enemyCollider = GetComponent<Collider>();
         playerController = player.GetComponent<pacPlayerController>();
         enemyGridPos = FindEnemyGridPos();
     }
 
     void Update()
     {
+        if (currentState == State.Dead)
+        {
+            // Skip all other behaviors once dead
+            return;
+        }
+
         playerGridPos = playerController.InternalGridPos;
 
         if (CanSeePlayer(enemyGridPos, playerGridPos))
@@ -83,6 +94,22 @@ public class EnemyAI : MonoBehaviour, IPlayerInteractable
 
     public void OnPlayerInteract(GameObject player)
     {
+        if (currentState == State.Dead)
+            return;
+
+        currentState = State.Dead;
+
+        // Immediately disable collider for no further collisions
+        if (enemyCollider != null) enemyCollider.enabled = false;
+
+        animator.SetTrigger("Die");
+
+        StartCoroutine(SlowDestroy());
+    }
+
+    private IEnumerator SlowDestroy()
+    {
+        yield return new WaitForSeconds(1.5f);  // wait 2 seconds
         Destroy(gameObject);
     }
 

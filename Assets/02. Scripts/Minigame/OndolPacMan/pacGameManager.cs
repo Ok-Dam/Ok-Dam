@@ -77,7 +77,6 @@ public class pacGameManager : MonoBehaviour
     public void IncrementHeatedCount()
     {
         heatedCount++;
-        Debug.Log($"Heated cells count: {heatedCount}");
     }
 
     public int GetHeatedCount()
