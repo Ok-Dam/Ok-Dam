@@ -22730,6 +22730,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 379806391}
     m_Modifications:
+    - target: {fileID: 3850364469396369184, guid: 68f460d6467f0b54d9c5937914fb7ec4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 25a686124f8e35f4798faaac425607ad, type: 3}
+    - target: {fileID: 6270454249573072955, guid: 68f460d6467f0b54d9c5937914fb7ec4, type: 3}
+      propertyPath: m_text
+      value: "\uD55C\uC625 \uB9C8\uB2F9\uC5D0 \uC794\uB514\uAC00 \uC5C6\uB294 \uC774\uC720\uB294?\r\n\uC544\uBB34\uAC83\uB3C4
+        \uC5C6\uC5B4 \uB728\uAC70\uC6CC\uC9C4 \uB9C8\uB2F9\uC758 \uB354\uC6B4 \uACF5\uAE30\uAC00
+        \uC704\uB85C \uC62C\uB77C\uAC00\uBA74, \uC0AC\uBC29\uC758 \uACF5\uAE30\uAC00
+        \uBE48 \uB9C8\uB2F9\uC73C\uB85C \uC774\uB3D9\uD574 \uC790\uC5F0\uC2A4\uB7EC\uC6B4
+        \uBC14\uB78C\uAE38\uC744 \uD615\uC131\uD558\uAE30 \uC704\uD574"
+      objectReference: {fileID: 0}
     - target: {fileID: 6713887167953345497, guid: 68f460d6467f0b54d9c5937914fb7ec4, type: 3}
       propertyPath: m_Name
       value: InfoPanel
@@ -32361,6 +32373,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9ed4bb9e513850e408c578c9596aaf9c, type: 2}
   - {fileID: 11400000, guid: f2beeb3df54dd5949b3baf2e59709b2a, type: 2}
   - {fileID: 11400000, guid: eb6487a7d0a81c843bb07e72662c2691, type: 2}
+  - {fileID: 11400000, guid: 5a226ca99a1819644bebed1f1a264966, type: 2}
+  - {fileID: 11400000, guid: 9f1ef98345c04f645ba79065e2d8e249, type: 2}
+  - {fileID: 11400000, guid: 396fb03bf54c75e4185039ae2c757f6e, type: 2}
+  - {fileID: 11400000, guid: 28740f4ab8f001948bca6681f27649e2, type: 2}
+  - {fileID: 11400000, guid: 3d591676f6f8139439cd2477a6db28e2, type: 2}
 --- !u!1 &7774919753374434789
 GameObject:
   m_ObjectHideFlags: 0

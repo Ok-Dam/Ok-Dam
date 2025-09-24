@@ -6,24 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/01. Scenes/StartScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
     path: Assets/01. Scenes/MapScene.unity
     guid: cde74497455dc604eb112eb55753bfd4
-  - enabled: 0
-    path: Assets/Scenes/GudleJangScene.unity
-    guid: 27fa389ebe7e89d4b8561ee9fa17e182
-  - enabled: 0
-    path: Assets/Scenes/GudleJangScene_End.unity
-    guid: efa462b0489772741af413af651d7991
-  - enabled: 0
-    path: Assets/Scenes/GudleMazeScene.unity
-    guid: 52224eeed10817e47b3fa1ef92774e97
-  - enabled: 0
-    path: Assets/Scenes/OndolSimul.unity
-    guid: e931f6ca3680128488c2ae36aaced3b9
-  - enabled: 1
-    path: Assets/01. Scenes/Building.unity
-    guid: 9018e6000edd46e449482ba30755242a
   - enabled: 1
     path: Assets/01. Scenes/OndolPacMan.unity
     guid: 1be41d0de2f25034baf3d9028f6afed6
+  - enabled: 1
+    path: Assets/01. Scenes/Building.unity
+    guid: 9018e6000edd46e449482ba30755242a
   m_configObjects: {}
