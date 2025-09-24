@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IPlayerInteractable
 {
-    public GridManager gridManager;
-    public GameObject player;
+    private GridManager gridManager;
+    private GameObject player;
+
+    private Animator animator;
+    private Collider enemyCollider; // 죽고 나서 서서히 사라질 때 충돌처리는 바로 끄는용
 
     private Vector2Int enemyGridPos;    // Grid 좌표 (배열 인덱스)
     private Vector2Int playerGridPos;   // Grid 좌표 (배열 인덱스)
 
-    private enum State { RandomMove, ChasePlayer }
+    private enum State { RandomMove, ChasePlayer, Dead }
     private State currentState = State.RandomMove;
 
     private float chaseTimer = 0f;
@@ -30,12 +33,20 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
+        enemyCollider = GetComponent<Collider>();
         playerController = player.GetComponent<pacPlayerController>();
         enemyGridPos = FindEnemyGridPos();
     }
 
     void Update()
     {
+        if (currentState == State.Dead)
+        {
+            // Skip all other behaviors once dead
+            return;
+        }
+
         playerGridPos = playerController.InternalGridPos;
 
         if (CanSeePlayer(enemyGridPos, playerGridPos))
@@ -59,10 +70,6 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            if (currentState != State.RandomMove)
-            {
-                Debug.Log("[State] Switching to RandomMove");
-            }
             currentState = State.RandomMove;
         }
 
@@ -71,17 +78,40 @@ public class EnemyAI : MonoBehaviour
             switch (currentState)
             {
                 case State.RandomMove:
-                    Debug.Log("[Action] RandomMove called");
                     RandomMove();
                     break;
                 case State.ChasePlayer:
-                    Debug.Log("[Action] ChasePlayerWithAStar called");
                     ChasePlayerWithAStar();
                     break;
             }
         }
     }
 
+    public void Init(GridManager grd, GameObject player) { 
+        this.gridManager = grd;
+        this.player = player;
+    }
+
+    public void OnPlayerInteract(GameObject player)
+    {
+        if (currentState == State.Dead)
+            return;
+
+        currentState = State.Dead;
+
+        // Immediately disable collider for no further collisions
+        if (enemyCollider != null) enemyCollider.enabled = false;
+
+        animator.SetTrigger("Die");
+
+        StartCoroutine(SlowDestroy());
+    }
+
+    private IEnumerator SlowDestroy()
+    {
+        yield return new WaitForSeconds(1.5f);  // wait 2 seconds
+        Destroy(gameObject);
+    }
 
 
     Vector2Int FindEnemyGridPos()
@@ -154,10 +184,8 @@ public class EnemyAI : MonoBehaviour
         // Recalculate path if needed
         if (currentPath == null || currentPath.Count == 0 || pathIndex >= currentPath.Count || currentPath[currentPath.Count - 1] != playerGridPos)
         {
-            Debug.Log($"[Pathfinding] Calculating new path from {enemyGridPos} to {playerGridPos}");
             currentPath = FindPath(enemyGridPos, playerGridPos);
             pathIndex = 0;
-            Debug.Log($"[Pathfinding] New path length: {currentPath.Count}");
         }
 
         // Skip nodes that equal enemyGridPos to avoid moving "onto" itself repeatedly
@@ -169,7 +197,6 @@ public class EnemyAI : MonoBehaviour
         if (currentPath != null && pathIndex < currentPath.Count)
         {
             Vector2Int nextGridPos = currentPath[pathIndex];
-            Debug.Log($"[Movement] Next path node: {nextGridPos}, Current position: {enemyGridPos}, PathIndex: {pathIndex}");
 
             if (!IsAdjacent(enemyGridPos, nextGridPos))
             {
@@ -180,7 +207,6 @@ public class EnemyAI : MonoBehaviour
 
             if (IsWalkable(nextGridPos))
             {
-                Debug.Log($"[Movement] Moving to {nextGridPos}");
                 MoveTo(nextGridPos);
                 pathIndex++;
             }

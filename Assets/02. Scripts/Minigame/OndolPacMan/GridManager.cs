@@ -42,6 +42,22 @@ public class GridManager : MonoBehaviour
             }
         }
     }
+
+    public Vector2Int ReturnEntrancePosition()
+    {
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int y = 0; y < gridHeight; y++)
+            {
+                if (gridMap[x, y] == 2)
+                {
+                    return ClampToGrid(new Vector2Int(x, y));
+                }
+            }
+        }
+        return ClampToGrid(new Vector2Int(1, 1));
+    }
+
     public Vector3 CoordToWorldPos(int x, int y)
     {
         float worldX = x * cellSize ;

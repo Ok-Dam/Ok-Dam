@@ -15,13 +15,12 @@ public class EnemyManager : MonoBehaviour
     {
         gridManager = GetComponent<GridManager>();
         exitPos = FindExitPosition();
-        StartCoroutine(DelayedSpawn());
     }
-    IEnumerator DelayedSpawn()
-    {
-        yield return new WaitForSeconds(2.0f); // 2초 대기 (원하는 시간으로 수정)
-        SpawnEnemyAtExit();
-    }
+    //IEnumerator DelayedSpawn()
+    //{
+    //    yield return new WaitForSeconds(2.0f); // 2초 대기 (원하는 시간으로 수정)
+    //    SpawnEnemyAtExit();
+    //}
 
     // 출구 위치를 gridMap에서 특정 값(예: 3)으로 찾아 저장
     Vector2Int FindExitPosition()
@@ -44,16 +43,13 @@ public class EnemyManager : MonoBehaviour
     public void SpawnEnemyAtExit()
     {
         Vector2Int clampedExitPos = gridManager.ClampToGrid(exitPos);
-        Debug.Log("<Enemy Spawn> ExitPos: " + exitPos + ", ClampedExitPos: " + clampedExitPos);
 
         Vector3 worldPos = gridManager.CoordToWorldPos(clampedExitPos.x, clampedExitPos.y);
-        Debug.Log("<Enemy Spawn> WorldPos: " + worldPos);
 
         GameObject enemy = Instantiate(enemyPrefab, new Vector3(worldPos.x, 0, worldPos.z), Quaternion.identity);
 
         EnemyAI ai = enemy.GetComponent<EnemyAI>();
-        ai.gridManager = gridManager;
-        ai.player = player;
+        ai.Init(gridManager, player);
 
         enemies.Add(enemy);
     }
