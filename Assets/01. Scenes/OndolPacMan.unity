@@ -1860,6 +1860,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tailPrefab: {fileID: 6857490593568037781, guid: b44613a43cee87c45a5b8a58967d6bc8, type: 3}
   tailLength: 0
+  tailShrinkInterval: 20
   gridManager: {fileID: 1970444172}
   regenInterval: 0.3
   tailSegmentMoveDuration: 0.3
