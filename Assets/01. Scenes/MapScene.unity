@@ -2140,7 +2140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endButton: {fileID: 328148745}
-  endButtonText: {fileID: 0}
+  endButtonText: {fileID: 6978083268250828276}
 --- !u!224 &129226181
 RectTransform:
   m_ObjectHideFlags: 0
