@@ -5,6 +5,7 @@ using UnityEngine;
 public class pacPlayerController : MonoBehaviour
 {
     public GridManager gridManager;
+    private TailManager tailManager;
     public float moveCooldown = 0.3f; // 이동 속도 조절용 딜레이
     private float moveTimer = 0f;
 
@@ -25,15 +26,16 @@ public class pacPlayerController : MonoBehaviour
     private Vector2Int currentDirection;
 
     private Vector3 targetWorldPos;
-    private bool isMoving = false;
+    public bool isMoving = false;
 
     private Vector2Int? reservedDirection = null; // 이동 중 예약할 방향
 
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        tailManager = GetComponent<TailManager>();
 
-        internalGridPos = FindEntrancePosition();
+        internalGridPos = gridManager.ReturnEntrancePosition();
         UpdateDisplayedGridPos();
 
         // internalGridPos에 맞춰 플레이어 게임 오브젝트의 위치를 명확히 설정
@@ -56,21 +58,6 @@ public class pacPlayerController : MonoBehaviour
             MoveForward();
             moveTimer = 0f;
         }
-    }
-
-    Vector2Int FindEntrancePosition()
-    {
-        for (int x = 0; x < gridManager.gridWidth; x++)
-        {
-            for (int y = 0; y < gridManager.gridHeight; y++)
-            {
-                if (gridManager.gridMap[x, y] == 2)
-                {
-                    return gridManager.ClampToGrid(new Vector2Int(x, y));
-                }
-            }
-        }
-        return gridManager.ClampToGrid(new Vector2Int(1, 1));
     }
 
 
@@ -143,32 +130,25 @@ public class pacPlayerController : MonoBehaviour
     }
 
     void MoveTo(Vector2Int newPos)
+{
+    internalGridPos = newPos;
+    UpdateDisplayedGridPos();
+
+    tailManager?.UpdateHeadPosition(internalGridPos);
+
+    // 방향 회전 먼저 즉시 적용
+    UpdateRotation();
+
+    // 부드러운 위치 이동 시작
+    targetWorldPos = gridManager.CoordToWorldPos(internalGridPos.x, internalGridPos.y);
+    targetWorldPos = new Vector3(targetWorldPos.x, 0, targetWorldPos.z - gridManager.cellSize * 0.5f);
+
+    if (!isMoving)
     {
-        if (tailLength > 0)
-        {
-            tailPositions.Insert(0, internalGridPos);
-
-            if (tailPositions.Count > tailLength)
-            {
-                tailPositions.RemoveAt(tailPositions.Count - 1);
-            }
-        }
-
-        internalGridPos = newPos;
-        UpdateDisplayedGridPos();
-
-        // 방향 회전 먼저 즉시 적용
-        UpdateRotation();
-
-        // 부드러운 위치 이동 시작
-        targetWorldPos = gridManager.CoordToWorldPos(internalGridPos.x, internalGridPos.y);
-        targetWorldPos = new Vector3(targetWorldPos.x, 0, targetWorldPos.z - gridManager.cellSize * 0.5f);
-
-        if (!isMoving)
-        {
-            StartCoroutine(SmoothMove());
-        }
+        StartCoroutine(SmoothMove());
     }
+}
+
 
     IEnumerator SmoothMove()
     {

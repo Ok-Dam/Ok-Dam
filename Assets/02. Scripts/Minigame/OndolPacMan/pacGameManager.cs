@@ -16,6 +16,8 @@ public class pacGameManager : MonoBehaviour
     private int totalCollectibles = 5;
     private int collectedCount = 0;
 
+    [SerializeField] private pacResultPanel resultPanel; // 결과 패널 스크립트
+
     // 데운 그리드 수 
     private int heatedCount = 0;
 
@@ -100,20 +102,10 @@ public class pacGameManager : MonoBehaviour
     public void CheckWinCondition()
     {
         if (HasCollectedAll())
-            WinGame();
+            ShowResults(0, heatedCount);
         else
-            LoseGame();
+            ShowResults(1, heatedCount);
     }
 
-    private void WinGame()
-    {
-        Debug.Log("You win!");
-        // TODO: add win UI, scene transition, etc.
-    }
-
-    private void LoseGame()
-    {
-        Debug.Log("You lose!");
-        // TODO: add lose UI, retry logic, etc.
-    }
+    private void ShowResults(int result, int heatedCount) { resultPanel.ShowResultPanel(result, heatedCount); }
 }

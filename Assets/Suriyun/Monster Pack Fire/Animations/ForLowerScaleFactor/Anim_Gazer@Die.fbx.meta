@@ -1,62 +1,50 @@
 fileFormatVersion: 2
-guid: fa4168d5a871b45458f54e8b3a83e368
+guid: ebed31fee4f602448b1aa7df45d269b7
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
   - first:
       1: 100000
-    second: center
-  - first:
-      1: 100002
     second: //RootNode
   - first:
-      1: 100004
-    second: Fire_Gazer
+      1: 100002
+    second: center
   - first:
-      1: 100006
+      1: 100004
     second: head
   - first:
-      1: 100008
+      1: 100006
     second: root
   - first:
-      1: 100010
+      1: 100008
     second: spine
   - first:
       4: 400000
-    second: center
-  - first:
-      4: 400002
     second: //RootNode
   - first:
-      4: 400004
-    second: Fire_Gazer
+      4: 400002
+    second: center
   - first:
-      4: 400006
+      4: 400004
     second: head
   - first:
-      4: 400008
+      4: 400006
     second: root
   - first:
-      4: 400010
+      4: 400008
     second: spine
   - first:
-      21: 2100000
-    second: M_Fire_Gazer_A
-  - first:
-      43: 4300000
-    second: Fire_Gazer
+      74: 7400000
+    second: Anim_Gazer@Die
   - first:
       95: 9500000
     second: //RootNode
-  - first:
-      137: 13700000
-    second: Fire_Gazer
   externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
-    materialSearch: 2
-    materialLocation: 0
+    materialSearch: 1
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

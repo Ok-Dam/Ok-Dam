@@ -48,6 +48,8 @@ TagManager:
   - ARROW_10
   - ARROW_11
   - Block
+  - pacPlayerHead
+  - pacEnemy
   layers:
   - Default
   - TransparentFX
