@@ -11916,23 +11916,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024413760}
   m_CullTransparentMesh: 0
---- !u!1 &1028427713 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2745694103888372184, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
-  m_PrefabInstance: {fileID: 1799189998}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1028427718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028427713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4e2f833bc434d74d8ff7895120def60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1029072872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13694,7 +13677,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 357497490}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -18303,13 +18286,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508850495}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 17.116, y: 0, z: -76.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 508839352}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1508850497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23007,7 +22990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6316520413145018491, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_Text
-      value: "\uD655 \uC778"
+      value: "\uAC8C\uC784 \uC2DC\uC791"
       objectReference: {fileID: 0}
     - target: {fileID: 6316520413145018491, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_FontData.m_MaxSize
@@ -23115,11 +23098,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7982027702717174233, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7982027702717174233, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7982027702717174233, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -23128,7 +23111,7 @@ PrefabInstance:
     - target: {fileID: 7982027702717174233, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1028427718}
+      objectReference: {fileID: 1785243345}
     - target: {fileID: 7982027702717174233, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
@@ -23139,7 +23122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7982027702717174233, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: LoadSceneByName
+      value: GoToOndol
       objectReference: {fileID: 0}
     - target: {fileID: 7982027702717174233, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -23147,11 +23130,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7982027702717174233, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: LoadNextScene, Assembly-CSharp
+      value: MiniGameButtons, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7982027702717174233, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
-      value: OndolSimul
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7982027702717174233, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -23168,9 +23151,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6496917570121386588, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1799190001}
-    - targetCorrespondingSourceObject: {fileID: 2745694103888372184, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1028427718}
   m_SourcePrefab: {fileID: 100100000, guid: 810570bbc87a56b47b032ada2328843f, type: 3}
 --- !u!224 &1799189999 stripped
 RectTransform:

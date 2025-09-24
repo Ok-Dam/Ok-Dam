@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/Building.unity
     guid: 9018e6000edd46e449482ba30755242a
+  - enabled: 1
+    path: Assets/01. Scenes/OndolPacMan.unity
+    guid: 1be41d0de2f25034baf3d9028f6afed6
   m_configObjects: {}
