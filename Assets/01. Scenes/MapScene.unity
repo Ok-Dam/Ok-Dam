@@ -13028,7 +13028,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: https://map.naver.com/p/entry/place/12164376?lng=127.0003379&lat=37.5929957&placePath=%2Fhome&entry=plt&searchType=place&c=15.00,0,0,0,dh
+          m_StringArgument: http://www.ntculture.or.kr/culturalHeritage/1
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1079571869
@@ -14034,7 +14034,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 357497490}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19182,7 +19182,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: https://map.naver.com/p/search/%EB%A7%A4%ED%95%99%EB%8B%B9/place/15334297?isCorrectAnswer=true&c=15.00,0,0,0,dh&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202509250023&locale=ko&svcName=map_pcv5&searchText=%EB%A7%A4%ED%95%99%EB%8B%B9
+          m_StringArgument: https://www.yangju.go.kr/tour/contents.do?key=837
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1536879196
