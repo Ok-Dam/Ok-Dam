@@ -10,8 +10,8 @@ public class pacGameManager : MonoBehaviour
     private GridManager gridManager;
     public pacPlayerController playerController;
 
-    [SerializeField] float firstEnemyGenTime = 3.0f;
-    [SerializeField] float enemyGenTime = 15.0f;
+    [SerializeField] float firstEnemyGenTime = 5.0f;
+    [SerializeField] float enemyGenTime = 20.0f;
 
     private int totalCollectibles = 5;
     private int collectedCount = 0;
@@ -102,10 +102,12 @@ public class pacGameManager : MonoBehaviour
     public void CheckWinCondition()
     {
         if (HasCollectedAll())
-            ShowResults(0, heatedCount);
+            ShowResults(0, heatedCount); //성공
         else
-            ShowResults(1, heatedCount);
+            ShowResults(1, heatedCount); // 실패
     }
 
     private void ShowResults(int result, int heatedCount) { resultPanel.ShowResultPanel(result, heatedCount); }
+    public void ShowFailResults() { resultPanel.ShowResultPanel(1, heatedCount); }
+
 }

@@ -50,11 +50,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10, y: 1, z: 10}
+  m_Size: {x: 9, y: 4, z: 9}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4803505661257971616
 Rigidbody:
@@ -97,6 +97,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextSegment: {fileID: 0}
   tailManager: {fileID: 0}
+  currentGridPos: {x: 0, y: 0}
+  targetGridPos: {x: 0, y: 0}
+  moveProgress: 1
 --- !u!1001 &5484234871242295923
 PrefabInstance:
   m_ObjectHideFlags: 0

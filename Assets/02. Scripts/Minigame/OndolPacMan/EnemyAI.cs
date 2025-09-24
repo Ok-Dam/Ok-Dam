@@ -99,7 +99,28 @@ public class EnemyAI : MonoBehaviour, IPlayerInteractable
 
         currentState = State.Dead;
 
+        pacPlayerController controller = player.GetComponent<pacPlayerController>();
+        if (controller != null)
+        {
+            controller.FailByDeath();
+        }
+
         // Immediately disable collider for no further collisions
+        if (enemyCollider != null) enemyCollider.enabled = false;
+
+        animator.SetTrigger("Die");
+
+        StartCoroutine(SlowDestroy());
+    }
+
+    // 플레이어 말고 꼬리와 충돌시
+    public void DieByTail()
+    {
+        if (currentState == State.Dead)
+            return;
+
+        currentState = State.Dead;
+
         if (enemyCollider != null) enemyCollider.enabled = false;
 
         animator.SetTrigger("Die");

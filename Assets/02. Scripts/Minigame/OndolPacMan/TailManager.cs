@@ -12,8 +12,6 @@ public class TailManager : MonoBehaviour
     public GridManager gridManager;
     private Vector2Int previousHeadPos;
 
-    private List<Vector3> tailWorldPositions = new List<Vector3>();
-
     private Vector2Int entrancePos;
     private List<Vector2Int> regenCells = new List<Vector2Int>();
 
@@ -21,6 +19,8 @@ public class TailManager : MonoBehaviour
     private float regenTimer = 0f;
 
     private pacPlayerController playerController;
+
+    public float tailSegmentMoveDuration = 0.3f;
 
     void Start()
     {
@@ -36,16 +36,12 @@ public class TailManager : MonoBehaviour
         regenCells.Add(new Vector2Int(x, y - 1));
         regenCells.Add(new Vector2Int(x - 1, y - 1));
         regenCells.Add(new Vector2Int(x + 1, y - 1));
-
-        Debug.Log("[TailManager Start] Initialized with entrance at " + entrancePos);
     }
 
     void Update()
     {
         if (playerController.isMoving)
-        {
-            SmoothFollowUpdate();
-        }
+            UpdateTailMovement();
 
         RegenerationCheck();
     }
@@ -56,22 +52,17 @@ public class TailManager : MonoBehaviour
         Vector2Int playerPos = playerController.InternalGridPos;
 
         bool inRegenZone = regenCells.Contains(playerPos);
-        Debug.Log($"[RegenerationCheck] Player pos: {playerPos} In regen zone: {inRegenZone} Regen timer: {regenTimer}");
-
         if (inRegenZone)
         {
             regenTimer += Time.deltaTime;
             if (regenTimer >= regenInterval)
             {
                 regenTimer = 0f;
-                Debug.Log("[RegenerationCheck] Regenerating tail length.");
                 SetTailLength(tailLength + 1);
             }
         }
         else
         {
-            if (regenTimer > 0f)
-                Debug.Log("[RegenerationCheck] Regen zone exit, reset timer.");
             regenTimer = 0f;
         }
     }
@@ -81,111 +72,82 @@ public class TailManager : MonoBehaviour
         int oldLength = tailLength;
         tailLength = Mathf.Max(0, length);
 
-        Debug.Log($"[SetTailLength] Tail length changing from {oldLength} to {tailLength}");
-
-        if (tailLength > oldLength && tailPositions.Count == 0)
+        if (tailLength > oldLength)
         {
-            Vector2Int currentHead = playerController.InternalGridPos;
-            Vector2Int tailStartPos = currentHead - playerController.LastMoveDirection;
-            tailPositions.Insert(0, tailStartPos);
-            Debug.Log($"[SetTailLength] Added initial tail start position {tailStartPos} behind head {currentHead}");
+            Vector2Int tailStartPos;
+
+            if (tailPositions.Count > 1)
+            {
+                Vector2Int lastPos = tailPositions[tailPositions.Count - 1];
+                Vector2Int prevPos = tailPositions[tailPositions.Count - 2];
+                Vector2Int direction = lastPos - prevPos;
+                tailStartPos = lastPos - direction;
+            }
+            else if (tailPositions.Count == 1)
+            {
+                Vector2Int lastPos = tailPositions[0];
+                Vector2Int direction = playerController.LastMoveDirection;
+                tailStartPos = lastPos - direction;
+            }
+            else
+            {
+                Vector2Int currentHead = playerController.InternalGridPos;
+                Vector2Int direction = playerController.LastMoveDirection;
+                tailStartPos = currentHead - direction;
+            }
+
+            tailPositions.Add(tailStartPos);
         }
 
         UpdateTailObjects();
-        InitializeTailWorldPositions();
-        UpdateTailObjectsPositionInstant();
+        UpdateTailLayers();  // update layers for collisions
     }
 
     public void UpdateHeadPosition(Vector2Int newHeadPos)
     {
-        Debug.Log($"[UpdateHeadPosition] Called with new head pos: {newHeadPos}; previousHeadPos: {previousHeadPos}");
-
         if (tailLength > 0 && newHeadPos != previousHeadPos)
         {
             tailPositions.Insert(0, previousHeadPos);
-            int maxCount = tailLength;
-
-            if (tailPositions.Count > maxCount)
-            {
-                tailPositions.RemoveRange(maxCount, tailPositions.Count - maxCount);
-                Debug.Log("[UpdateHeadPosition] Trimmed tail positions list to max count: " + maxCount);
-            }
-            Debug.Log($"[UpdateHeadPosition] Inserted previous head pos: {previousHeadPos}. Tail positions count: {tailPositions.Count}");
+            if (tailPositions.Count > tailLength)
+                tailPositions.RemoveRange(tailLength, tailPositions.Count - tailLength);
         }
-
         previousHeadPos = newHeadPos;
-
-        UpdateTailObjects();
-        InitializeTailWorldPositions();
-        UpdateTailObjectsPositionInstant();
     }
 
-    void InitializeTailWorldPositions()
+    void UpdateTailMovement()
     {
-        Debug.Log("[InitializeTailWorldPositions] Syncing tailWorldPositions list.");
-        while (tailWorldPositions.Count < tailLength)
-        {
-            int idx = tailWorldPositions.Count;
-            Vector3 pos = idx < tailPositions.Count
-                ? gridManager.CoordToWorldPos(tailPositions[idx].x, tailPositions[idx].y)
-                : (tailWorldPositions.Count > 0 ? tailWorldPositions[tailWorldPositions.Count - 1] : gridManager.CoordToWorldPos(entrancePos.x, entrancePos.y));
-            tailWorldPositions.Add(pos);
-
-            Debug.Log($"[InitializeTailWorldPositions] Added world position {pos} at index {idx}");
-        }
-        while (tailWorldPositions.Count > tailLength)
-        {
-            tailWorldPositions.RemoveAt(tailWorldPositions.Count - 1);
-            Debug.Log("[InitializeTailWorldPositions] Removed excess tail world position.");
-        }
-    }
-
-    void SmoothFollowUpdate()
-    {
-        const float followSpeed = 3f;  // Slower follow speed now
-        if (tailObjects.Count == 0 || tailWorldPositions.Count < tailObjects.Count)
-            return;
-
-        Vector3 prevPos = playerController.transform.position;
-
         for (int i = 0; i < tailObjects.Count; i++)
         {
-            Vector3 targetPos = tailWorldPositions[i];
-            float lerpFactor = Mathf.Clamp01(Time.deltaTime * followSpeed);
-            tailWorldPositions[i] = Vector3.Lerp(targetPos, prevPos, lerpFactor);
-            // Or alternatively:
-            // float maxMoveDist = followSpeed * Time.deltaTime;
-            // tailWorldPositions[i] = Vector3.MoveTowards(targetPos, prevPos, maxMoveDist);
+            TailSegment segment = tailObjects[i].GetComponent<TailSegment>();
+            Vector2Int nextGridPos = (i < tailPositions.Count) ? tailPositions[i] : playerController.InternalGridPos;
 
-            tailObjects[i].transform.position = tailWorldPositions[i];
-            prevPos = tailWorldPositions[i];
+            if (segment.moveProgress >= 1f && segment.currentGridPos != nextGridPos)
+            {
+                segment.MoveToNextGrid(nextGridPos);
+            }
         }
     }
-
 
     void UpdateTailObjects()
     {
-        Debug.Log($"[UpdateTailObjects] Tail length: {tailLength}, Tail objects count: {tailObjects.Count}");
         while (tailObjects.Count < tailLength)
         {
             int idx = tailObjects.Count;
             Vector2Int spawnGridPos = idx < tailPositions.Count ? tailPositions[idx] : playerController.InternalGridPos - playerController.LastMoveDirection;
-            Vector3 spawnWorldPos = gridManager.CoordToWorldPos(spawnGridPos.x, spawnGridPos.y);
-            spawnWorldPos.z -= gridManager.cellSize * 0.5f;
 
-            Debug.Log($"[UpdateTailObjects] Spawning tail segment {idx} at grid {spawnGridPos}, world pos {spawnWorldPos}");
-
-            GameObject tailObj = Instantiate(tailPrefab, spawnWorldPos, Quaternion.identity, transform);
+            GameObject tailObj = Instantiate(tailPrefab, transform);
 
             TailSegment segment = tailObj.GetComponent<TailSegment>();
             if (segment != null)
             {
                 segment.tailManager = this;
-                segment.nextSegment = tailObjects.Count > 0
-                    ? tailObjects[tailObjects.Count - 1].GetComponent<TailSegment>()
-                    : null;
+                // nextSegment points toward tail_end (i.e. next segment is tailObjects[i+1])
+                TailSegment nextSeg = (tailObjects.Count < tailLength - 1) ? tailObjects[tailObjects.Count + 1].GetComponent<TailSegment>() : null;
+                segment.nextSegment = nextSeg;
+                segment.InitializePosition(spawnGridPos, playerController.moveCooldown);
             }
             tailObjects.Add(tailObj);
+            UpdateTailLayers();
         }
 
         while (tailObjects.Count > tailLength)
@@ -193,48 +155,67 @@ public class TailManager : MonoBehaviour
             GameObject toRemove = tailObjects[tailObjects.Count - 1];
             tailObjects.RemoveAt(tailObjects.Count - 1);
             Destroy(toRemove);
-            Debug.Log("[UpdateTailObjects] Removed excess tail object.");
+            UpdateTailLayers();
         }
+
+        //꼬리 리스트 전체를 순회하면서 nextSegment를 일괄 설정 - failsafe
+        for (int i = 0; i < tailObjects.Count; i++)
+        {
+            TailSegment segment = tailObjects[i].GetComponent<TailSegment>();
+            if (segment != null)
+            {
+                segment.nextSegment = (i < tailObjects.Count - 1) ? tailObjects[i + 1].GetComponent<TailSegment>() : null;
+            }
+        }
+
     }
 
-    void UpdateTailObjectsPositionInstant()
+    private void UpdateTailLayers()
     {
         for (int i = 0; i < tailObjects.Count; i++)
         {
-            if (i >= tailPositions.Count) break;
-
-            Vector2Int gridPos = tailPositions[i];
-            Vector3 pos = gridManager.CoordToWorldPos(gridPos.x, gridPos.y);
-            Vector3 adjustedPos = new Vector3(pos.x, 0, pos.z - gridManager.cellSize * 0.5f);
-
-            tailObjects[i].transform.position = adjustedPos;
-
-            Debug.Log($"[UpdateTailObjectsPositionInstant] Tail segment {i} position set to GridPos: {gridPos}, WorldPos: {adjustedPos}");
+            TailSegment segment = tailObjects[i].GetComponent<TailSegment>();
+            if (segment != null)
+            {
+                if (i == 0) // First tail segment gets special collision layer
+                {
+                    segment.gameObject.layer = LayerMask.NameToLayer("pacTailFirst");
+                }
+                else
+                {
+                    // Default layer or your normal tail layer
+                    segment.gameObject.layer = LayerMask.NameToLayer("Default");
+                }
+            }
         }
     }
 
+    // 꼬리 삭제
     public void HandleTailCollision(TailSegment collidedSegment, GameObject collider)
     {
-        collidedSegment.DeleteSegment();
-
         int indexToRemove = tailObjects.FindIndex(obj => obj == collidedSegment.gameObject);
-        Debug.Log("[HandleTailCollision] Collision detected on tail index " + indexToRemove);
 
         if (indexToRemove >= 0)
         {
-            int removeCount = tailObjects.Count - indexToRemove;
-            tailObjects.RemoveRange(indexToRemove, removeCount);
-            tailPositions.RemoveRange(indexToRemove, removeCount);
-            tailWorldPositions.RemoveRange(indexToRemove, removeCount);
-            tailLength = Mathf.Max(0, tailLength - removeCount);
+            // 꼬리 끝 방향부터 부딫힌 segment까지 삭제: indexToRemove부터 꼬리 끝까지 삭제
+            for (int i = tailObjects.Count - 1; i >= indexToRemove; i--)
+            {
+                tailObjects[i].GetComponent<TailSegment>().DeleteSegment();
+            }
 
-            Debug.Log($"[HandleTailCollision] Removed {removeCount} tail segments. New tail length: {tailLength}");
+            // 꼬리 리스트와 위치 리스트에서 해당 구간만 삭제
+            tailObjects.RemoveRange(indexToRemove, tailObjects.Count - indexToRemove);
+            tailPositions.RemoveRange(indexToRemove, tailPositions.Count - indexToRemove);
+            tailLength = tailObjects.Count;
+            UpdateTailLayers();
         }
 
-        if (collider.CompareTag("Enemy"))
+        if (collider.CompareTag("pacEnemy"))
         {
-            Destroy(collider);
-            Debug.Log("[HandleTailCollision] Enemy destroyed on collision.");
+            EnemyAI enemyAI = collider.GetComponent<EnemyAI>();
+            enemyAI.DieByTail();
         }
     }
+
+
 }

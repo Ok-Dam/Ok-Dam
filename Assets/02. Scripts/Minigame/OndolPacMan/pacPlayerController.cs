@@ -6,7 +6,7 @@ public class pacPlayerController : MonoBehaviour
 {
     public GridManager gridManager;
     private TailManager tailManager;
-    public float moveCooldown = 0.3f; // 이동 속도 조절용 딜레이
+    public float moveCooldown = 0.2f; // 이동 속도 조절용 딜레이
     private float moveTimer = 0f;
 
     public Animator animator;
@@ -208,6 +208,11 @@ public class pacPlayerController : MonoBehaviour
         }
     }
 
+    public void FailByDeath()
+    {
+        pacGameManager.Instance.ShowFailResults();
+    }
+
     void UpdateRotation()
     {
         float zRotationDegrees = 0f;
@@ -223,14 +228,6 @@ public class pacPlayerController : MonoBehaviour
 
         Quaternion baseRotation = Quaternion.Euler(-10.0f, 0, zRotationDegrees);
         transform.rotation = baseRotation;
-    }
-
-    void UpdateWorldPosition()
-    {
-        // 기존 이동 즉시 위치 갱신 대신 부드러운 이동을 쓴다면 삭제하거나 주석 처리 가능
-        Vector3 worldPos = gridManager.CoordToWorldPos(internalGridPos.x, internalGridPos.y);
-        transform.position = new Vector3(worldPos.x, 0, worldPos.z - gridManager.cellSize * 0.5f);
-        UpdateRotation();
     }
 
     void UpdateDisplayedGridPos()
