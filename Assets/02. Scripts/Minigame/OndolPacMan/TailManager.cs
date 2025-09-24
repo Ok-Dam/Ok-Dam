@@ -9,6 +9,11 @@ public class TailManager : MonoBehaviour
     private List<GameObject> tailObjects = new List<GameObject>();
     private List<Vector2Int> tailPositions = new List<Vector2Int>();
 
+    //老沥林扁付促 部府皑家
+    [SerializeField] private float tailShrinkInterval = 5f;
+    private float tailShrinkTimer = 0f;
+
+
     public GridManager gridManager;
     private Vector2Int previousHeadPos;
 
@@ -44,6 +49,7 @@ public class TailManager : MonoBehaviour
             UpdateTailMovement();
 
         RegenerationCheck();
+        TailShrinkCheck();
     }
 
     void RegenerationCheck()
@@ -189,6 +195,54 @@ public class TailManager : MonoBehaviour
             }
         }
     }
+
+    private void TailShrinkCheck()
+    {
+        tailShrinkTimer += Time.deltaTime;
+
+        if (tailShrinkTimer >= tailShrinkInterval)
+        {
+            tailShrinkTimer = 0f;
+
+            bool success = TryShrinkTail();
+            if (!success)
+            {
+                // 部府 绝阑 版快 角菩 贸府
+                pacPlayerController pc = playerController;
+                if (pc != null)
+                {
+                    pc.FailByDeath();
+                }
+            }
+        }
+    }
+
+    public bool TryShrinkTail()
+    {
+        if (tailLength == 0)
+            return false;
+
+        // 部府 府胶飘俊辑 盖 场 部府(付瘤阜 夸家) 昏力
+        int lastIndex = tailObjects.Count - 1;
+
+        TailSegment lastSegment = tailObjects[lastIndex].GetComponent<TailSegment>();
+        if (lastSegment != null)
+        {
+            lastSegment.DeleteSegment(); // 部府 场 规氢 犁蓖 昏力 器窃
+        }
+
+        Destroy(tailObjects[lastIndex]);
+        tailObjects.RemoveAt(lastIndex);
+
+        if (tailPositions.Count > lastIndex)
+            tailPositions.RemoveAt(lastIndex);
+
+        tailLength = tailObjects.Count;
+        UpdateTailLayers();
+
+        return true;
+    }
+
 
     // 部府 昏力
     public void HandleTailCollision(TailSegment collidedSegment, GameObject collider)
