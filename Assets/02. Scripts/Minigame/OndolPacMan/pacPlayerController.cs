@@ -6,7 +6,7 @@ public class pacPlayerController : MonoBehaviour
 {
     public GridManager gridManager;
     private TailManager tailManager;
-    public float moveCooldown = 0.3f; // 이동 속도 조절용 딜레이
+    public float moveCooldown = 0.2f; // 이동 속도 조절용 딜레이
     private float moveTimer = 0f;
 
     public Animator animator;
@@ -24,6 +24,7 @@ public class pacPlayerController : MonoBehaviour
 
     // 배열 인덱스 기준 방향 (위가 y+1)
     private Vector2Int currentDirection;
+    private Vector2Int lastMoveDirection;
 
     private Vector3 targetWorldPos;
     public bool isMoving = false;
@@ -43,6 +44,7 @@ public class pacPlayerController : MonoBehaviour
         transform.position = new Vector3(startWorldPos.x, 0, startWorldPos.z - gridManager.cellSize * 0.5f);
 
         currentDirection = Vector2Int.down; // 초기 방향 설정
+       lastMoveDirection = Vector2Int.down;
     }
 
 
@@ -134,7 +136,8 @@ public class pacPlayerController : MonoBehaviour
     internalGridPos = newPos;
     UpdateDisplayedGridPos();
 
-    tailManager?.UpdateHeadPosition(internalGridPos);
+        lastMoveDirection = currentDirection;
+        tailManager?.UpdateHeadPosition(internalGridPos);
 
     // 방향 회전 먼저 즉시 적용
     UpdateRotation();
@@ -205,6 +208,11 @@ public class pacPlayerController : MonoBehaviour
         }
     }
 
+    public void FailByDeath()
+    {
+        pacGameManager.Instance.ShowFailResults();
+    }
+
     void UpdateRotation()
     {
         float zRotationDegrees = 0f;
@@ -222,14 +230,6 @@ public class pacPlayerController : MonoBehaviour
         transform.rotation = baseRotation;
     }
 
-    void UpdateWorldPosition()
-    {
-        // 기존 이동 즉시 위치 갱신 대신 부드러운 이동을 쓴다면 삭제하거나 주석 처리 가능
-        Vector3 worldPos = gridManager.CoordToWorldPos(internalGridPos.x, internalGridPos.y);
-        transform.position = new Vector3(worldPos.x, 0, worldPos.z - gridManager.cellSize * 0.5f);
-        UpdateRotation();
-    }
-
     void UpdateDisplayedGridPos()
     {
         displayedGridPos = new Vector2Int(internalGridPos.x, gridManager.gridHeight - 1 - internalGridPos.y);
@@ -242,6 +242,10 @@ public class pacPlayerController : MonoBehaviour
     public Vector2Int InternalGridPos
     {
         get { return internalGridPos; }
+    }
+    public Vector2Int LastMoveDirection
+    {
+        get { return lastMoveDirection; }
     }
 
 }

@@ -1544,8 +1544,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 1505790719655493401}
-  firstEnemyGenTime: 3
-  enemyGenTime: 15
+  firstEnemyGenTime: 5
+  enemyGenTime: 20
   resultPanel: {fileID: 971169698}
 --- !u!114 &1970444177
 MonoBehaviour:
@@ -1721,6 +1721,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3490491955612362060, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3490491955612362060, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
       propertyPath: m_TagString
       value: pacPlayerHead
       objectReference: {fileID: 0}
@@ -1736,6 +1740,30 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: f7cee0ebca0520146b43313d628fa8bd, type: 2}
+    - target: {fileID: 6240791374536166416, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6240791374536166418, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6240791374536166420, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6240791374536166422, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6240791374536166428, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6240791374536166430, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 7179457461144408056, guid: 89e02a7619fd3904aac90f8b51b369b0, type: 3}
       propertyPath: gridManager
       value: 
@@ -1789,7 +1817,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 15, y: 20, z: 15}
+  m_Size: {x: 15, y: 10, z: 15}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1505790719655493404
 Rigidbody:
@@ -1833,7 +1861,8 @@ MonoBehaviour:
   tailPrefab: {fileID: 6857490593568037781, guid: b44613a43cee87c45a5b8a58967d6bc8, type: 3}
   tailLength: 0
   gridManager: {fileID: 1970444172}
-  regenInterval: 0.5
+  regenInterval: 0.3
+  tailSegmentMoveDuration: 0.3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
