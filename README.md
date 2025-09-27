@@ -42,9 +42,11 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
 - **설명 콘텐츠**  
   상호작용이 표시된 곳에서 한옥 요소에 대한 설명을 UI 텍스트로 제공합니다.
 
-|![Image](https://github.com/user-attachments/assets/f051c312-6134-4e55-9769-89177e1b5883)|![Image](https://github.com/user-attachments/assets/759c907b-38c4-4441-8562-debd2380144a)
-|:---:|:---:|
-|사진 찍기 전|찍은 후|
+<br>
+
+|![Image](https://github.com/user-attachments/assets/d8378c92-54fe-4a81-b654-94f75b53d70f)|![Image](https://github.com/user-attachments/assets/07f4f51b-1143-4746-a17e-388bade2244e)|![Image](https://github.com/user-attachments/assets/258c36b7-570a-4caf-8fab-544b4c37b8cc)
+|:---:|:---:|:---:|
+|사진 찍기 전|찍은 후|링크 접속|
 
 - **카메라 기능**  
   카메라가 표시된 위치에서 사진을 찍으면, 동일한 구도의 실제 사진이 나타납니다.
@@ -52,30 +54,29 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
   <br><br>
 
 ### 🎲 미니게임
+- **윷놀이**
 <table>
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/46927874-d768-41be-8454-c09c78ad2769" width="420" height="250"/><br/>
-      윷놀이
+      <img src="https://github.com/user-attachments/assets/3c466b68-ced9-4592-8955-d43dbd3df479" width="420" height="250"/><br/>
+      윷 던지기
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/828a5b8b-7fbb-41e7-9487-4692c627efdb"  width="420" height="250"/><br/>
-      구들 미로 게임
+      <img src="https://github.com/user-attachments/assets/119834fa-b63e-427e-8caa-4194d402e2a1"  width="420" height="250"/><br/>
+      한옥 퀴즈
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/6211ccc8-3303-47d7-b280-622bb25f66c3"  width="420" height="250"/><br/>
-      구들장 보수 게임
+      <img src="https://github.com/user-attachments/assets/0d61b39d-1fbd-49f1-abd2-f0c7b6be5815"  width="420" height="250"/><br/>
+      부품 원리 설명
     </td>
   </tr>
 </table>
 
-
-- **윷놀이**
-  
   + 구현된 한옥을 위에서 보면 네모 모양인데, 이를 윷놀이 판에 맞춰서 결합한 미니게임
-  + 기존 윷놀이처럼 윷을 던져 말을 이동
+  + 기존 윷놀이처럼 윷을 던져 말을 이동. 업기, 빽도 같은 기존의 규칙 전부 구현
   + 윷놀이 판은 구현된 한옥 위에 떠있는데, 각 칸은 위치상 일치하는 한옥 방이 존재
-  + 각 칸에 도착하면 일치하는 방에 대한 퀴즈가 진행된다. 퀴즈 내용은 기존에 맵을 돌아다니며 얻은 정보에 기반
+  + 각 칸에 도착하면 일치하는 방에 대한 퀴즈가 진행 -> 퀴즈 내용은 기존에 맵을 돌아다니며 얻은 정보에 기반
+  + 대응하는 방이 없는 중앙 부근의 칸들에선 말의 부품 문양에 따른 한옥의 원리 설명 
   <details>
   <summary>윷놀이 평면도</summary>
   <table>
@@ -91,19 +92,51 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
     </tr>
   </table>
 </details>
+
+<br>
+
+- **기와 쌓기**
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/8edc55d1-e022-412d-b6f6-4b0639848659"/><br/>
+      게임 시작
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/d17a1e52-590e-4a2c-b5a5-b2bbcf7cda9e"/><br/>
+      기와 쌓기
+    </td>
+  </tr>
+</table>
   
-- **구들 미로 게임**
+  + 점점 좁아지는 기와를 쌓아 올리는 게임
+  + 블록이 좌우로 이동할 때 스페이스바를 누르면 아래 층과 겹치는 부분만 유지, 나머지는 제거
+  + 겹치는 부분이 없으면 실패
 
-  + 전통 온돌의 구조를 학습하며 퀴즈를 푸는 1인칭 미로 탐험 게임
-  + 미로의 벽이 온돌의 구들 구조이며 벽면에는 온돌의 구조와 원리에 대한 정보 탑재
-  + 어두운 환경 속에서 손전등을 활용한 정보 확인으로 긴장감 형성
-  + 벽면에 탑재된 정보 관련 퀴즈 제공으로 학습 요소 제공
-   
-- **구들장 보수 게임**
+<br>
 
-  + 전통 온돌 시공 과정 중 구들장 보수 공사 단계를 모티브로 제작한 체험형 게임
-  + 금이 간 구들장을 망치로 두들겨 수리 후 새 구들장 설치 및 구들장 사이로 새어나오는 연기 제거하는 보수 공사 진행
-  + 제한 시간 및 연기와 금 간 구들장의 랜덤 위치 발생으로 몰입감 형성 
+ - **온돌 팩맨**
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/6f6da9f2-389e-411d-ab8c-33b733bc606c"/><br/>
+      게임 설명
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/84f8efe8-52f3-4d0e-a912-6c970b8b93c8"/><br/>
+      인게임
+    </td>
+  </tr>
+</table>
+  
+  + 온돌의 허튼 고래와 팩맨 게임의 형태가 닮았음에서 기인
+  + 온돌의 원리를 팩맨 + 스네이크 게임을 통해 자연스럽게 학습할 수 있게 구성
+      - 목표: 고장난 굴뚝을 고치기 위한 5개의 부품 수집 + 고래를 최대한 골고루 데우기
+      - 플레이어: 구들개자리에서 들어오는 열기(불)
+      - 구들개자리: 실제 온돌에서 열기가 들어오는 곳이자 플레이어가 열기를 모을 수 있는 곳
+      - 적: 고장난 굴뚝에서 들어오는 한기. 플레이어의 열기와 충돌 시 소멸(열기와 한기가 만나면 소멸)
+      - 플레이어가 지나간 길은 데워지며, 빨간 색으로 표시됨 > 많을 수록 추가 점수
+
 
 <br><br>
 
@@ -117,8 +150,8 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
   Photon 서버를 통해 플레이어 간 실시간 상호작용이 가능합니다.
   <br><br>
 ### 시연 영상 링크
-- 발표 영상 주소: https://youtu.be/bH1tXeaYUk8
-- 시연 영상 주소: https://youtu.be/--Muxnh8ahc
+- 발표 영상 주소: TODO 
+- 시연 영상 주소: TODO
 
 <br><br>
   
@@ -128,13 +161,11 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
 | 🎮 Unity | 게임 엔진 (3D 맵, 인터랙션, UI 구현) |
 | ☁️ Photon Cloud | 서버, 멀티플레이어 네트워크 연동 |
 | 🧠 ChatGPT| AI 대화 시스템 구현 |
-| 👽️ Mixamo | 애니메이션 생성 |
-| 🎵 Suno | 배경 음악 생성 |
 | 🧱 Meshy | 3D 모델링 생성 AI |
 | 🧑‍💻 Visual Studio | 코드 작성 및 디버깅 도구 |
 | 🌐 Node.js | GPT용 서버 |
 
   <br><br>
 ## 기술 스택  
-![Image](https://github.com/user-attachments/assets/da5c5af5-506b-40a5-9ec9-40539b4a3ef7)
+![Image](https://github.com/user-attachments/assets/9b12bca8-68d6-485d-a819-3a443c069293)
 
