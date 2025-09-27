@@ -142,16 +142,30 @@ Unity로 제작되었으며, 플레이어는 미니게임을 통해 자연스럽
 
 ### 🧠 생성형 AI & 멀티플레이
 
-- **생성형 AI NPC**  
+- **생성형 AI NPC**
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/daa559f5-eb91-426a-b632-d776b243faae"/><br/>
+      한국어
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/4a9ae540-34fc-4988-b3a1-8b2a463d6b43"/><br/>
+      외국어
+    </td>
+  </tr>
+</table>
   채팅으로 NPC와 대화하면 chatGPT를 거쳐 상호작용합니다.
-
+  
+  <br>
   
 - **멀티플레이어 지원**  
   Photon 서버를 통해 플레이어 간 실시간 상호작용이 가능합니다.
+  
   <br><br>
+  
 ### 시연 영상 링크
-- 발표 영상 주소: TODO 
-- 시연 영상 주소: TODO
+- [간단한 시연 영상](https://www.youtube.com/watch?v=szIfeak0OT0)
 
 <br><br>
   
